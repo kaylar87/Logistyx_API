@@ -2755,17 +2755,14 @@ public class $1bNL$NoWeight2KG {
                 .body(objectShipmentIdFromShipmentsRequest)
                 .when()
                 .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
 
-        BringParcelPojo bringParcelPojo = responseConveyances.as(BringParcelPojo.class);
-
-        String encodedStringFromPostman = bringParcelPojo.getDocuments().get(0).getContent();
-        byte[] decodedBytes = Base64.getDecoder().decode(encodedStringFromPostman);
-        String decodedString = new String(decodedBytes);
-
-        String[] decodeArr = decodedString.split("\'\r\n");
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
         System.out.println("decodeArrList.get(2) = " + decodeArrList.get(2));
-
         assertThat(decodeArrList.get(2), is(equalTo("UNH+" + bringParcelPojoShipments.getShipmentId() + "+IFTMIN:D:04A:UN:BIG14")));
 
     }
@@ -2775,22 +2772,135 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test22() {
 
-        String requestJsonBody = "{\"Shipments\":[{\"ShipmentId\":313013}]}";
+        String requestJsonBodyShipments = "{\n" +
+                "    \"ShipperCode\": \"CEVA\",\n" +
+                "    \"ProjectCode\": \"THESTAND\",\n" +
+                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
+                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
+                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
+                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
+                "    \"Addresses\": [\n" +
+                "        {\n" +
+                "            \"Reference\": \"CEVA pickups\",\n" +
+                "            \"AddressLines\": [\n" +
+                "                {\n" +
+                "                    \"Index\": 1,\n" +
+                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"PostalCode\": \"6422 PJ\",\n" +
+                "            \"LocalityName\": \"HEERLEN\",\n" +
+                "            \"CountryCode\": \"NL\",\n" +
+                "            \"Remark\": \"Pickup location / CEVA\",\n" +
+                "            \"Contacts\": [\n" +
+                "                {\n" +
+                "                    \"Name\": \"Randall Flagg\",\n" +
+                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
+                "                    \"PhoneNumber\": \"31688877766\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"ForwarderDivisionAccounts\": [\n" +
+                "                {\n" +
+                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
+                "                    \"AccountCode\": \"01053548\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"AddressTypes\": [\n" +
+                "                {\n" +
+                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"AddressTypes\": [\n" +
+                "                {\n" +
+                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"Reference\": \"DY.REFERENCE\",\n" +
+                "            \"AddressLines\": [\n" +
+                "                {\n" +
+                "                    \"Index\": 1,\n" +
+                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"Index\": 2,\n" +
+                "                    \"Value\": \"Karl Johans gate 31\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"PostalCode\": \"0159\",\n" +
+                "            \"LocalityName\": \"OSLO\",\n" +
+                "            \"CountryCode\": \"NO\",\n" +
+                "            \"Remark\": \"DY.Remark\",\n" +
+                "            \"Contacts\": [\n" +
+                "                {\n" +
+                "                    \"Name\": \"DY.Contact Name\",\n" +
+                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
+                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        }\n" +
+                "    ],\n" +
+                "    \"Value\": 10,\n" +
+                "    \"InsuranceValue\": 10,\n" +
+                "    \"CustomsValue\": 10,\n" +
+                "    \"IncotermCode\": \"DAP\",\n" +
+                "    \"Volume\": 13.36,\n" +
+                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
+                "    \"Weight\": 2,\n" +
+                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
+                "    \"Info\": \"S.Info\",\n" +
+                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
+                "    \"ShippingUnits\": [\n" +
+                "        {\n" +
+                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
+                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
+                "            \"Length\": 33,\n" +
+                "            \"Width\": 27,\n" +
+                "            \"Height\": 15,\n" +
+                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
+                "            \"Volume\": 13360,\n" +
+                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
+                "            \"PackageType\": \"PD\",\n" +
+                "            \"GrossWeight\": 2,\n" +
+                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
+                "            \"Content\": \"001010000000008853\"\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}";
 
 
-        Response response = given().header("Shipper-Code", "CEVA")
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
-                .body(requestJsonBody)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
                 .when()
                 .post("/conveyances/confirm");
-
-
-        BringParcelPojo bringParcelPojo = response.as(BringParcelPojo.class);
-
-        String encodedStringFromPostman = bringParcelPojo.getDocuments().get(0).getContent();
-        byte[] decodedBytes = Base64.getDecoder().decode(encodedStringFromPostman);
-        String decodedString = new String(decodedBytes);
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         Date date = new Date();
@@ -2803,13 +2913,9 @@ public class $1bNL$NoWeight2KG {
         String minute = date1.substring(14, 16);
         String second = date1.substring(17, 19);
 
-        String[] decodeArr = decodedString.split("\'\r\n");
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
         System.out.println("decodeArrList.get(3) = " + decodeArrList.get(3));
-
-
-//        System.out.println("bringParcelPojo.getDocuments().get(0).getReference() = " + bringParcelPojo.getDocuments().get(0).getReference());
-//        String str = (String) bringParcelPojo.getDocuments().get(0).getReference();
 
         assertThat(decodeArrList.get(3).toString(), containsString("BGM+610+" + year + month + day + hour + minute));
         assertThat(decodeArrList.get(3).toString(), containsString("+9"));
@@ -2821,22 +2927,136 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test23() {
 
-        String requestJsonBody = "{\"Shipments\":[{\"ShipmentId\":313013}]}";
+        String requestJsonBodyShipments = "{\n" +
+                "    \"ShipperCode\": \"CEVA\",\n" +
+                "    \"ProjectCode\": \"THESTAND\",\n" +
+                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
+                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
+                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
+                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
+                "    \"Addresses\": [\n" +
+                "        {\n" +
+                "            \"Reference\": \"CEVA pickups\",\n" +
+                "            \"AddressLines\": [\n" +
+                "                {\n" +
+                "                    \"Index\": 1,\n" +
+                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"PostalCode\": \"6422 PJ\",\n" +
+                "            \"LocalityName\": \"HEERLEN\",\n" +
+                "            \"CountryCode\": \"NL\",\n" +
+                "            \"Remark\": \"Pickup location / CEVA\",\n" +
+                "            \"Contacts\": [\n" +
+                "                {\n" +
+                "                    \"Name\": \"Randall Flagg\",\n" +
+                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
+                "                    \"PhoneNumber\": \"31688877766\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"ForwarderDivisionAccounts\": [\n" +
+                "                {\n" +
+                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
+                "                    \"AccountCode\": \"01053548\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"AddressTypes\": [\n" +
+                "                {\n" +
+                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"AddressTypes\": [\n" +
+                "                {\n" +
+                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"Reference\": \"DY.REFERENCE\",\n" +
+                "            \"AddressLines\": [\n" +
+                "                {\n" +
+                "                    \"Index\": 1,\n" +
+                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"Index\": 2,\n" +
+                "                    \"Value\": \"Karl Johans gate 31\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"PostalCode\": \"0159\",\n" +
+                "            \"LocalityName\": \"OSLO\",\n" +
+                "            \"CountryCode\": \"NO\",\n" +
+                "            \"Remark\": \"DY.Remark\",\n" +
+                "            \"Contacts\": [\n" +
+                "                {\n" +
+                "                    \"Name\": \"DY.Contact Name\",\n" +
+                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
+                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        }\n" +
+                "    ],\n" +
+                "    \"Value\": 10,\n" +
+                "    \"InsuranceValue\": 10,\n" +
+                "    \"CustomsValue\": 10,\n" +
+                "    \"IncotermCode\": \"DAP\",\n" +
+                "    \"Volume\": 13.36,\n" +
+                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
+                "    \"Weight\": 2,\n" +
+                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
+                "    \"Info\": \"S.Info\",\n" +
+                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
+                "    \"ShippingUnits\": [\n" +
+                "        {\n" +
+                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
+                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
+                "            \"Length\": 33,\n" +
+                "            \"Width\": 27,\n" +
+                "            \"Height\": 15,\n" +
+                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
+                "            \"Volume\": 13360,\n" +
+                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
+                "            \"PackageType\": \"PD\",\n" +
+                "            \"GrossWeight\": 2,\n" +
+                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
+                "            \"Content\": \"001010000000008853\"\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}";
 
 
-        Response response = given().header("Shipper-Code", "CEVA")
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
-                .body(requestJsonBody)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
                 .when()
                 .post("/conveyances/confirm");
-
-
-        BringParcelPojo bringParcelPojo = response.as(BringParcelPojo.class);
-
-        String encodedStringFromPostman = bringParcelPojo.getDocuments().get(0).getContent();
-        byte[] decodedBytes = Base64.getDecoder().decode(encodedStringFromPostman);
-        String decodedString = new String(decodedBytes);
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         Date date = new Date();
@@ -2849,10 +3069,9 @@ public class $1bNL$NoWeight2KG {
         String minute = date1.substring(14, 16);
         String second = date1.substring(17, 19);
 
-        String[] decodeArr = decodedString.split("\'\r\n");
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
         System.out.println("decodeArrList.get(4) = " + decodeArrList.get(4));
-
         assertThat(decodeArrList.get(4).toString(), containsString("DTM+137:" + year + month + day + hour + minute + ":203"));
 
     }
@@ -2862,22 +3081,139 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test24() {
 
-        String requestJsonBody = "{\"Shipments\":[{\"ShipmentId\":313013}]}";
+        String requestJsonBodyShipments = "{\n" +
+                "    \"ShipperCode\": \"CEVA\",\n" +
+                "    \"ProjectCode\": \"THESTAND\",\n" +
+                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
+                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
+                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
+                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
+                "    \"Addresses\": [\n" +
+                "        {\n" +
+                "            \"Reference\": \"CEVA pickups\",\n" +
+                "            \"AddressLines\": [\n" +
+                "                {\n" +
+                "                    \"Index\": 1,\n" +
+                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"PostalCode\": \"6422 PJ\",\n" +
+                "            \"LocalityName\": \"HEERLEN\",\n" +
+                "            \"CountryCode\": \"NL\",\n" +
+                "            \"Remark\": \"Pickup location / CEVA\",\n" +
+                "            \"Contacts\": [\n" +
+                "                {\n" +
+                "                    \"Name\": \"Randall Flagg\",\n" +
+                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
+                "                    \"PhoneNumber\": \"31688877766\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"ForwarderDivisionAccounts\": [\n" +
+                "                {\n" +
+                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
+                "                    \"AccountCode\": \"01053548\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"AddressTypes\": [\n" +
+                "                {\n" +
+                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"AddressTypes\": [\n" +
+                "                {\n" +
+                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"Reference\": \"DY.REFERENCE\",\n" +
+                "            \"AddressLines\": [\n" +
+                "                {\n" +
+                "                    \"Index\": 1,\n" +
+                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"Index\": 2,\n" +
+                "                    \"Value\": \"Karl Johans gate 31\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"PostalCode\": \"0159\",\n" +
+                "            \"LocalityName\": \"OSLO\",\n" +
+                "            \"CountryCode\": \"NO\",\n" +
+                "            \"Remark\": \"DY.Remark\",\n" +
+                "            \"Contacts\": [\n" +
+                "                {\n" +
+                "                    \"Name\": \"DY.Contact Name\",\n" +
+                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
+                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        }\n" +
+                "    ],\n" +
+                "    \"Value\": 10,\n" +
+                "    \"InsuranceValue\": 10,\n" +
+                "    \"CustomsValue\": 10,\n" +
+                "    \"IncotermCode\": \"DAP\",\n" +
+                "    \"Volume\": 13.36,\n" +
+                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
+                "    \"Weight\": 2,\n" +
+                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
+                "    \"Info\": \"S.Info\",\n" +
+                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
+                "    \"ShippingUnits\": [\n" +
+                "        {\n" +
+                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
+                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
+                "            \"Length\": 33,\n" +
+                "            \"Width\": 27,\n" +
+                "            \"Height\": 15,\n" +
+                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
+                "            \"Volume\": 13360,\n" +
+                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
+                "            \"PackageType\": \"PD\",\n" +
+                "            \"GrossWeight\": 2,\n" +
+                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
+                "            \"Content\": \"001010000000008853\"\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}";
 
 
-        Response response = given().header("Shipper-Code", "CEVA")
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
-                .body(requestJsonBody)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
                 .when()
                 .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
 
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
 
-        BringParcelPojo bringParcelPojo = response.as(BringParcelPojo.class);
-
-        String encodedStringFromPostman = bringParcelPojo.getDocuments().get(0).getContent();
-        byte[] decodedBytes = Base64.getDecoder().decode(encodedStringFromPostman);
-        String decodedString = new String(decodedBytes);
 
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         Date date = new Date();
@@ -2890,10 +3226,7 @@ public class $1bNL$NoWeight2KG {
         String minute = date1.substring(14, 16);
         String second = date1.substring(17, 19);
 
-        String[] decodeArr = decodedString.split("\'\r\n");
-        List decodeArrList = Arrays.asList(decodeArr);
         System.out.println("decodeArrList.get(5) = " + decodeArrList.get(5));
-
         assertThat(decodeArrList.get(5).toString(), containsString("DTM+234:" + year + month + day + ":102"));
 
     }
@@ -3016,11 +3349,19 @@ public class $1bNL$NoWeight2KG {
         System.out.println("productIdFromLabelShipments = " + productIdFromLabelShipments);
 
 
-        String requestJsonBodyConveyances = "{\"Shipments\":[{\"ShipmentId\":313013}]}";
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
         Response responseConveyances = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
-                .body(requestJsonBodyConveyances)
+                .body(objectShipmentIdFromShipmentsRequest)
                 .when()
                 .post("/conveyances/confirm");
         BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
@@ -3030,8 +3371,8 @@ public class $1bNL$NoWeight2KG {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        System.out.println("decodeArrList.get(6) = " + decodeArrList.get(6));
 
+        System.out.println("decodeArrList.get(6) = " + decodeArrList.get(6));
         assertThat(decodeArrList.get(6).toString(), containsString("FTX+PRD+++" + productIdFromLabelShipments));
 
     }
@@ -3153,11 +3494,19 @@ public class $1bNL$NoWeight2KG {
         System.out.println("bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight() = " + bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight());
 
 
-        String requestJsonBodyConveyances = "{\"Shipments\":[{\"ShipmentId\":313013}]}";
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
         Response responseConveyances = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
-                .body(requestJsonBodyConveyances)
+                .body(objectShipmentIdFromShipmentsRequest)
                 .when()
                 .post("/conveyances/confirm");
         BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
@@ -3167,8 +3516,8 @@ public class $1bNL$NoWeight2KG {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        System.out.println("decodeArrList.get(7) = " + decodeArrList.get(7));
 
+        System.out.println("decodeArrList.get(7) = " + decodeArrList.get(7));
         assertThat(decodeArrList.get(7).toString(), containsString("CNT+7:" + bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight() + ":KGM"));
 
     }
@@ -3290,11 +3639,19 @@ public class $1bNL$NoWeight2KG {
         System.out.println("bringParcelPojoShipments.getShippingUnits().get(0).getIndex() = " + bringParcelPojoShipments.getShippingUnits().get(0).getIndex());
 
 
-        String requestJsonBodyConveyances = "{\"Shipments\":[{\"ShipmentId\":313013}]}";
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
         Response responseConveyances = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
-                .body(requestJsonBodyConveyances)
+                .body(objectShipmentIdFromShipmentsRequest)
                 .when()
                 .post("/conveyances/confirm");
         BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
@@ -3304,8 +3661,8 @@ public class $1bNL$NoWeight2KG {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        System.out.println("decodeArrList.get(8) = " + decodeArrList.get(8));
 
+        System.out.println("decodeArrList.get(8) = " + decodeArrList.get(8));
         assertThat(decodeArrList.get(8).toString(), containsString("CNT+11:" + bringParcelPojoShipments.getShippingUnits().get(0).getIndex() + ":PCE"));
 
     }
@@ -3428,11 +3785,19 @@ public class $1bNL$NoWeight2KG {
         Double totalVolume = bringParcelPojoShipments.getVolume() / 1000000;
         System.out.println(String.format("%.8f", totalVolume));
 
-        String requestJsonBodyConveyances = "{\"Shipments\":[{\"ShipmentId\":313013}]}";
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
         Response responseConveyances = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
-                .body(requestJsonBodyConveyances)
+                .body(objectShipmentIdFromShipmentsRequest)
                 .when()
                 .post("/conveyances/confirm");
         BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
@@ -3442,8 +3807,8 @@ public class $1bNL$NoWeight2KG {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        System.out.println("decodeArrList.get(9) = " + decodeArrList.get(9));
 
+        System.out.println("decodeArrList.get(9) = " + decodeArrList.get(9));
         assertThat(decodeArrList.get(9).toString(), containsString("CNT+15:" + String.format("%.8f", totalVolume) + ":MTQ"));
 
     }
@@ -3564,11 +3929,19 @@ public class $1bNL$NoWeight2KG {
         System.out.println("bringParcelPojoShipments.getShipperRef() = " + bringParcelPojoShipments.getShipperRef());
 
 
-        String requestJsonBodyConveyances = "{\"Shipments\":[{\"ShipmentId\":313013}]}";
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
         Response responseConveyances = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
-                .body(requestJsonBodyConveyances)
+                .body(objectShipmentIdFromShipmentsRequest)
                 .when()
                 .post("/conveyances/confirm");
         BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
@@ -3578,8 +3951,8 @@ public class $1bNL$NoWeight2KG {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        System.out.println("decodeArrList.get(10) = " + decodeArrList.get(10));
 
+        System.out.println("decodeArrList.get(10) = " + decodeArrList.get(10));
         assertThat(decodeArrList.get(10).toString(), containsString("RFF+CU:" + bringParcelPojoShipments.getShipperRef()));
 
     }
@@ -3700,7 +4073,6 @@ public class $1bNL$NoWeight2KG {
         String decodedStringShipments = new String(decodedBytesShipments);
         System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
 
-
         int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
         System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
         JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
@@ -3724,7 +4096,6 @@ public class $1bNL$NoWeight2KG {
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
         System.out.println("decodeArrList.get(11) = " + decodeArrList.get(11));
-
         assertThat(decodeArrList.get(11).toString(), containsString("RFF+SRN:" + bringParcelPojoShipments.getForwarderRef()));
 
     }
