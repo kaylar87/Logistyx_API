@@ -1,9 +1,7 @@
 package com.logistyx.TEST;
 
-import static io.restassured.RestAssured.baseURI;
-
 import com.logistyx.pojo.bring.parcel.BringParcelPojo;
-import com.sun.xml.bind.v2.TODO;
+import com.logistyx.utilities.BNPBase;
 import io.restassured.response.Response;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -18,123 +16,19 @@ import static io.restassured.RestAssured.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 
 @DisplayName("1b - NL-NO,  weight 2 KG")
-public class $1bNL$NoWeight2KG {
-
-    @BeforeAll
-    public static void init() {
-        baseURI = "https://as-cdt-dev-logistyx-qa1-docs.azurewebsites.net";
-    }
+public class $1bNL$NoWeight2KG extends BNPBase {
 
     @DisplayName("ShippingId is not NULL")
     @Test
     public void test1() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -153,102 +47,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test2() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
+        BNPBase.shipmentsLabel();
 
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
@@ -271,103 +70,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test3() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
+        BNPBase.shipmentsLabel();
 
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
@@ -425,103 +128,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test4() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
+        BNPBase.shipmentsLabel();
 
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
@@ -534,7 +141,6 @@ public class $1bNL$NoWeight2KG {
         String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
         byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
         String decodedStringShipments = new String(decodedBytesShipments);
-
 
         String pickUpAddressName1FromJson = bringParcelPojoShipments.getAddresses().get(0).getAddressLines().get(0).getValue();
         System.out.println("pickUpAddressName1FromJson = " + pickUpAddressName1FromJson);
@@ -556,103 +162,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test5() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
+        BNPBase.shipmentsLabel();
 
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
@@ -665,7 +175,6 @@ public class $1bNL$NoWeight2KG {
         String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
         byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
         String decodedStringShipments = new String(decodedBytesShipments);
-
 
         String deliveryAddressName1FromJson = bringParcelPojoShipments.getDeliveryAddress().getAddressLines().get(0).getValue();
         System.out.println("deliveryAddressName1FromJson = " + deliveryAddressName1FromJson);
@@ -694,104 +203,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test6() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -817,103 +229,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test7() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
+        BNPBase.shipmentsLabel();
 
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
@@ -941,104 +257,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test8() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -1073,105 +292,7 @@ public class $1bNL$NoWeight2KG {
     @DisplayName("Service (BNP-BUS-PRCL) on the label, destination country = NO, product = Bring Parcel Business Parcel, product code = 0330 and handling code = 2")
     @Test
     public void test9() {
-
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -1268,104 +389,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test10() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -1391,104 +415,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test11() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -1511,104 +438,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test12() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -1631,104 +461,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test13() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -1749,104 +482,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test14() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -1865,104 +501,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test15() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -1990,103 +529,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test16() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
+        BNPBase.shipmentsLabel();
 
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
@@ -2107,104 +550,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test17() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -2230,104 +576,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test18() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -2356,104 +605,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test19() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -2473,104 +625,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test20() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -2629,104 +684,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test21() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -2772,104 +730,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test22() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -2927,104 +788,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test23() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -3081,104 +845,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test24() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -3236,104 +903,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test25() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -3382,104 +952,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test26() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -3527,104 +1000,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test27() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -3667,109 +1043,11 @@ public class $1bNL$NoWeight2KG {
 
     }
 
-
     @DisplayName("Total volume 13.36, CNT+15:0.00001336:MTQ checks.")
     @Test
     public void test28() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -3817,104 +1095,7 @@ public class $1bNL$NoWeight2KG {
     @Test
     public void test29() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -3957,109 +1138,11 @@ public class $1bNL$NoWeight2KG {
 
     }
 
-
     @DisplayName("RFF+SRN:12345670000020662 checks.")
     @Test
     public void test30() {
 
-        String requestJsonBodyShipments = "{\n" +
-                "    \"ShipperCode\": \"CEVA\",\n" +
-                "    \"ProjectCode\": \"THESTAND\",\n" +
-                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
-                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
-                "    \"Addresses\": [\n" +
-                "        {\n" +
-                "            \"Reference\": \"CEVA pickups\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"6422 PJ\",\n" +
-                "            \"LocalityName\": \"HEERLEN\",\n" +
-                "            \"CountryCode\": \"NL\",\n" +
-                "            \"Remark\": \"Pickup location / CEVA\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"Randall Flagg\",\n" +
-                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
-                "                    \"PhoneNumber\": \"31688877766\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"ForwarderDivisionAccounts\": [\n" +
-                "                {\n" +
-                "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
-                "                    \"AccountCode\": \"01053548\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"AddressTypes\": [\n" +
-                "                {\n" +
-                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"Reference\": \"DY.REFERENCE\",\n" +
-                "            \"AddressLines\": [\n" +
-                "                {\n" +
-                "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Karl Johans gate 31\"\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"PostalCode\": \"0159\",\n" +
-                "            \"LocalityName\": \"OSLO\",\n" +
-                "            \"CountryCode\": \"NO\",\n" +
-                "            \"Remark\": \"DY.Remark\",\n" +
-                "            \"Contacts\": [\n" +
-                "                {\n" +
-                "                    \"Name\": \"DY.Contact Name\",\n" +
-                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"Value\": 10,\n" +
-                "    \"InsuranceValue\": 10,\n" +
-                "    \"CustomsValue\": 10,\n" +
-                "    \"IncotermCode\": \"DAP\",\n" +
-                "    \"Volume\": 13.36,\n" +
-                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 2,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
-                "    \"ShippingUnits\": [\n" +
-                "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
-                "            \"Length\": 33,\n" +
-                "            \"Width\": 27,\n" +
-                "            \"Height\": 15,\n" +
-                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13360,\n" +
-                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-                "            \"PackageType\": \"PD\",\n" +
-                "            \"GrossWeight\": 2,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"001010000000008853\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-
-
+        BNPBase.shipmentsLabel();
         Response responseShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
@@ -4097,6 +1180,743 @@ public class $1bNL$NoWeight2KG {
         List decodeArrList = Arrays.asList(decodeArr);
         System.out.println("decodeArrList.get(11) = " + decodeArrList.get(11));
         assertThat(decodeArrList.get(11).toString(), containsString("RFF+SRN:" + bringParcelPojoShipments.getForwarderRef()));
+
+    }
+
+    @DisplayName("TDT+20++++BPI::87 checks.")
+    @Test
+    public void test31() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(12) = " + decodeArrList.get(12));
+        assertThat(decodeArrList.get(12).toString(), containsString("TDT"));
+        assertThat(decodeArrList.get(12).toString(), containsString("20"));
+        assertThat(decodeArrList.get(12).toString(), containsString(""));
+        assertThat(decodeArrList.get(12).toString(), containsString(""));
+        assertThat(decodeArrList.get(12).toString(), containsString(""));
+        assertThat(decodeArrList.get(12).toString(), containsString("BPI::87"));
+
+    }
+
+    @DisplayName("Pickup ADDRESS 1: NAD+CZ+01053548::87++CEVA pickups+Earl Bakkenstraat 7+HEERLEN++6422 PJ+NL checks.")
+    @Test
+    public void test32() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(13) = " + decodeArrList.get(13));
+        assertThat(decodeArrList.get(13).toString(), containsString("NAD"));
+        assertThat(decodeArrList.get(13).toString(), containsString("CZ"));
+        assertThat(decodeArrList.get(13).toString(), containsString(bringParcelPojoShipments.getPickupForwarderDivisionAccountCode()));
+        assertThat(decodeArrList.get(13).toString(), containsString("87"));
+        assertThat(decodeArrList.get(13).toString(), containsString(bringParcelPojoShipments.getAddresses().get(0).getReference()));
+        assertThat(decodeArrList.get(13).toString(), containsString(bringParcelPojoShipments.getAddresses().get(0).getAddressLines().get(0).getValue()));
+        assertThat(decodeArrList.get(13).toString(), containsString(bringParcelPojoShipments.getAddresses().get(0).getLocalityName()));
+        assertThat(decodeArrList.get(13).toString(), containsString(bringParcelPojoShipments.getAddresses().get(0).getPostalCode()));
+        assertThat(decodeArrList.get(13).toString(), containsString(bringParcelPojoShipments.getAddresses().get(0).getCountryCode()));
+
+    }
+
+    //TODO same as test32???
+    @DisplayName("Pickup ADDRESS 2: NAD+CZ+01053548::87++CEVA pickups+Earl Bakkenstraat 7+HEERLEN++6422 PJ+NL checks.")
+    @Test
+    public void test33() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(13) = " + decodeArrList.get(13));
+        assertThat(decodeArrList.get(13).toString(), containsString("NAD"));
+        assertThat(decodeArrList.get(13).toString(), containsString("CZ"));
+        assertThat(decodeArrList.get(13).toString(), containsString(bringParcelPojoShipments.getPickupForwarderDivisionAccountCode()));
+        assertThat(decodeArrList.get(13).toString(), containsString("87"));
+        assertThat(decodeArrList.get(13).toString(), containsString(bringParcelPojoShipments.getAddresses().get(0).getReference()));
+        assertThat(decodeArrList.get(13).toString(), containsString(bringParcelPojoShipments.getAddresses().get(0).getAddressLines().get(0).getValue()));
+        assertThat(decodeArrList.get(13).toString(), containsString(bringParcelPojoShipments.getAddresses().get(0).getLocalityName()));
+        assertThat(decodeArrList.get(13).toString(), containsString(bringParcelPojoShipments.getAddresses().get(0).getPostalCode()));
+        assertThat(decodeArrList.get(13).toString(), containsString(bringParcelPojoShipments.getAddresses().get(0).getCountryCode()));
+
+    }
+
+    @DisplayName("Pickup Contact, CTA+IC+:Randall Flagg checks.")
+    @Test
+    public void test34() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(14) = " + decodeArrList.get(14));
+        assertThat(decodeArrList.get(14).toString(), containsString("CTA"));
+        assertThat(decodeArrList.get(14).toString(), containsString("IC"));
+        assertThat(decodeArrList.get(14).toString(), containsString(bringParcelPojoShipments.getAddresses().get(0).getContacts().get(0).getName()));
+
+    }
+
+    @DisplayName("Pickup email, COM+r?.flagg@thestand?.com:EM checks.")
+    @Test
+    public void test35() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(15) = " + decodeArrList.get(15));
+        assertThat(decodeArrList.get(15).toString(), containsString("COM"));
+        assertThat(decodeArrList.get(15).toString(), containsString(bringParcelPojoShipments.getAddresses().get(0).getContacts().get(0).getEmailAddress().replace(".", "?.")));
+        assertThat(decodeArrList.get(15).toString(), containsString("EM"));
+    }
+
+    @DisplayName("Pickup phone COM+31688877766:AL checks.")
+    @Test
+    public void test36() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(16) = " + decodeArrList.get(16));
+        assertThat(decodeArrList.get(16).toString(), containsString("COM"));
+        assertThat(decodeArrList.get(16).toString(), containsString(bringParcelPojoShipments.getAddresses().get(0).getContacts().get(0).getPhoneNumber()));
+        assertThat(decodeArrList.get(16).toString(), containsString("AL"));
+
+    }
+
+    @DisplayName("Delivery ADDRESS 1: NAD+CN+::87++DY?.REFERENCE+Grand Hotel Oslo:Karl Johans gate 31+OSLO++0159+NO checks.")
+    @Test
+    public void test37() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(17) = " + decodeArrList.get(17));
+        assertThat(decodeArrList.get(17).toString(), containsString("NAD"));
+        assertThat(decodeArrList.get(17).toString(), containsString("CN"));
+        assertThat(decodeArrList.get(17).toString(), containsString("87"));
+        assertThat(decodeArrList.get(17).toString(), containsString(bringParcelPojoShipments.getAddresses().get(1).getReference().replace(".", "?.")));
+        assertThat(decodeArrList.get(17).toString(), containsString(bringParcelPojoShipments.getDeliveryAddress().getAddressLines().get(0).getValue()));
+        assertThat(decodeArrList.get(17).toString(), containsString(bringParcelPojoShipments.getDeliveryAddress().getAddressLines().get(1).getValue()));
+        assertThat(decodeArrList.get(17).toString(), containsString(bringParcelPojoShipments.getDeliveryAddress().getLocalityName()));
+        assertThat(decodeArrList.get(17).toString(), containsString(bringParcelPojoShipments.getDeliveryAddress().getPostalCode()));
+        assertThat(decodeArrList.get(17).toString(), containsString(bringParcelPojoShipments.getDeliveryAddress().getCountryCode()));
+
+    }
+
+    @DisplayName("DELIVERY ADDRESS 2: NAD+CN+::87++DY?.REFERENCE+Grand Hotel Oslo:Karl Johans gate 31+OSLO++0159+NO checks.")
+    @Test
+    public void test38() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(17) = " + decodeArrList.get(17));
+        assertThat(decodeArrList.get(17).toString(), containsString("NAD"));
+        assertThat(decodeArrList.get(17).toString(), containsString("CN"));
+        assertThat(decodeArrList.get(17).toString(), containsString("87"));
+        assertThat(decodeArrList.get(17).toString(), containsString(bringParcelPojoShipments.getAddresses().get(1).getReference().replace(".", "?.")));
+        assertThat(decodeArrList.get(17).toString(), containsString(bringParcelPojoShipments.getDeliveryAddress().getAddressLines().get(0).getValue()));
+        assertThat(decodeArrList.get(17).toString(), containsString(bringParcelPojoShipments.getDeliveryAddress().getAddressLines().get(1).getValue()));
+        assertThat(decodeArrList.get(17).toString(), containsString(bringParcelPojoShipments.getDeliveryAddress().getLocalityName()));
+        assertThat(decodeArrList.get(17).toString(), containsString(bringParcelPojoShipments.getDeliveryAddress().getPostalCode()));
+        assertThat(decodeArrList.get(17).toString(), containsString(bringParcelPojoShipments.getDeliveryAddress().getCountryCode()));
+
+    }
+
+    @DisplayName("Delivery contact, CTA+IC+:DY?.Contact Name checks.")
+    @Test
+    public void test39() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(18) = " + decodeArrList.get(18));
+        assertThat(decodeArrList.get(18).toString(), containsString("CTA"));
+        assertThat(decodeArrList.get(18).toString(), containsString("IC"));
+        assertThat(decodeArrList.get(18).toString(), containsString(bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getName().replace(".", "?.")));
+
+    }
+
+    @DisplayName("Delivery email, COM+delivery@email?.com:EM checks.")
+    @Test
+    public void test40() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(19) = " + decodeArrList.get(19));
+        assertThat(decodeArrList.get(19).toString(), containsString("COM"));
+        assertThat(decodeArrList.get(19).toString(), containsString(bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getEmailAddress().replace(".", "?.")));
+        assertThat(decodeArrList.get(19).toString(), containsString("EM"));
+    }
+
+    @DisplayName("Delivery phone number, COM+<PLACEHOLDER>062222222:AL checks.")
+    @Test
+    public void test41() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(20) = " + decodeArrList.get(20));
+        assertThat(decodeArrList.get(20).toString(), containsString("COM+?+"));
+        assertThat(decodeArrList.get(20).toString(), containsString(bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getPhoneNumber().replace("+", "").replace("(", "").replace(")", "").replace("-", "")));
+        assertThat(decodeArrList.get(20).toString(), containsString("AL"));
+    }
+
+    @DisplayName("ACCOUNT: NAD+FP+12BAC3DE::87 checks.")
+    @Test
+    public void test42() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(21) = " + decodeArrList.get(21));
+        assertThat(decodeArrList.get(21).toString(), containsString("NAD"));
+        assertThat(decodeArrList.get(21).toString(), containsString("FP"));
+        assertThat(decodeArrList.get(21).toString(), containsString("12BAC3DE"));
+        assertThat(decodeArrList.get(21).toString(), containsString("87"));
+
+    }
+
+    @DisplayName("Package #1, GID+1+1:PD")
+    @Test
+    public void test43() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(22) = " + decodeArrList.get(22));
+        assertThat(decodeArrList.get(22).toString(), containsString("GID"));
+
+        //TODO 1 or 2 or both
+        assertThat(decodeArrList.get(22).toString(), containsString(String.valueOf(bringParcelPojoShipments.getNumberOfShippingUnits())));
+        //assertThat(decodeArrList.get(22).toString(), containsString(String.valueOf(bringParcelPojoShipments.getShippingUnits().get(0).getIndex())));
+
+        assertThat(decodeArrList.get(22).toString(), containsString(bringParcelPojoShipments.getShippingUnits().get(0).getPackageType()));
+    }
+
+    @DisplayName("Package #1 weight ('Standard', always present; #6434), MEA+WT+G+KGM:2.0")
+    @Test
+    public void test44() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(23) = " + decodeArrList.get(23));
+        assertThat(decodeArrList.get(23).toString(), containsString("MEA"));
+        assertThat(decodeArrList.get(23).toString(), containsString("WT"));
+        assertThat(decodeArrList.get(23).toString(), containsString("G"));
+        assertThat(decodeArrList.get(23).toString(), containsString(bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeightUnitOfMeasure()));
+        assertThat(decodeArrList.get(23).toString(), containsString(String.valueOf(bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight())));
+
+    }
+
+    @DisplayName("Package #1 dimensions, DIM+2+CMT:33:27:15")
+    @Test
+    public void test45() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(24) = " + decodeArrList.get(24));
+        assertThat(decodeArrList.get(24).toString(), containsString("DIM"));
+        assertThat(decodeArrList.get(24).toString(), containsString("2"));
+        assertThat(decodeArrList.get(24).toString(), containsString(bringParcelPojoShipments.getShippingUnits().get(0).getDimensionsUnitOfMeasure()));
+
+        assertThat(decodeArrList.get(24).toString(), containsString(String.valueOf(String.format("%.0f", bringParcelPojoShipments.getShippingUnits().get(0).getLength()))));
+        assertThat(decodeArrList.get(24).toString(), containsString(String.valueOf(String.format("%.0f", bringParcelPojoShipments.getShippingUnits().get(0).getWidth()))));
+        assertThat(decodeArrList.get(24).toString(), containsString(String.valueOf(String.format("%.0f", bringParcelPojoShipments.getShippingUnits().get(0).getHeight()))));
 
     }
 
