@@ -5,7 +5,6 @@ import com.logistyx.utilities.BNPBase;
 import io.restassured.response.Response;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +21,7 @@ import java.text.SimpleDateFormat;
 
 
 @DisplayName("1b - NL-NO,  weight 2 KG")
-public class $1bNL$NoWeight2KG extends BNPBase {
+public class $1bNlNoWeight2KG extends BNPBase {
 
     @DisplayName("ShippingId is not NULL")
     @Test
@@ -1917,6 +1916,249 @@ public class $1bNL$NoWeight2KG extends BNPBase {
         assertThat(decodeArrList.get(24).toString(), containsString(String.valueOf(String.format("%.0f", bringParcelPojoShipments.getShippingUnits().get(0).getLength()))));
         assertThat(decodeArrList.get(24).toString(), containsString(String.valueOf(String.format("%.0f", bringParcelPojoShipments.getShippingUnits().get(0).getWidth()))));
         assertThat(decodeArrList.get(24).toString(), containsString(String.valueOf(String.format("%.0f", bringParcelPojoShipments.getShippingUnits().get(0).getHeight()))));
+
+    }
+
+    //TODO what to check?
+    @Disabled
+    @DisplayName("Verify the CHECK DIGIT for 00112345670000030125 is correct. We expect: 5 for 11234567000003012")
+    @Test
+    public void test46() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(23) = " + decodeArrList.get(23));
+        assertThat(decodeArrList.get(23).toString(), containsString("MEA"));
+        assertThat(decodeArrList.get(23).toString(), containsString("WT"));
+        assertThat(decodeArrList.get(23).toString(), containsString("G"));
+        assertThat(decodeArrList.get(23).toString(), containsString(bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeightUnitOfMeasure()));
+        assertThat(decodeArrList.get(23).toString(), containsString(String.valueOf(bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight())));
+
+    }
+
+    @DisplayName("Package #1 Tracking number, PCI+30+112345670000030125")
+    @Test
+    public void test47() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(25) = " + decodeArrList.get(25));
+        assertThat(decodeArrList.get(25).toString(), containsString("PCI"));
+        assertThat(decodeArrList.get(25).toString(), containsString("30"));
+        assertThat(decodeArrList.get(25).toString(), containsString(bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(2)));
+
+    }
+
+    @DisplayName("Package #1 reference number, RFF+CW:SU.ShipperRef")
+    @Test
+    public void test48() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(26) = " + decodeArrList.get(26));
+        assertThat(decodeArrList.get(26).toString(), containsString("RFF"));
+        assertThat(decodeArrList.get(26).toString(), containsString("CW"));
+        assertThat(decodeArrList.get(26).toString(), containsString(bringParcelPojoShipments.getShippingUnits().get(0).getShipperRef()));
+
+    }
+
+    //TODO 26?
+    @DisplayName("UNT: UNT+26+314596 checks.")
+    @Test
+    public void test49() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(27) = " + decodeArrList.get(27));
+        assertThat(decodeArrList.get(27).toString(), containsString("UNT"));
+
+        //TODO - 26? what is 26?
+        assertThat(decodeArrList.get(27).toString(), containsString("26"));
+        assertThat(decodeArrList.get(27).toString(), containsString(String.valueOf(bringParcelPojoShipments.getShipmentId())));
+
+
+    }
+
+    @DisplayName("UNT: UNZ+1+00000000002598' checks.")
+    @Test
+    public void test50() {
+
+        BNPBase.shipmentsLabel();
+        Response responseShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments)
+                .when()
+                .post("/shipments/label");
+
+        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
+        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        String decodedStringShipments = new String(decodedBytesShipments);
+        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+
+        Response responseConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest)
+                .when()
+                .post("/conveyances/confirm");
+        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
+        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        String decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        System.out.println("decodeArrList.get(28) = " + decodeArrList.get(28));
+        assertThat(decodeArrList.get(28).toString(), containsString("UNZ"));
+        assertThat(decodeArrList.get(28).toString(), containsString("1"));
+        assertThat(decodeArrList.get(28).toString(), containsString(decodeArrList.get(1).toString().substring((decodeArrList.get(1).toString().lastIndexOf("+")+1))));
 
     }
 
