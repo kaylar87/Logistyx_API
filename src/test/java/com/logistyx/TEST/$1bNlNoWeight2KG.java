@@ -16,8 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 import java.util.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+
 
 
 @DisplayName("1b - NL-NO,  weight 2 KG")
@@ -28,18 +27,9 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test1() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
 
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-
+        System.out.println("bringParcelPojoShipments.getShipmentId() = " + bringParcelPojoShipments.getShipmentId());
         assertThat(bringParcelPojoShipments.getShipmentId(), is(notNullValue()));
-        System.out.println("bringParcelPojo.getShipmentId() = " + bringParcelPojoShipments.getShipmentId());
-
     }
 
     @DisplayName("ZPL ('Documents/0/Content') is not NULL")
@@ -47,18 +37,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test2() {
 
         BNPBase.shipmentsLabel();
-
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
 
         assertThat(encodedStringFromPostmanShipments, is(notNullValue()));
         System.out.println("encodedStringFromPostmanShipments = " + encodedStringFromPostmanShipments);
@@ -70,18 +48,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test3() {
 
         BNPBase.shipmentsLabel();
-
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
 
         assertThat(encodedStringFromPostmanShipments.length(), is(greaterThan(500)));
         System.out.println("encodedStringFromPostmanShipments.length() = " + encodedStringFromPostmanShipments.length());
@@ -129,18 +95,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
 
         BNPBase.shipmentsLabel();
 
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-
         String pickUpAddressName1FromJson = bringParcelPojoShipments.getAddresses().get(0).getAddressLines().get(0).getValue();
         System.out.println("pickUpAddressName1FromJson = " + pickUpAddressName1FromJson);
         int pickUpAddressName1FromLabelStart = decodedStringShipments.indexOf("^FT30,133^A0N,27,27^FD") + 22;
@@ -162,18 +116,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test5() {
 
         BNPBase.shipmentsLabel();
-
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
 
         String deliveryAddressName1FromJson = bringParcelPojoShipments.getDeliveryAddress().getAddressLines().get(0).getValue();
         System.out.println("deliveryAddressName1FromJson = " + deliveryAddressName1FromJson);
@@ -203,17 +145,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test6() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
 
         String deliveryPersonDetailsFromJson = bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getName();
         System.out.println("deliveryPersonDetailsFromJson = " + deliveryPersonDetailsFromJson);
@@ -230,18 +161,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
 
         BNPBase.shipmentsLabel();
 
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-
         String deliveryPhoneNumberFromJson = bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getPhoneNumber();
         System.out.println("deliveryPhoneNumberFromJson = " + deliveryPhoneNumberFromJson);
         int deliveryPhoneNumberFromLabelStart = decodedStringShipments.indexOf("^FT559,423^A0N,27,27^FD") + 23;
@@ -257,34 +176,19 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test8() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
 
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
+        String shipDateFromJson = bringParcelPojoShipments.getRequestedPickupDateTime().substring(0, 10);
+        String shipDayFromJson = shipDateFromJson.substring(8);
+        String shipMonthFromJson = shipDateFromJson.substring(5, 7);
+        String shipYearFromJson = shipDateFromJson.substring(0, 4);
 
-        String shipDateFromJson = bringParcelPojoShipments.getRequestedPickupDateTime().replace("-", ".").substring(0, 10);
-        shipDateFromJson.replace("-", ".");
-        String shipDayFromJsonFormat = shipDateFromJson.substring(8);
-        //System.out.println("shipDayFromJsonFormat = " + shipDayFromJsonFormat);
-        String shipMonthFromJsonFormat = shipDateFromJson.substring(5, 7);
-        //System.out.println("shipMonthFromJsonFormat = " + shipMonthFromJsonFormat);
-        String shipYearFromJsonFormat = shipDateFromJson.substring(0, 4);
-        //System.out.println("shipYearFromJsonFormat = " + shipYearFromJsonFormat);
-        String shipDateFromJsonFormat = shipDayFromJsonFormat + "." + shipMonthFromJsonFormat + "." + shipYearFromJsonFormat;
-        //System.out.println("shipDateFromJsonFormat = " + shipDateFromJsonFormat);
-
+        String shipDateFromJsonFormat = shipDayFromJson + "." + shipMonthFromJson + "." + shipYearFromJson;
+        System.out.println("shipDateFromJsonFormat = " + shipDateFromJsonFormat);
         System.out.println("shipDateFromJson = " + shipDateFromJson);
         int shipDateFromLabelStart = decodedStringShipments.indexOf("^FT559,246^A0N,27,27^FD") + 23;
         String shipDateFromLabel = decodedStringShipments.substring(shipDateFromLabelStart, shipDateFromLabelStart + 10);
         System.out.println("shipDateFromLabel = " + shipDateFromLabel);
-        assertThat(shipDateFromJsonFormat, containsString(shipDateFromLabel));
+        assertThat(shipDateFromJsonFormat, is(equalTo(shipDateFromLabel)));
 
     }
 
@@ -292,17 +196,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     @Test
     public void test9() {
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
 
         String productIdFromLabel = decodedStringShipments.substring(decodedStringShipments.indexOf("^FT169,988^A0N,54,54^FD") + 23, decodedStringShipments.indexOf("^FT169,988^A0N,54,54^FD") + 23 + 4);
         System.out.println("productIdFromLabel = " + productIdFromLabel);
@@ -389,17 +282,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test10() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
 
         String shipmentIdFromJson = bringParcelPojoShipments.getForwarderRef();
         System.out.println("shipmentIdFromJson = " + shipmentIdFromJson);
@@ -415,17 +297,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test11() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
 
         int customerNoFromLabelStart = decodedStringShipments.indexOf("^FT620,560^A0N,27,27^FD") + 23;
         String customerNoFromLabel = decodedStringShipments.substring(customerNoFromLabelStart, customerNoFromLabelStart + 8);
@@ -438,17 +309,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test12() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
 
         String bringLogoFromLabel = "^FO35,854^GFA,630,1596,12,:Z64:eJytlU1qAzEMhW20";
         assertThat(decodedStringShipments, containsString(bringLogoFromLabel));
@@ -501,17 +361,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test15() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
 
         String packageIdFromJson = bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef();
         System.out.println("packageIdFromJson = " + packageIdFromJson);
@@ -550,17 +399,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test17() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
 
         String numberOfShippingUnitsFromJson = String.valueOf(bringParcelPojoShipments.getNumberOfShippingUnits());
         System.out.println("numberOfShippingUnitsFromJson = " + numberOfShippingUnitsFromJson);
@@ -576,17 +414,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test18() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
 
         assertThat(decodedStringShipments, containsString("^FT30,1039^A0N,22,22^FDSenders reference:^FS"));
         String shipperRefFromJson = bringParcelPojoShipments.getShippingUnits().get(0).getShipperRef();
@@ -625,48 +452,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test20() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
-
-
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        Date date = new Date();
-        String date1 = dateFormat.format(date);
-        String month = date1.substring(0, 2);
-        String day = date1.substring(3, 5);
-        int year = Integer.parseInt(date1.substring(6, 10));
-        int century = (year / 100) + 1;
-        int hour = Integer.parseInt(date1.substring(11, 13)) + 5;
-        String minute = date1.substring(14, 16);
-        String second = date1.substring(17, 19);
-        System.out.println("hour = " + hour);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -684,39 +469,9 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test21() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
 
         int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
         System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
-
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
         System.out.println("decodeArrList.get(2) = " + decodeArrList.get(2));
@@ -730,48 +485,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test22() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
-
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        Date date = new Date();
-        String date1 = dateFormat.format(date);
-        String month = date1.substring(0, 2);
-        String day = date1.substring(3, 5);
-        int year = Integer.parseInt(date1.substring(6, 10));
-        int century = (year / 100) + 1;
-        int hour = Integer.parseInt(date1.substring(11, 13)) + 5;
-        String minute = date1.substring(14, 16);
-        String second = date1.substring(17, 19);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -788,49 +501,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test23() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
-
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        Date date = new Date();
-        String date1 = dateFormat.format(date);
-        String month = date1.substring(0, 2);
-        String day = date1.substring(3, 5);
-        int year = Integer.parseInt(date1.substring(6, 10));
-        int century = (year / 100) + 1;
-        int hour = Integer.parseInt(date1.substring(11, 13)) + 5;
-        String minute = date1.substring(14, 16);
-        String second = date1.substring(17, 19);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -845,52 +515,10 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test24() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
 
-
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        Date date = new Date();
-        String date1 = dateFormat.format(date);
-        String month = date1.substring(0, 2);
-        String day = date1.substring(3, 5);
-        int year = Integer.parseInt(date1.substring(6, 10));
-        int century = (year / 100) + 1;
-        int hour = Integer.parseInt(date1.substring(11, 13)) + 5;
-        String minute = date1.substring(14, 16);
-        String second = date1.substring(17, 19);
 
         System.out.println("decodeArrList.get(5) = " + decodeArrList.get(5));
         assertThat(decodeArrList.get(5).toString(), containsString("DTM+234:" + year + month + day + ":102"));
@@ -903,40 +531,9 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test25() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
 
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
         String productIdFromLabelShipments = decodedStringShipments.substring(decodedStringShipments.indexOf("^FT169,988^A0N,54,54^FD") + 23, decodedStringShipments.indexOf("^FT169,988^A0N,54,54^FD") + 23 + 4);
         System.out.println("productIdFromLabelShipments = " + productIdFromLabelShipments);
-
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -952,39 +549,8 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test26() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
 
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
         System.out.println("bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight() = " + bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight());
-
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1000,39 +566,8 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test27() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
 
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
         System.out.println("bringParcelPojoShipments.getShippingUnits().get(0).getIndex() = " + bringParcelPojoShipments.getShippingUnits().get(0).getIndex());
-
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1047,40 +582,9 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test28() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
 
         Double totalVolume = bringParcelPojoShipments.getVolume() / 1000000;
         System.out.println(String.format("%.8f", totalVolume));
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1095,39 +599,8 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test29() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
 
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
         System.out.println("bringParcelPojoShipments.getShipperRef() = " + bringParcelPojoShipments.getShipperRef());
-
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1142,38 +615,8 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test30() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
 
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
         System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1187,37 +630,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test31() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1236,37 +648,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test32() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1341,38 +722,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test34() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1388,38 +737,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test35() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1434,38 +751,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test36() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1481,38 +766,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test37() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1534,38 +787,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test38() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1587,38 +808,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test39() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1634,38 +823,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test40() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1680,38 +837,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test41() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1726,38 +851,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test42() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1774,38 +867,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test43() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1824,38 +885,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test44() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1873,38 +902,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test45() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1926,38 +923,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test46() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -1975,38 +940,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test47() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -2022,38 +955,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test48() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -2070,38 +971,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test49() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -2111,8 +980,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
         //TODO - 26? what is 26?
         assertThat(decodeArrList.get(27).toString(), containsString("26"));
         assertThat(decodeArrList.get(27).toString(), containsString(String.valueOf(bringParcelPojoShipments.getShipmentId())));
-
-
     }
 
     @DisplayName("UNT: UNZ+1+00000000002598' checks.")
@@ -2120,45 +987,13 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test50() {
 
         BNPBase.shipmentsLabel();
-        Response responseShipments = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(requestJsonBodyShipments)
-                .when()
-                .post("/shipments/label");
-
-        BringParcelPojo bringParcelPojoShipments = responseShipments.as(BringParcelPojo.class);
-        String encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
-        byte[] decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
-        String decodedStringShipments = new String(decodedBytesShipments);
-        System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
-
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
-        System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
-        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
-        JSONArray array = new JSONArray();
-        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
-        array.add(map);
-
-        Response responseConveyances = given().header("Shipper-Code", "CEVA")
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(objectShipmentIdFromShipmentsRequest)
-                .when()
-                .post("/conveyances/confirm");
-        BringParcelPojo bringParcelPojoConveyances = responseConveyances.as(BringParcelPojo.class);
-        String encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
-        byte[] decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
-        String decodedStringConveyances = new String(decodedBytesConveyances);
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
         System.out.println("decodeArrList.get(28) = " + decodeArrList.get(28));
         assertThat(decodeArrList.get(28).toString(), containsString("UNZ"));
         assertThat(decodeArrList.get(28).toString(), containsString("1"));
-        assertThat(decodeArrList.get(28).toString(), containsString(decodeArrList.get(1).toString().substring((decodeArrList.get(1).toString().lastIndexOf("+")+1))));
+        assertThat(decodeArrList.get(28).toString(), containsString(decodeArrList.get(1).toString().substring((decodeArrList.get(1).toString().lastIndexOf("+") + 1))));
 
     }
 

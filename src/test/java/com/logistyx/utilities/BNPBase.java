@@ -1,18 +1,52 @@
 package com.logistyx.utilities;
 
-
-
+import com.logistyx.pojo.bring.parcel.BringParcelPojo;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import io.restassured.response.ValidatableResponse;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Base64;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-import static io.restassured.RestAssured.baseURI;
-
+import static io.restassured.RestAssured.*;
 
 public abstract class BNPBase {
 
     public static String requestJsonBodyShipments;
+    public static RequestSpecification requestSpecShipments;
+    public static ResponseSpecification responseSpecShipments;
+    public static ValidatableResponse validateResponseShipments;
+    public static BringParcelPojo bringParcelPojoShipments;
+    public static String encodedStringFromPostmanShipments;
+    public static String decodedStringShipments;
+    public static byte[] decodedBytesShipments;
+
+    public static RequestSpecification requestSpecConveyances;
+    public static ResponseSpecification responseSpecConveyances;
+    public static ValidatableResponse validateResponseConveyances;
+    public static BringParcelPojo bringParcelPojoConveyances;
+    public static String encodedStringFromPostmanConveyances;
+    public static String decodedStringConveyances;
+    public static byte[] decodedBytesConveyances;
+
+    public static String month;
+    public static String day;
+    public static int year;
+    public static int century;
+    public static int hour;
+    public static String minute;
+    public static String second;
+
 
     @BeforeAll
     public static void init() {
@@ -118,6 +152,59 @@ public abstract class BNPBase {
                 "        }\n" +
                 "    ]\n" +
                 "}";
+        requestSpecShipments = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(requestJsonBodyShipments);
+        responseSpecShipments = expect().statusCode(200)
+                .and()
+                .contentType(ContentType.JSON);
+        validateResponseShipments = given().spec(requestSpecShipments)
+                .when()
+                .post("/shipments/label")
+                .then()
+                .spec(responseSpecShipments);
+        bringParcelPojoShipments = validateResponseShipments.extract().as(BringParcelPojo.class);
+        encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
+        decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
+        decodedStringShipments = new String(decodedBytesShipments);
+
+
+        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+        requestSpecConveyances = given().header("Shipper-Code", "CEVA")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest);
+        responseSpecConveyances = expect().statusCode(200)
+                .and()
+                .contentType(ContentType.JSON);
+        validateResponseConveyances = given().spec(requestSpecConveyances)
+                .when()
+                .post("/conveyances/confirm")
+                .then()
+                .spec(responseSpecConveyances);
+        bringParcelPojoConveyances = validateResponseConveyances.extract().as(BringParcelPojo.class);
+        encodedStringFromPostmanConveyances = bringParcelPojoConveyances.getDocuments().get(0).getContent();
+        decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        decodedStringConveyances = new String(decodedBytesConveyances);
+
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        Date date = new Date();
+        String date1 = dateFormat.format(date);
+        month = date1.substring(0, 2);
+        day = date1.substring(3, 5);
+        year = Integer.parseInt(date1.substring(6, 10));
+        century = (year / 100) + 1;
+        hour = Integer.parseInt(date1.substring(11, 13)) + 5;
+        minute = date1.substring(14, 16);
+        second = date1.substring(17, 19);
+
 
     }
 }
