@@ -18,7 +18,6 @@ import static org.hamcrest.Matchers.*;
 import java.util.*;
 
 
-
 @DisplayName("1b - NL-NO,  weight 2 KG")
 public class $1bNlNoWeight2KG extends BNPBase {
 
@@ -457,10 +456,10 @@ public class $1bNlNoWeight2KG extends BNPBase {
         List decodeArrList = Arrays.asList(decodeArr);
         System.out.println("decodeArrList.get(1) = " + decodeArrList.get(1));
 
-//        System.out.println("bringParcelPojo.getDocuments().get(0).getReference() = " + bringParcelPojoConveyances.getDocuments().get(0).getReference());
-//        String str = (String) bringParcelPojoConveyances.getDocuments().get(0).getReference();
+        String refStart = (String) bringParcelPojoConveyances.getDocuments().get(0).getReference();
+        assertThat(decodeArrList.get(1).toString(), containsString("UNB+UNOC:3+12BAC3DE:ZZZ+7080003248381:14+" + (year - 2000) + month + day + ":" + hour + minute + "+0000000000" + refStart.substring(refStart.length() - 4)));
 
-        assertThat(decodeArrList.get(1).toString(), containsString("UNB+UNOC:3+12BAC3DE:ZZZ+7080003248381:14+" + century + month + day + ":" + hour + minute));
+
     }
 
 
