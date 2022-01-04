@@ -6,6 +6,7 @@ import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import org.apache.commons.math3.util.Precision;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
@@ -19,6 +20,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 
 public abstract class BNPBase {
 
@@ -30,6 +33,11 @@ public abstract class BNPBase {
     public static String encodedStringFromPostmanShipments;
     public static String decodedStringShipments;
     public static byte[] decodedBytesShipments;
+    public static String upTo15kgIcon;
+    public static String mediumWeightIcon;
+    public static String heavyWeightIcon;
+    public static double weightInKilos;
+    public static double volumeInCubicMetre;
 
     public static RequestSpecification requestSpecConveyances;
     public static ResponseSpecification responseSpecConveyances;
@@ -169,8 +177,49 @@ public abstract class BNPBase {
         decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
         decodedStringShipments = new String(decodedBytesShipments);
 
+        upTo15kgIcon = "^FO690,601^GFA,358,711,9,:Z64:eJyFkTtOAzEQQGcxWlOsCOUWVkQkDrAlRSRyFI6QMuVEIKWnocxFUvgoLjhAyhQIM55PtBtHyrh5erZnxh64Hj4rvGUU2DRJ4EirRBNhKWcR5lNoiRkeARyqcWw6vkgRRgC3oNziPPcEVkIye6vlzoClrnQYpOdksIFXgaUZv+oEmmMLd0+fC3phS8/OGV10MJTKDhtk8JRTAQSoj2TwzkDpnisYGB4qQ930DL0BmTDdGqqttRmCjiGZSXpmG9V8GOxQYQ966wBqykBDeXL57P7l++dLPt3LyKm3P9R5zE4+soGck8Asq6Ef4FFRrEYmTE20M3FkQmUugJr7NThBFf+O+ldF:486D^FS";
+        mediumWeightIcon = "^FO690,601^GFA,346,711,9,:Z64:eJyNkTFOAzEQRf/GYpciCilTRIKCA1BSwR6BZvs9wpYpImFOkCtwlOEmLikp05nZPzORKFbEcvH8POMZ27h2NI8OrzUbHFMxmGDQFBwMMvaEFLACWkLHCS4vkHjihon/ggXPWfgDKQ7UyDZgYx0KdgYFzwaHgJfYupG931TW6GqtuSmtg3QOORl02sYMkrQKTat5DigErT0yJiCvA24DtOQDQZuYAp6Ypf3taBS2sWVmciNTmDFiRjcf4uZL3JyymxPcnOGmhJmvv0Vz5jtouftPM7j7XvU0+v2FBmkGe7vRDGHJ9GH6MLIcczHvtf4QhmF4w/L4BaLZkiY=:F1CF^FS";
+        heavyWeightIcon = "^FO677,601^GFA,510,869,11,:Z64:eJxt0j1Ow0AQBeDZbBQjEeEDgGQfgZKKHAVfAImSzttR5jSI0kYcgCNkJSoa5Aq5cDy8mf2JFWEp8ZfxZryzM3R2mTGz7DKvXlziM/WJT+TldouPxw8swZ+NoxvrNY8lcCA7ExVE63KkInBTTWTZ0YZoBRL3tAbbIZPB3UBbJEGEdqNElVivxNuQbaPfiaXQsnKSYri3TvIIvemp1Q3jPZ5YicSNYRd5awNLpkrTIjFT8Tklrg6BSEzdpCsZ5N/I0fCXy/xIUcvvMTojSR9ZZjKK8pEH7CiSF/RpQQc2iY7qwD3TP+yWdCf6RF5yOHHMfJikv7rf/Zx4RBV3MYojq3PFfZ2PxGe2I3j5+A3uhETXTL6a6nioTTk3wooPvmCNVkf2NnXo1RsZB8zGgMpDVM9DuymtaEKPpXteBkQ7iKgOgQyFl6lArokwBNpkdNv0PyzUsdOjkLSG+U1vYcwrPGzD8FdYcE/nLPBwe+JFoKXl9QeoUytL:4EBF^FS";
 
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
+
+        switch (bringParcelPojoShipments.getWeightUnitOfMeasure()) {
+            case "KG":
+            case "KGM":
+            case "KGS":
+                weightInKilos = bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight();
+                break;
+            case "G":
+            case "G ":
+            case "G  ":
+            case "GM":
+            case "GM ":
+            case "GR ":
+            case "GRM":
+            case "KG ": // Can't help, DOCS or the component thinks this is grams, no conversion
+                weightInKilos = Precision.round(bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight() * 0.001, 1);
+                break;
+            case "LB":
+            case "LB ":
+            case "LBR":
+            case "LBS":
+                weightInKilos = Precision.round(bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight() * 0.45359237, 1);
+                break;
+        }
+
+        switch (bringParcelPojoShipments.getVolumeUnitOfMeasure()) {
+            case "MTQ":
+                volumeInCubicMetre = Precision.round(bringParcelPojoShipments.getVolume(), 8);
+                break;
+            case "CMQ":
+                volumeInCubicMetre = Precision.round(bringParcelPojoShipments.getVolume() / 1000000, 8);
+                break;
+        }
+
+
+
+
+
+            int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
         JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
         JSONArray array = new JSONArray();
         objectShipmentIdFromShipmentsRequest.put("Shipments", array);
