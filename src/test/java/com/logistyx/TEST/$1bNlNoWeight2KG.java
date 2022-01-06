@@ -1,7 +1,9 @@
 package com.logistyx.TEST;
 
 import com.logistyx.pojo.bring.parcel.BringParcelPojo;
+import com.logistyx.pojo.bring.parcel.ShippingUnit;
 import com.logistyx.utilities.BNPBase;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.commons.math3.util.Precision;
 import org.json.simple.JSONArray;
@@ -44,7 +46,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     @Test
     public void test2() {
 
-
         assertThat(encodedStringFromPostmanShipments, is(notNullValue()));
     }
 
@@ -52,7 +53,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     @DisplayName("ZPL size > 500 characters")
     @Test
     public void test3() {
-
 
         assertThat(encodedStringFromPostmanShipments.length(), is(greaterThan(500)));
     }
@@ -150,11 +150,11 @@ public class $1bNlNoWeight2KG extends BNPBase {
         String shipYearFromJson = shipDateFromJson.substring(0, 4);
 
         String shipDateFromJsonFormat = shipDayFromJson + "." + shipMonthFromJson + "." + shipYearFromJson;
-        System.out.println("shipDateFromJsonFormat = " + shipDateFromJsonFormat);
-        System.out.println("shipDateFromJson = " + shipDateFromJson);
+        //    System.out.println("shipDateFromJsonFormat = " + shipDateFromJsonFormat);
+        //    System.out.println("shipDateFromJson = " + shipDateFromJson);
         int shipDateFromLabelStart = decodedStringShipments.indexOf("^FT559,246^A0N,27,27^FD") + 23;
         String shipDateFromLabel = decodedStringShipments.substring(shipDateFromLabelStart, shipDateFromLabelStart + 10);
-        System.out.println("shipDateFromLabel = " + shipDateFromLabel);
+        //    System.out.println("shipDateFromLabel = " + shipDateFromLabel);
         assertThat(shipDateFromJsonFormat, is(equalTo(shipDateFromLabel)));
 
     }
@@ -166,19 +166,19 @@ public class $1bNlNoWeight2KG extends BNPBase {
 
 
         String productIdFromLabel = decodedStringShipments.substring(decodedStringShipments.indexOf("^FT169,988^A0N,54,54^FD") + 23, decodedStringShipments.indexOf("^FT169,988^A0N,54,54^FD") + 23 + 4);
-        System.out.println("productIdFromLabel = " + productIdFromLabel);
+        //    System.out.println("productIdFromLabel = " + productIdFromLabel);
         String productFromJson = bringParcelPojoShipments.getForwarderDivisionService().getName();
-        System.out.println("productFromJson = " + productFromJson);
+        //    System.out.println("productFromJson = " + productFromJson);
         String productFromLabel = decodedStringShipments.substring(decodedStringShipments.indexOf("^FT169,892^A0N,35,35^FD") + 23, decodedStringShipments.indexOf("^FT169,892^A0N,35,35^FD") + 23 + productFromJson.length());
-        System.out.println("productFromLabel = " + productFromLabel);
+        //    System.out.println("productFromLabel = " + productFromLabel);
         String deliveryCountryCodeFromJson = bringParcelPojoShipments.getDeliveryAddress().getCountryCode();
-        System.out.println("deliveryCountryCodeFromJson = " + deliveryCountryCodeFromJson);
+        //    System.out.println("deliveryCountryCodeFromJson = " + deliveryCountryCodeFromJson);
         String handlingCodeFromLabel = decodedStringShipments.substring(decodedStringShipments.indexOf("^FT691,982^A0N,128,128^FD") + 25, decodedStringShipments.indexOf("^FT691,982^A0N,128,128^FD") + 26);
-        System.out.println("handlingCodeFromLabel = " + handlingCodeFromLabel);
+        //    System.out.println("handlingCodeFromLabel = " + handlingCodeFromLabel);
         String weightFromLabel = decodedStringShipments.substring(decodedStringShipments.indexOf("^FT620,500^A0N,27,27^FD") + 23, decodedStringShipments.indexOf("^FT620,500^A0N,27,27^FD") + 26);
-        System.out.println("weightFromLabel = " + weightFromLabel);
+        //    System.out.println("weightFromLabel = " + weightFromLabel);
 
-        System.out.println("bringParcelPojoShipments.getForwarderServiceCode() = " + bringParcelPojoShipments.getForwarderServiceCode());
+        //    System.out.println("bringParcelPojoShipments.getForwarderServiceCode() = " + bringParcelPojoShipments.getForwarderServiceCode());
         assertThat(bringParcelPojoShipments.getForwarderServiceCode(), is(equalTo("BNP-BUS-PRCL")));
 
         if (bringParcelPojoShipments.getForwarderServiceCode().equals("BNP-BUS-PRCL")) {
@@ -252,10 +252,10 @@ public class $1bNlNoWeight2KG extends BNPBase {
 
 
         String shipmentIdFromJson = bringParcelPojoShipments.getForwarderRef();
-        System.out.println("shipmentIdFromJson = " + shipmentIdFromJson);
+        //    System.out.println("shipmentIdFromJson = " + shipmentIdFromJson);
         int shipmentIdFromLabelStart = decodedStringShipments.indexOf("^FT30,567^A0N,27,27^FD") + 22;
         String shipmentIdFromLabel = decodedStringShipments.substring(shipmentIdFromLabelStart, shipmentIdFromLabelStart + shipmentIdFromJson.length());
-        System.out.println("shipmentIdFromLabel = " + shipmentIdFromLabel);
+        //    System.out.println("shipmentIdFromLabel = " + shipmentIdFromLabel);
         assertThat(shipmentIdFromJson, is(equalTo(shipmentIdFromLabel)));
 
     }
@@ -268,7 +268,7 @@ public class $1bNlNoWeight2KG extends BNPBase {
 
         int customerNoFromLabelStart = decodedStringShipments.indexOf("^FT620,560^A0N,27,27^FD") + 23;
         String customerNoFromLabel = decodedStringShipments.substring(customerNoFromLabelStart, customerNoFromLabelStart + 8);
-        System.out.println("customerNoFromLabel = " + customerNoFromLabel);
+        //    System.out.println("customerNoFromLabel = " + customerNoFromLabel);
         assertThat(customerNoFromLabel, is(equalTo("12BAC3DE")));
     }
 
@@ -277,13 +277,11 @@ public class $1bNlNoWeight2KG extends BNPBase {
     @Test
     public void test12() {
 
-
         String bringLogoFromLabel = "^FO35,854^GFA,630,1596,12,:Z64:eJytlU1qAzEMhW20";
         assertThat(decodedStringShipments, containsString(bringLogoFromLabel));
     }
 
 
-    //TODO
     @DisplayName("Icon, based on 1. package weight: 2 KGM --> Light, up to 15 kg, Converted weight: 2.0 kg")
     @Test
     public void test13() {
@@ -295,15 +293,17 @@ public class $1bNlNoWeight2KG extends BNPBase {
         } else if (weightInKilos <= 15) {
             assertThat(decodedStringShipments, containsString(upTo15kgIcon));
         }
+
     }
 
     //TODO
-    @Disabled
-    @DisplayName("1. package's' & shipment weight: 2 KGM, Converted weight: 2.0 kg. Total (shipment) weight is 2.0 kg")
+
+    @DisplayName("1. package's' & shipment weight: 2 KGM(package input weight), Converted (package) weight: 2.0 kg. Total (shipment) weight is 2.0 kg")
     @Test
     public void test14() {
 
-
+        System.out.println("totalGrossWeight = " + totalGrossWeight);
+        System.out.println("grossWeight = " + grossWeight);
     }
 
 
@@ -312,16 +312,15 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test15() {
 
         String packageIdFromJson = bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef();
-        System.out.println("packageIdFromJson = " + packageIdFromJson);
+        //    System.out.println("packageIdFromJson = " + packageIdFromJson);
         int packageIdFromLabelStart = decodedStringShipments.indexOf("^FT30,500^A0N,27,27^FD") + 22;
         String packageIdFromLabel = decodedStringShipments.substring(packageIdFromLabelStart, packageIdFromLabelStart + packageIdFromJson.length() + 2).replace("(", "").replace(")", "");
-        System.out.println("packageIdFromLabel = " + packageIdFromLabel);
+        //    System.out.println("packageIdFromLabel = " + packageIdFromLabel);
         assertThat(packageIdFromJson, is(equalTo(packageIdFromLabel)));
 
     }
 
 
-    @Disabled
     @DisplayName("1. package's Package-ID, printed under barcode, (00)112345670000024094")
     @Test
     public void test16() {
@@ -390,7 +389,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
     public void test20() {
 
 
-        int shipmentIdFromShipmentsRequest = bringParcelPojoShipments.getShipmentId();
         //System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -434,8 +432,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-
-
         //    System.out.println("decodeArrList.get(5) = " + decodeArrList.get(5));
         assertThat(decodeArrList.get(5).toString(), containsString("DTM+234:" + year + month + day + ":102"));
 
@@ -449,10 +445,8 @@ public class $1bNlNoWeight2KG extends BNPBase {
 
         String productIdFromLabelShipments = decodedStringShipments.substring(decodedStringShipments.indexOf("^FT169,988^A0N,54,54^FD") + 23, decodedStringShipments.indexOf("^FT169,988^A0N,54,54^FD") + 23 + 4);
         //    System.out.println("productIdFromLabelShipments = " + productIdFromLabelShipments);
-
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-
         //    System.out.println("decodeArrList.get(6) = " + decodeArrList.get(6));
         assertThat(decodeArrList.get(6).toString(), containsString("FTX+PRD+++" + productIdFromLabelShipments));
 
@@ -463,12 +457,8 @@ public class $1bNlNoWeight2KG extends BNPBase {
     @Test
     public void test25() {
 
-
-//        System.out.println("bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight() = " + bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight());
-
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-
 //        System.out.println("decodeArrList.get(7) = " + decodeArrList.get(7));
         assertThat(decodeArrList.get(7).toString(), containsString("CNT+7:" + weightInKilos + ":KGM"));
 
@@ -481,10 +471,8 @@ public class $1bNlNoWeight2KG extends BNPBase {
 
 
         //    System.out.println("bringParcelPojoShipments.getShippingUnits().get(0).getIndex() = " + bringParcelPojoShipments.getShippingUnits().get(0).getIndex());
-
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-
         //    System.out.println("decodeArrList.get(8) = " + decodeArrList.get(8));
         assertThat(decodeArrList.get(8).toString(), containsString("CNT+11:" + bringParcelPojoShipments.getShippingUnits().get(0).getIndex() + ":PCE"));
 
@@ -497,7 +485,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-
         //    System.out.println("decodeArrList.get(9) = " + decodeArrList.get(9));
         assertThat(decodeArrList.get(9).toString(), containsString("CNT+15:" + String.format("%.8f", volumeInCubicMetre) + ":MTQ"));
 
@@ -510,10 +497,8 @@ public class $1bNlNoWeight2KG extends BNPBase {
 
 
         //    System.out.println("bringParcelPojoShipments.getShipperRef() = " + bringParcelPojoShipments.getShipperRef());
-
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-
         //    System.out.println("decodeArrList.get(10) = " + decodeArrList.get(10));
         assertThat(decodeArrList.get(10).toString(), containsString("RFF+CU:" + bringParcelPojoShipments.getShipperRef()));
 
@@ -526,7 +511,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
 
 
         //    System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
-
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
         //    System.out.println("decodeArrList.get(11) = " + decodeArrList.get(11));
@@ -552,11 +536,9 @@ public class $1bNlNoWeight2KG extends BNPBase {
     @Test
     public void test31() {
 
-
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
         //    System.out.println("decodeArrList.get(13) = " + decodeArrList.get(13));
-
         assertThat(decodeArrList.get(13).toString(), is(equalTo("NAD+CZ+" + bringParcelPojoShipments.getPickupForwarderDivisionAccountCode() + "::87++" + bringParcelPojoShipments.getAddresses().get(0).getReference() + "+" + bringParcelPojoShipments.getAddresses().get(0).getAddressLines().get(0).getValue() + "+" + bringParcelPojoShipments.getAddresses().get(0).getLocalityName() + "++" + bringParcelPojoShipments.getAddresses().get(0).getPostalCode() + "+" + bringParcelPojoShipments.getAddresses().get(0).getCountryCode())));
     }
 
@@ -631,12 +613,12 @@ public class $1bNlNoWeight2KG extends BNPBase {
     @Test
     public void test38() {
 
-
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
         //    System.out.println("decodeArrList.get(20) = " + decodeArrList.get(20));
         assertThat(decodeArrList.get(20).toString(), is(equalTo("COM+" + "?" + "+" + bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getPhoneNumber().replace("+", "").replace("(", "").replace(")", "").replace("-", "") + ":AL")));
     }
+
 
     @DisplayName("ACCOUNT: NAD+FP+12BAC3DE::87 checks.")
     @Test
@@ -647,7 +629,6 @@ public class $1bNlNoWeight2KG extends BNPBase {
         List decodeArrList = Arrays.asList(decodeArr);
         //    System.out.println("decodeArrList.get(21) = " + decodeArrList.get(21));
         assertThat(decodeArrList.get(21).toString(), is(equalTo("NAD+FP+12BAC3DE::87")));
-
 
     }
 
@@ -660,13 +641,12 @@ public class $1bNlNoWeight2KG extends BNPBase {
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
         //    System.out.println("decodeArrList.get(22) = " + decodeArrList.get(22));
-
-        if (bringParcelPojoShipments.toString().contains("Quantity")) {
-            assertThat(decodeArrList.get(22).toString(), is(equalTo("GID" + "+" + validateResponseShipments.extract().jsonPath().getInt("Quantity") + "+" + bringParcelPojoShipments.getNumberOfShippingUnits() + ":" + bringParcelPojoShipments.getShippingUnits().get(0).getPackageType())));
-        } else {
-            assertThat(decodeArrList.get(22).toString(), is(equalTo("GID" + "+" + "1" + "+" + bringParcelPojoShipments.getNumberOfShippingUnits() + ":" + bringParcelPojoShipments.getShippingUnits().get(0).getPackageType())));
-        }
+//        if (bringParcelPojoShipments.getShippingUnits().toString().contains("Quantity")) {
+//            assertThat(decodeArrList.get(22).toString(), is(equalTo("GID" + "+" + validateResponseShipments.extract().jsonPath().getInt("Quantity") + "+" + bringParcelPojoShipments.getNumberOfShippingUnits() + ":" + bringParcelPojoShipments.getShippingUnits().get(0).getPackageType())));
+//        } else {
+        assertThat(decodeArrList.get(22).toString(), is(equalTo("GID" + "+" + "1" + "+" + bringParcelPojoShipments.getNumberOfShippingUnits() + ":" + bringParcelPojoShipments.getShippingUnits().get(0).getPackageType())));
     }
+//    }
 
 
     @DisplayName("Package #1 weight ('Standard', always present; #6434), MEA+WT+G+KGM:2.0")
@@ -679,6 +659,7 @@ public class $1bNlNoWeight2KG extends BNPBase {
         assertThat(decodeArrList.get(23).toString(), is(equalTo("MEA+WT+G" + "+" + bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeightUnitOfMeasure() + ":" + weightInKilos)));
     }
 
+
     @DisplayName("Package #1 dimensions, DIM+2+CMT:33:27:15")
     @Test
     public void test42() {
@@ -689,14 +670,17 @@ public class $1bNlNoWeight2KG extends BNPBase {
         assertThat(decodeArrList.get(24).toString(), is(equalTo("DIM+2" + "+" + bringParcelPojoShipments.getShippingUnits().get(0).getDimensionsUnitOfMeasure() + ":" + String.format("%.0f", bringParcelPojoShipments.getShippingUnits().get(0).getLength()) + ":" + String.format("%.0f", bringParcelPojoShipments.getShippingUnits().get(0).getWidth()) + ":" + String.format("%.0f", bringParcelPojoShipments.getShippingUnits().get(0).getHeight()))));
     }
 
-    //TODO what to check?
-    @Disabled
+
     @DisplayName("Verify the CHECK DIGIT for 00112345670000030125 is correct. We expect: 5 for 11234567000003012")
     @Test
     public void test43() {
 
-
+        //    System.out.println("bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(2) = " + bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(2, 19));
+        //    System.out.println("bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef() = " + bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef());
+        //    System.out.println("checkDigit = " + checkDigit);
+        assertThat(bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(19, 20), is(equalTo(String.valueOf(checkDigit))));
     }
+
 
     @DisplayName("Package #1 Tracking number, PCI+30+112345670000030125")
     @Test
@@ -705,12 +689,10 @@ public class $1bNlNoWeight2KG extends BNPBase {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        System.out.println("decodeArrList.get(25) = " + decodeArrList.get(25));
-        assertThat(decodeArrList.get(25).toString(), containsString("PCI"));
-        assertThat(decodeArrList.get(25).toString(), containsString("30"));
-        assertThat(decodeArrList.get(25).toString(), containsString(bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(2)));
-
+        //    System.out.println("decodeArrList.get(25) = " + decodeArrList.get(25));
+        assertThat(decodeArrList.get(25).toString(), is(equalTo("PCI+30" + "+" + bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(2))));
     }
+
 
     @DisplayName("Package #1 reference number, RFF+CW:SU.ShipperRef")
     @Test
@@ -719,14 +701,11 @@ public class $1bNlNoWeight2KG extends BNPBase {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        System.out.println("decodeArrList.get(26) = " + decodeArrList.get(26));
-        assertThat(decodeArrList.get(26).toString(), containsString("RFF"));
-        assertThat(decodeArrList.get(26).toString(), containsString("CW"));
-        assertThat(decodeArrList.get(26).toString(), containsString(bringParcelPojoShipments.getShippingUnits().get(0).getShipperRef()));
-
+        //    System.out.println("decodeArrList.get(26) = " + decodeArrList.get(26));
+        assertThat(decodeArrList.get(26).toString(), is(equalTo("RFF+CW:" + bringParcelPojoShipments.getShippingUnits().get(0).getShipperRef())));
     }
 
-    //TODO 26?
+
     @DisplayName("UNT: UNT+26+314596 checks.")
     @Test
     public void test46() {
@@ -734,13 +713,10 @@ public class $1bNlNoWeight2KG extends BNPBase {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        System.out.println("decodeArrList.get(27) = " + decodeArrList.get(27));
-        assertThat(decodeArrList.get(27).toString(), containsString("UNT"));
-
-        //TODO - 26? what is 26?
-        assertThat(decodeArrList.get(27).toString(), containsString("26"));
-        assertThat(decodeArrList.get(27).toString(), containsString(String.valueOf(bringParcelPojoShipments.getShipmentId())));
+        //    System.out.println("decodeArrList.get(27) = " + decodeArrList.get(27));
+        assertThat(decodeArrList.get(27).toString(), is(equalTo("UNT" + "+" + (decodeArrList.indexOf(decodeArrList.get(27).toString()) - 1) + "+" + bringParcelPojoShipments.getShipmentId())));
     }
+
 
     @DisplayName("UNT: UNZ+1+00000000002598' checks.")
     @Test
@@ -749,11 +725,8 @@ public class $1bNlNoWeight2KG extends BNPBase {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        System.out.println("decodeArrList.get(28) = " + decodeArrList.get(28));
-        assertThat(decodeArrList.get(28).toString(), containsString("UNZ"));
-        assertThat(decodeArrList.get(28).toString(), containsString("1"));
-        assertThat(decodeArrList.get(28).toString(), containsString(decodeArrList.get(1).toString().substring((decodeArrList.get(1).toString().lastIndexOf("+") + 1))));
-
+        //    System.out.println("decodeArrList.get(28) = " + decodeArrList.get(28));
+        assertThat(decodeArrList.get(28).toString().replace("'", ""), is(equalTo("UNZ+1" + "+" + decodeArrList.get(1).toString().substring((decodeArrList.get(1).toString().lastIndexOf("+") + 1)))));
 
     }
 
