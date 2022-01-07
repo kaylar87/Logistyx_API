@@ -1,9 +1,9 @@
 package com.logistyx.TEST;
 
-
-import com.logistyx.utilities.BNPBaseNotDG;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import com.logistyx.utilities.BNPBaseDG;
 import org.junit.jupiter.api.DisplayName;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -12,13 +12,13 @@ import static org.hamcrest.Matchers.*;
 import java.util.*;
 
 
-@DisplayName("1b - NL-NO,  weight 2 KG")
-public class $1bNlNoWeight2KG extends BNPBaseNotDG {
+
+@DisplayName("SU level: UN1993 (Flammable liquid, n.o.s, STOMAHESIVE PASTE, 2.3 KG)")
+public class SULevelUN1993 extends BNPBaseDG{
 
     static {
-        BNPBaseNotDG.shipmentsLabel();
+        BNPBaseDG.shipmentsLabel();
     }
-
 
     @DisplayName("ShippingId is not NULL")
     @Test
@@ -33,7 +33,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
     }
 
 
-    @DisplayName("ZPL ('Documents/0/Content') is not NULL")
+    @DisplayName("ZPL ('Documents[0].Content') is not NULL")
     @Test
     public void test2() {
 
@@ -49,7 +49,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
     }
 
 
-    @DisplayName("PICKUP address details: Earl Bakkenstraat 7, NL-6422 PJ, HEERLEN")
+    @DisplayName("PICKUP address details: Json vs Label")
     @Test
     public void test4() {
 
@@ -71,7 +71,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
     }
 
 
-    @DisplayName("DELIVERY address details: Grand Hotel Oslo, NO-0159, OSLO")
+    @DisplayName("DELIVERY address details: Json vs Label")
     @Test
     public void test5() {
 
@@ -100,7 +100,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
     }
 
 
-    @DisplayName("Delivery person details: DY.Contact Name")
+    @DisplayName("Delivery person details: Json vs Label")
     @Test
     public void test6() {
 
@@ -115,7 +115,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
     }
 
 
-    @DisplayName("Delivery phone number: +(06)2-222222")
+    @DisplayName("Delivery phone number: Json vs Label")
     @Test
     public void test7() {
 
@@ -130,7 +130,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
     }
 
 
-    @DisplayName("Ship date (format: dd.MM.yyyy): 06.10.2020")
+    @DisplayName("Ship date (format: dd.MM.yyyy): Json vs Label")
     @Test
     public void test8() {
 
@@ -151,7 +151,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
     }
 
 
-    @DisplayName("Service (BNP-BUS-PRCL) on the label, destination country = NO, product = Bring Parcel Business Parcel, product code = 0330 and handling code = 2")
+    @DisplayName("Service (BNP-BUS-PRCL), destination country, product, productId, handling code - Json vs Label")
     @Test
     public void test9() {
 
@@ -237,7 +237,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
     }
 
 
-    @DisplayName("Unique Shipment Identity, 12345670000019437")
+    @DisplayName("Unique Shipment Identity, Json vs Label")
     @Test
     public void test10() {
 
@@ -273,7 +273,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
     }
 
 
-    @DisplayName("Icon, based on 1. package weight: 2 KGM --> Light, up to 15 kg, Converted weight: 2.0 kg")
+    @DisplayName("Icon, based on package weight, Converted weightInKilos, Json vs Label")
     @Test
     public void test13() {
 
@@ -287,23 +287,24 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
     }
 
-    //TODO
 
-    @DisplayName("1. package's' & shipment weight: 2 KGM(package input weight), Converted (package) weight: 2.0 kg. Total (shipment) weight is 2.0 kg")
+    //TODO package weight - shipment weight
+    @Disabled
+    @DisplayName("Package's' & shipment weight, Json vs Label, number of Shipping Units(Json vs ShippingUnits objects)")
     @Test
     public void test14() {
 
-        //    System.out.println("totalGrossWeight = " + totalGrossWeight);
-        //    System.out.println("bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight() = " + (bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight()));
-        //   System.out.println("grossWeight = " + grossWeight);
-        //    System.out.println("numberOfShippingUnits = " + numberOfShippingUnits);
+        System.out.println("totalGrossWeight = " + totalGrossWeight);
+        System.out.println("bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight() = " + (bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight()));
+        System.out.println("grossWeight = " + grossWeight);
+        System.out.println("numberOfShippingUnits = " + numberOfShippingUnits);
         assertThat(bringParcelPojoShipments.getNumberOfShippingUnits(), is(equalTo(numberOfShippingUnits)));
-        assertThat(bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight(), is(equalTo((double)(totalGrossWeight))));
+        assertThat(bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight(), is(equalTo((double) (totalGrossWeight))));
 
     }
 
 
-    @DisplayName("1. package's Unique Package Identity, (00)112345670000024094")
+    @DisplayName("Package's Unique Package Identity, Json vs Label")
     @Test
     public void test15() {
 
@@ -317,7 +318,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
     }
 
 
-    @DisplayName("1. package's Package-ID, printed under barcode, (00)112345670000024094")
+    @DisplayName("Package's Package-ID, printed under barcode, Json vs Label")
     @Test
     public void test16() {
 
@@ -334,7 +335,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
     }
 
 
-    @DisplayName("1. package's Package number identifier, 1 / {1|1} for CEVA")
+    @DisplayName("Package's Package number identifier, 1 / {1|1} for CEVA")
     @Test
     public void test17() {
 
@@ -349,7 +350,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
     }
 
 
-    @DisplayName("1. package's sender / shipper reference, SU.ShipperRef")
+    @DisplayName("Package's sender / shipper reference, Json vs Label")
     @Test
     public void test18() {
 
@@ -365,8 +366,8 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
     }
 
 
-    @DisplayName("UNB+UNOC:3+12BAC3DE:ZZZ+7080003248381:14+211222:1416+00000000002119 checks.")
-    @Test
+    @DisplayName("UNB+UNOC:3+12BAC3DE:ZZZ+7080003248381:14+YY+MM+DD:HH+MM+0000000000+Conveyances.Documents(0).Reference(last4)")
+    @org.junit.jupiter.api.Test
     public void test19() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
@@ -374,6 +375,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
         //System.out.println("decodeArrList.get(1) = " + decodeArrList.get(1));
 
         String refStart = (String) bringParcelPojoConveyances.getDocuments().get(0).getReference();
+        //System.out.println("refStart = " + refStart);
         assertThat(decodeArrList.get(1).toString(), containsString("UNB+UNOC:3+12BAC3DE:ZZZ+7080003248381:14+" + (year - 2000) + month + day + ":" + hour + minute + "+0000000000" + refStart.substring(refStart.length() - 4)));
 
 
@@ -381,7 +383,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("UNH+312427+IFTMIN:D:04A:UN:BIG14 checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test20() {
 
 
@@ -395,12 +397,12 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("BGM+610+20211222141626282+9 checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test21() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //System.out.println("decodeArrList.get(3) = " + decodeArrList.get(3));
+        System.out.println("decodeArrList.get(3) = " + decodeArrList.get(3));
 
         assertThat(decodeArrList.get(3).toString(), containsString("BGM+610+" + year + month + day + hour + minute));
         assertThat(decodeArrList.get(3).toString(), containsString("+9"));
@@ -409,7 +411,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("DTM+137:202112221416:203 checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test22() {
 
 
@@ -422,7 +424,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("DTM+234:20211222:102 checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test23() {
 
 
@@ -435,7 +437,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("FTX+PRD+++0330 checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test24() {
 
 
@@ -450,7 +452,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("Total: 2.0, - CNT+7:2.0:KGM checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test25() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
@@ -462,7 +464,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("Total packages 1, CNT+11:1:PCE checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test26() {
 
 
@@ -476,7 +478,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("Total volume 13.36, CNT+15:0.00001336:MTQ checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test27() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
@@ -488,7 +490,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("RFF+CU:s.ShipperRef checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test28() {
 
 
@@ -502,7 +504,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("RFF+SRN:12345670000020662 checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test29() {
 
 
@@ -516,7 +518,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("TDT+20++++BPI::87 checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test30() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
@@ -529,7 +531,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("Pickup ADDRESS 1: NAD+CZ+01053548::87++CEVA pickups+Earl Bakkenstraat 7+HEERLEN++6422 PJ+NL checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test31() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
@@ -540,7 +542,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("Pickup Contact, CTA+IC+:Randall Flagg checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test32() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
@@ -551,7 +553,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("Pickup email, COM+r?.flagg@thestand?.com:EM checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test33() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
@@ -562,7 +564,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("Pickup phone COM+31688877766:AL checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test34() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
@@ -573,7 +575,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("Delivery ADDRESS 1: NAD+CN+::87++DY?.REFERENCE+Grand Hotel Oslo:Karl Johans gate 31+OSLO++0159+NO checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test35() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
@@ -584,7 +586,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("Delivery contact, CTA+IC+:DY?.Contact Name checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test36() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
@@ -595,7 +597,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("Delivery email, COM+delivery@email?.com:EM checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test37() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
@@ -606,7 +608,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("Delivery phone number, COM+<PLACEHOLDER>062222222:AL checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test38() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
@@ -617,7 +619,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("ACCOUNT: NAD+FP+12BAC3DE::87 checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test39() {
 
 
@@ -630,7 +632,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("Package #1, GID+1+1:PD")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test40() {
 
 
@@ -646,7 +648,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("Package #1 weight ('Standard', always present; #6434), MEA+WT+G+KGM:2.0")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test41() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
@@ -657,7 +659,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("Package #1 dimensions, DIM+2+CMT:33:27:15")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test42() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
@@ -668,7 +670,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("Verify the CHECK DIGIT for 00112345670000030125 is correct. We expect: 5 for 11234567000003012")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test43() {
 
         //    System.out.println("bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(2) = " + bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(2, 19));
@@ -679,7 +681,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("Package #1 Tracking number, PCI+30+112345670000030125")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test44() {
 
 
@@ -691,7 +693,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("Package #1 reference number, RFF+CW:SU.ShipperRef")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test45() {
 
 
@@ -703,7 +705,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
 
     @DisplayName("UNT: UNT+26+314596 checks.")
-    @Test
+    @org.junit.jupiter.api.Test
     public void test46() {
 
 
@@ -723,6 +725,25 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
         List decodeArrList = Arrays.asList(decodeArr);
         //    System.out.println("decodeArrList.get(28) = " + decodeArrList.get(28));
         assertThat(decodeArrList.get(28).toString().replace("'", ""), is(equalTo("UNZ+1" + "+" + decodeArrList.get(1).toString().substring((decodeArrList.get(1).toString().lastIndexOf("+") + 1)))));
+
+    }
+
+    @DisplayName("Services: Limited Quantities")
+    @Test
+    public void test48() {
+
+
+        assertThat(decodedStringShipments, containsString("^FT30,724^A0N,22,22^FDServices:^FS"));
+        System.out.println("dGweightInKilos = " + dGweightInKilos);
+        System.out.println("dGweightUoM = " + dGweightUoM);
+        //assertThat(decodedStringShipments, containsString("^FT30,762^A0N,35,35^FD0003 - LIMITED QUANTITY " + dGweightInKilos + " " + dGweightUoM + " Gross^FS"));
+
+        String servicesFromLabelFull = "^FT30,762^A0N,35,35^FD0003 - LIMITED QUANTITY 2.3 KG Gross^FS";
+        int servicesFromLabelStart = decodedStringShipments.indexOf("^FT30,762^A0N,35,35^FD") + 22;
+
+        String servicesFromLabel = decodedStringShipments.substring(servicesFromLabelStart, servicesFromLabelStart + ("0003 - LIMITED QUANTITY " + dGweightInKilos + " " + dGweightUoM + " Gross").length()-1);
+        System.out.println("servicesFromLabel = " + servicesFromLabel);
+
 
     }
 

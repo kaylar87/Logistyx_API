@@ -1,6 +1,6 @@
 package com.logistyx.TEST;
 
-import com.logistyx.pojo.bring.parcel.shipments.BringParcelPojo;
+import com.logistyx.pojo.bring.parcel.NotDG.BringParcelPojo;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.ValidatableResponse;
