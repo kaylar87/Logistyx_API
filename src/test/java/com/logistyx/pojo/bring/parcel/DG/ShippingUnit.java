@@ -102,11 +102,11 @@ public class ShippingUnit {
     @JsonProperty("CustomsValueCurrencyCode")
     public Object customsValueCurrencyCode;
     @JsonProperty("Length")
-    public Double length;
+    public Float length;
     @JsonProperty("Width")
-    public Double width;
+    public Float width;
     @JsonProperty("Height")
-    public Double height;
+    public Float height;
     @JsonProperty("DimensionsUnitOfMeasure")
     public String dimensionsUnitOfMeasure;
     @JsonProperty("Area")
@@ -118,7 +118,7 @@ public class ShippingUnit {
     @JsonProperty("GirthUnitOfMeasure")
     public Object girthUnitOfMeasure;
     @JsonProperty("Volume")
-    public Double volume;
+    public Float volume;
     @JsonProperty("VolumeUnitOfMeasure")
     public String volumeUnitOfMeasure;
     @JsonProperty("PackageType")
@@ -126,15 +126,15 @@ public class ShippingUnit {
     @JsonProperty("SpecificPackageType")
     public Object specificPackageType;
     @JsonProperty("NetWeight")
-    public Double netWeight;
+    public Float netWeight;
     @JsonProperty("NetWeightUnitOfMeasure")
     public Object netWeightUnitOfMeasure;
     @JsonProperty("TareWeight")
-    public Double tareWeight;
+    public Float tareWeight;
     @JsonProperty("TareWeightUnitOfMeasure")
     public Object tareWeightUnitOfMeasure;
     @JsonProperty("GrossWeight")
-    public Double grossWeight;
+    public Float grossWeight;
     @JsonProperty("GrossWeightUnitOfMeasure")
     public String grossWeightUnitOfMeasure;
     @JsonProperty("Content")

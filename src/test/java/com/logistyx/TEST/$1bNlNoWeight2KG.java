@@ -297,7 +297,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
         //    System.out.println("bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight() = " + (bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight()));
         //   System.out.println("grossWeight = " + grossWeight);
         //    System.out.println("numberOfShippingUnits = " + numberOfShippingUnits);
-        assertThat(bringParcelPojoShipments.getNumberOfShippingUnits(), is(equalTo(numberOfShippingUnits)));
+        assertThat(bringParcelPojoShipments.getNumberOfShippingUnits(), is(equalTo(detectedNumberOfPackages)));
         assertThat(bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight(), is(equalTo((double)(totalGrossWeight))));
 
     }

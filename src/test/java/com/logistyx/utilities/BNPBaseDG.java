@@ -37,10 +37,11 @@ public abstract class BNPBaseDG {
     public static double volumeInCubicMetre;
     public static String checkString;
     public static int checkDigit;
+    public static Map<String, Object> jsonMap;
 
     public static int totalGrossWeight;
     public static List<Float> grossWeight;
-    public static int numberOfShippingUnits;
+    public static int detectedNumberOfPackages;
 
     public static RequestSpecification requestSpecConveyances;
     public static ResponseSpecification responseSpecConveyances;
@@ -140,7 +141,7 @@ public abstract class BNPBaseDG {
                 "    \"Weight\": 42,\n" +
                 "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
                 "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2022-01-07\",\n" +
+                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
                 "    \"ShippingUnits\": [\n" +
                 "        {\n" +
                 "            \"ShipperRef\": \"SU.ShipperRef 1/3\",\n" +
@@ -188,6 +189,9 @@ public abstract class BNPBaseDG {
         encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
         decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
         decodedStringShipments = new String(decodedBytesShipments);
+
+        jsonMap = validateResponseShipments.extract().as(Map.class);
+
 
         upTo15kgIcon = "^FO690,601^GFA,358,711,9,:Z64:eJyFkTtOAzEQQGcxWlOsCOUWVkQkDrAlRSRyFI6QMuVEIKWnocxFUvgoLjhAyhQIM55PtBtHyrh5erZnxh64Hj4rvGUU2DRJ4EirRBNhKWcR5lNoiRkeARyqcWw6vkgRRgC3oNziPPcEVkIye6vlzoClrnQYpOdksIFXgaUZv+oEmmMLd0+fC3phS8/OGV10MJTKDhtk8JRTAQSoj2TwzkDpnisYGB4qQ930DL0BmTDdGqqttRmCjiGZSXpmG9V8GOxQYQ966wBqykBDeXL57P7l++dLPt3LyKm3P9R5zE4+soGck8Asq6Ef4FFRrEYmTE20M3FkQmUugJr7NThBFf+O+ldF:486D^FS";
         mediumWeightIcon = "^FO690,601^GFA,346,711,9,:Z64:eJyNkTFOAzEQRf/GYpciCilTRIKCA1BSwR6BZvs9wpYpImFOkCtwlOEmLikp05nZPzORKFbEcvH8POMZ27h2NI8OrzUbHFMxmGDQFBwMMvaEFLACWkLHCS4vkHjihon/ggXPWfgDKQ7UyDZgYx0KdgYFzwaHgJfYupG931TW6GqtuSmtg3QOORl02sYMkrQKTat5DigErT0yJiCvA24DtOQDQZuYAp6Ypf3taBS2sWVmciNTmDFiRjcf4uZL3JyymxPcnOGmhJmvv0Vz5jtouftPM7j7XvU0+v2FBmkGe7vRDGHJ9GH6MLIcczHvtf4QhmF4w/L4BaLZkiY=:F1CF^FS";
@@ -271,9 +275,9 @@ public abstract class BNPBaseDG {
 
         JsonPath jsonPath = validateResponseShipments.extract().jsonPath();
         grossWeight = jsonPath.get("ShippingUnits.GrossWeight");
-        numberOfShippingUnits = grossWeight.size();
+        detectedNumberOfPackages = bringParcelPojoShipments.getShippingUnits().size();
         //    System.out.println("grossWeight = " + grossWeight);
-        for (int i = 0; i < grossWeight.size(); i++) {
+        for (int i = 0; i < detectedNumberOfPackages; i++) {
             totalGrossWeight = (int) (totalGrossWeight + grossWeight.get(i));
         }
 

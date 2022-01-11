@@ -39,7 +39,7 @@ public abstract class BNPBaseNotDG {
 
     public static int totalGrossWeight;
     public static List<Float> grossWeight;
-    public static int numberOfShippingUnits;
+    public static int detectedNumberOfPackages;
 
     public static RequestSpecification requestSpecConveyances;
     public static ResponseSpecification responseSpecConveyances;
@@ -236,9 +236,9 @@ public abstract class BNPBaseNotDG {
 
         JsonPath jsonPath = validateResponseShipments.extract().jsonPath();
         grossWeight = jsonPath.get("ShippingUnits.GrossWeight");
-        numberOfShippingUnits = grossWeight.size();
+        detectedNumberOfPackages = bringParcelPojoShipments.getShippingUnits().size();
         //    System.out.println("grossWeight = " + grossWeight);
-        for (int i = 0; i < grossWeight.size(); i++) {
+        for (int i = 0; i < detectedNumberOfPackages; i++) {
             totalGrossWeight = (int) (totalGrossWeight + grossWeight.get(i));
         }
 

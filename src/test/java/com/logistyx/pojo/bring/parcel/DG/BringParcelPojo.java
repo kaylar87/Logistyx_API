@@ -250,4 +250,6 @@ public class BringParcelPojo {
     @JsonProperty("DocumentDirectives")
     public List<Object> documentDirectives = null;
 
+
+
 }
