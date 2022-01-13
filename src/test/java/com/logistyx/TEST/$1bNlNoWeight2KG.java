@@ -287,7 +287,6 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
     }
 
-    //TODO
 
     @DisplayName("1. package's' & shipment weight: 2 KGM(package input weight), Converted (package) weight: 2.0 kg. Total (shipment) weight is 2.0 kg")
     @Test
