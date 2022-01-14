@@ -51,70 +51,9 @@ public class FFGHOMEwithDIMS extends FedExFuseBaseNotDG {
     }
 
 
-    //TODO SEPARATE
-    @DisplayName("ZPL: Delivery Address")
-    @Test
-    public void test4() {
-
-        assertThat(decodedStringShipments, containsString("^FT4,204^A0N,14,14^FDTO^FS"));
-
-        String deliveryAddressName1FromJson = fedExFusePojoShipments.getAddresses().get(0).getContacts().get(0).getName().toUpperCase();
-        //System.out.println("deliveryAddressName1FromJson = " + deliveryAddressName1FromJson);
-        int deliveryAddressName1FromLabelStart = decodedStringShipments.indexOf("^FT22,215^A0N,27,27^FD") + 22;
-        String deliveryAddressName1FromLabel = decodedStringShipments.substring(deliveryAddressName1FromLabelStart, deliveryAddressName1FromLabelStart + deliveryAddressName1FromJson.length());
-        //System.out.println("deliveryAddressName1FromLabel = " + deliveryAddressName1FromLabel);
-        assertThat(deliveryAddressName1FromJson, is(equalTo(deliveryAddressName1FromLabel)));
-
-        String deliveryAddressName2FromJson = fedExFusePojoShipments.getDeliveryAddress().getAddressLines().get(0).getValue();
-        //System.out.println("deliveryAddressName2FromJson = " + deliveryAddressName2FromJson);
-        int deliveryAddressName2FromLabelStart = decodedStringShipments.indexOf("^FT22,242^A0N,27,27^FD") + 22;
-        String deliveryAddressName2FromLabel = decodedStringShipments.substring(deliveryAddressName2FromLabelStart, deliveryAddressName2FromLabelStart + deliveryAddressName2FromJson.length());
-        //System.out.println("deliveryAddressName2FromLabel = " + deliveryAddressName2FromLabel);
-        assertThat(deliveryAddressName2FromJson, is(equalTo(deliveryAddressName2FromLabel)));
-
-        String deliveryAddressName3FromJson = fedExFusePojoShipments.getDeliveryAddress().getAddressLines().get(1).getValue();
-        //System.out.println("deliveryAddressName3FromJson = " + deliveryAddressName3FromJson);
-        int deliveryAddressName3FromLabelStart = decodedStringShipments.indexOf("^FT22,269^A0N,27,27^FD") + 22;
-        String deliveryAddressName3FromLabel = decodedStringShipments.substring(deliveryAddressName3FromLabelStart, deliveryAddressName3FromLabelStart + deliveryAddressName3FromJson.length());
-        //System.out.println("deliveryAddressName3FromLabel = " + deliveryAddressName3FromLabel);
-        assertThat(deliveryAddressName3FromJson, is(equalTo(deliveryAddressName3FromLabel)));
-
-        String deliveryAddressName4FromJson = fedExFusePojoShipments.getDeliveryAddress().getLocalityName().toUpperCase() + ", " + fedExFusePojoShipments.getDeliveryAddress().getSubdivisionCode() + " " + fedExFusePojoShipments.getDeliveryAddress().getPostalCode();
-        //System.out.println("deliveryAddressName4FromJson = " + deliveryAddressName4FromJson);
-        int deliveryAddressName4FromLabelStart = decodedStringShipments.indexOf("^FT22,333^A0N,27,27^FD") + 22;
-        String deliveryAddressName4FromLabel = decodedStringShipments.substring(deliveryAddressName4FromLabelStart, deliveryAddressName4FromLabelStart + deliveryAddressName4FromJson.length());
-        //System.out.println("deliveryAddressName4FromLabel = " + deliveryAddressName4FromLabel);
-        assertThat(deliveryAddressName4FromJson, is(equalTo(deliveryAddressName4FromLabel)));
-
-    }
-
-
-    @DisplayName("ZPL: Service: FFG-HOME")
-    @Test
-    public void test5() {
-
-        assertThat(decodedStringShipments, containsString("^FT664,606^A0N,87,87^FDH^FS"));
-
-        String forwarderDivisionServiceName1FromJson = fedExFusePojoShipments.getForwarderDivisionService().getName().substring(0, 5);
-        //System.out.println("forwarderDivisionServiceName1FromJson = " + forwarderDivisionServiceName1FromJson);
-        int forwarderDivisionServiceName1FromLabelStart = decodedStringShipments.indexOf("^FT650,492^A0N,43,43^FD") + 23;
-        String forwarderDivisionServiceName1FromLabel = decodedStringShipments.substring(forwarderDivisionServiceName1FromLabelStart, forwarderDivisionServiceName1FromLabelStart + forwarderDivisionServiceName1FromJson.length());
-        //System.out.println("forwarderDivisionServiceName1FromLabel = " + forwarderDivisionServiceName1FromLabel);
-        assertThat(forwarderDivisionServiceName1FromJson, is(equalTo(forwarderDivisionServiceName1FromLabel)));
-
-        String forwarderDivisionServiceName2FromJson = fedExFusePojoShipments.getForwarderDivisionService().getName().substring(6, 19);
-        //System.out.println("forwarderDivisionServiceName2FromJson = " + forwarderDivisionServiceName2FromJson);
-        int forwarderDivisionServiceName2FromLabelStart = decodedStringShipments.indexOf("^FT650,515^A0N,22,18^FD") + 23;
-        String forwarderDivisionServiceName2FromLabel = decodedStringShipments.substring(forwarderDivisionServiceName2FromLabelStart, forwarderDivisionServiceName2FromLabelStart + forwarderDivisionServiceName2FromJson.length());
-        //System.out.println("forwarderDivisionServiceName2FromLabel = " + forwarderDivisionServiceName2FromLabel);
-        assertThat(forwarderDivisionServiceName2FromJson, is(equalTo(forwarderDivisionServiceName2FromLabel)));
-
-    }
-
-
     @DisplayName("Package Size (L x W x H)")
     @Test
-    public void test6() {
+    public void test4() {
 
         int lengthRoundedFromJson = (int) ((fedExFusePojoShipments.getShippingUnits().get(0).getLength()) * 1);
         int widthRoundedFromJson = (int) ((fedExFusePojoShipments.getShippingUnits().get(0).getWidth()) * 1);
@@ -130,7 +69,7 @@ public class FFGHOMEwithDIMS extends FedExFuseBaseNotDG {
 
     @DisplayName("HUF and PDF are generated")
     @Test
-    public void test7() {
+    public void test5() {
 
         for (int i = 0; i < fedExFusePojoConveyances.getDocuments().size(); i++) {
             if (fedExFusePojoConveyances.getDocuments().get(i).getDocumentFormatCode().contains("HUF")) {
@@ -148,16 +87,21 @@ public class FFGHOMEwithDIMS extends FedExFuseBaseNotDG {
 
     @DisplayName("ZPL: Pickup Address 'ORIGIN ID:' exists")
     @Test
-    public void test8() {
+    public void test6() {
 
-        assertThat(decodedStringShipments, containsString("^FT10,27^A0N,22,22^FDORIGIN ID:                     0208080007^FS"));
 
+        String pickupAddressOriginIDFromJson = fedExFusePojoShipments.getPickupAddress().getContacts().get(0).getPhoneNumber().replace(" ", "");
+        //    System.out.println("pickupAddressOriginIDFromJson = " + pickupAddressOriginIDFromJson);
+        int pickupAddressOriginIDFromLabelStart = decodedStringShipments.indexOf("^FT10,27^A0N,22,22^FDORIGIN ID:                     ") + 52;
+        String pickupAddressOriginIDFromLabel = decodedStringShipments.substring(pickupAddressOriginIDFromLabelStart, pickupAddressOriginIDFromLabelStart + pickupAddressOriginIDFromJson.length());
+        //    System.out.println("pickupAddressContactFromLabel = " + pickupAddressOriginIDFromLabel);
+        assertThat(pickupAddressOriginIDFromJson, is(equalTo(pickupAddressOriginIDFromLabel)));
     }
 
 
     @DisplayName("ZPL: Pickup Address Contact exists: Contact Name")
     @Test
-    public void test9() {
+    public void test7() {
 
         String pickupAddressContactFromJson = fedExFusePojoShipments.getPickupAddress().getContacts().get(0).getName();
         //    System.out.println("pickupAddressContactFromJson = " + pickupAddressContactFromJson);
@@ -171,7 +115,7 @@ public class FFGHOMEwithDIMS extends FedExFuseBaseNotDG {
 
     @DisplayName("ZPL: Pickup Address Company exists: Company Name")
     @Test
-    public void test10() {
+    public void test8() {
 
         String pickupAddressCompanyFromJson = fedExFusePojoShipments.getPickupAddress().getReference();
         //    System.out.println("pickupAddressCompanyFromJson = " + pickupAddressCompanyFromJson);
@@ -185,7 +129,7 @@ public class FFGHOMEwithDIMS extends FedExFuseBaseNotDG {
 
     @DisplayName("ZPL: Pickup Address Line 1 exists: Pickup Address Line 1")
     @Test
-    public void test11() {
+    public void test9() {
 
         String pickupAddressLine1FromJson = fedExFusePojoShipments.getPickupAddress().getAddressLines().get(0).getValue();
         //    System.out.println("pickupAddressLine1FromJson = " + pickupAddressLine1FromJson);
@@ -199,7 +143,7 @@ public class FFGHOMEwithDIMS extends FedExFuseBaseNotDG {
 
     @DisplayName("ZPL: Pickup Address Line 2 exists: Pickup Address Line 2")
     @Test
-    public void test12() {
+    public void test10() {
 
         String pickupAddressLine2FromJson = fedExFusePojoShipments.getPickupAddress().getAddressLines().get(1).getValue();
         //    System.out.println("pickupAddressLine2FromJson = " + pickupAddressLine2FromJson);
@@ -213,7 +157,7 @@ public class FFGHOMEwithDIMS extends FedExFuseBaseNotDG {
 
     @DisplayName("ZPL: Pickup Address Line 3 exists: City, State, ZIP")
     @Test
-    public void test13() {
+    public void test11() {
 
         String pickupAddressLine3FromJson = fedExFusePojoShipments.getPickupAddress().getLocalityName() + ", " + fedExFusePojoShipments.getPickupAddress().getSubdivisionCode() + " " + fedExFusePojoShipments.getPickupAddress().getPostalCode();
         //    System.out.println("pickupAddressLine3FromJson = " + pickupAddressLine3FromJson);
@@ -227,7 +171,7 @@ public class FFGHOMEwithDIMS extends FedExFuseBaseNotDG {
 
     @DisplayName("ZPL: Pickup Address Country exists: Country Code")
     @Test
-    public void test14() {
+    public void test12() {
 
         String pickupAddressLine4FromJson = fedExFusePojoShipments.getPickupAddress().getCountryCode();
         //    System.out.println("pickupAddressLine4FromJson = " + pickupAddressLine4FromJson);
@@ -240,7 +184,7 @@ public class FFGHOMEwithDIMS extends FedExFuseBaseNotDG {
 
     @DisplayName("ZPL: Ship Date exists: 2022-01-12T20:02:51.987Z")
     @Test
-    public void test15() {
+    public void test13() {
 
         String shipDateFromJson = fedExFusePojoShipments.getRequestedPickupDateTime();
         //    System.out.println("shipDateFromJson = " + shipDateFromJson);
@@ -298,7 +242,7 @@ public class FFGHOMEwithDIMS extends FedExFuseBaseNotDG {
 
     @DisplayName("Meter Number = 1711")
     @Test
-    public void test16() {
+    public void test14() {
 
         assertThat(decodedStringShipments, containsString("^FT406,71^A0N,22,22^FDCAD: 1711/FUSE0008^FS"));
     }
@@ -306,14 +250,220 @@ public class FFGHOMEwithDIMS extends FedExFuseBaseNotDG {
 
     @DisplayName("Package Weight: GrossWeight + GrossWeightUnitOfMeasure")
     @Test
-    public void test17() {
+    public void test15() {
 
         String packageWeightFromJson = String.format("%.2f", fedExFusePojoShipments.getShippingUnits().get(0).getGrossWeight());
-    //    System.out.println("packageWeightFromJson = " + packageWeightFromJson);
+        //    System.out.println("packageWeightFromJson = " + packageWeightFromJson);
         int packageWeightFromLabelStart = decodedStringShipments.indexOf("^FT406,49^A0N,22,22^FDACTWGT: ") + 30;
-        String packageWeightFromLabel = decodedStringShipments.substring(packageWeightFromLabelStart, packageWeightFromLabelStart + (packageWeightFromJson+ fedExFusePojoShipments.getShippingUnits().get(0).getGrossWeightUnitOfMeasure()).length());
-    //    System.out.println("packageWeightFromLabel = " + packageWeightFromLabel);
-        assertThat(packageWeightFromLabel, is(equalTo(packageWeightFromJson+ " " + fedExFusePojoShipments.getShippingUnits().get(0).getGrossWeightUnitOfMeasure().toUpperCase().trim())));
+        String packageWeightFromLabel = decodedStringShipments.substring(packageWeightFromLabelStart, packageWeightFromLabelStart + (packageWeightFromJson + fedExFusePojoShipments.getShippingUnits().get(0).getGrossWeightUnitOfMeasure()).length());
+        //    System.out.println("packageWeightFromLabel = " + packageWeightFromLabel);
+        assertThat(packageWeightFromLabel, is(equalTo(packageWeightFromJson + " " + fedExFusePojoShipments.getShippingUnits().get(0).getGrossWeightUnitOfMeasure().toUpperCase().trim())));
+    }
+
+
+    @DisplayName("ZPL: Payment Type exists: BILL SENDER")
+    @Test
+    public void test16() {
+
+        assertThat(decodedStringShipments, containsString("^FT406,114^A0N,22,22^FDBILL SENDER^FS"));
+
+    }
+
+
+    @DisplayName("ZPL: Vertical line at top exists")
+    @Test
+    public void test17() {
+
+        assertThat(decodedStringShipments, containsString("^FO395,9^GB3,168,3,B^FS"));
+
+    }
+
+
+    @DisplayName("ZPL: Horizontal lines at top exist")
+    @Test
+    public void test18() {
+
+        assertThat(decodedStringShipments, containsString("^FO3,175^GB761,3,3,B^FS"));
+
+    }
+
+
+    @DisplayName("ZPL: Delivery Address 'TO' exists")
+    @Test
+    public void test19() {
+
+        assertThat(decodedStringShipments, containsString("^FT4,204^A0N,14,14^FDTO^FS"));
+
+    }
+
+
+    @DisplayName("ZPL: Delivery Address Contact exists: ENTER SANDMAN")
+    @Test
+    public void test20() {
+
+        String deliveryAddressContactFromJson = fedExFusePojoShipments.getAddresses().get(0).getContacts().get(0).getName().toUpperCase();
+        //    System.out.println("deliveryAddressContactFromJson = " + deliveryAddressContactFromJson);
+        int deliveryAddressContactFromLabelStart = decodedStringShipments.indexOf("^FT22,215^A0N,27,27^FD") + 22;
+        String deliveryAddressContactFromLabel = decodedStringShipments.substring(deliveryAddressContactFromLabelStart, deliveryAddressContactFromLabelStart + deliveryAddressContactFromJson.length());
+        //    System.out.println("deliveryAddressName1FromLabel = " + deliveryAddressName1FromLabel);
+        assertThat(deliveryAddressContactFromJson, is(equalTo(deliveryAddressContactFromLabel)));
+
+    }
+
+
+    @DisplayName("ZPL: Delivery Address Line 1 exists: Pickup Address Line 1")
+    @Test
+    public void test21() {
+
+
+        String deliveryAddressLine1FromJson = fedExFusePojoShipments.getDeliveryAddress().getAddressLines().get(0).getValue();
+        //    System.out.println("deliveryAddressLine1FromJson = " + deliveryAddressLine1FromJson);
+        int deliveryAddressLine1FromLabelStart = decodedStringShipments.indexOf("^FT22,242^A0N,27,27^FD") + 22;
+        String deliveryAddressLine1FromLabel = decodedStringShipments.substring(deliveryAddressLine1FromLabelStart, deliveryAddressLine1FromLabelStart + deliveryAddressLine1FromJson.length());
+        //    System.out.println("deliveryAddressLine1FromLabel = " + deliveryAddressLine1FromLabel);
+        assertThat(deliveryAddressLine1FromJson, is(equalTo(deliveryAddressLine1FromLabel)));
+
+
+    }
+
+
+    @DisplayName("ZPL: Delivery Address Line 2 exists: Pickup Address Line 2")
+    @Test
+    public void test22() {
+
+
+        String deliveryAddressLine2FromJson = fedExFusePojoShipments.getDeliveryAddress().getAddressLines().get(1).getValue();
+        //    System.out.println("deliveryAddressLine2FromJson = " + deliveryAddressLine2FromJson);
+        int deliveryAddressLine2FromLabelStart = decodedStringShipments.indexOf("^FT22,269^A0N,27,27^FD") + 22;
+        String deliveryAddressLine2FromLabel = decodedStringShipments.substring(deliveryAddressLine2FromLabelStart, deliveryAddressLine2FromLabelStart + deliveryAddressLine2FromJson.length());
+        //    System.out.println("deliveryAddressLine2FromLabel = " + deliveryAddressLine2FromLabel);
+        assertThat(deliveryAddressLine2FromJson, is(equalTo(deliveryAddressLine2FromLabel)));
+
+    }
+
+
+    @DisplayName("ZPL: Delivery Address Line 3 exists: City, State, ZIP")
+    @Test
+    public void test23() {
+
+
+        String deliveryAddressLine3FromJson = fedExFusePojoShipments.getDeliveryAddress().getLocalityName().toUpperCase() + ", " + fedExFusePojoShipments.getDeliveryAddress().getSubdivisionCode() + " " + fedExFusePojoShipments.getDeliveryAddress().getPostalCode();
+        //    System.out.println("deliveryAddressLine3FromJson = " + deliveryAddressLine3FromJson);
+        int deliveryAddressLine3FromLabelStart = decodedStringShipments.indexOf("^FT22,333^A0N,27,27^FD") + 22;
+        String deliveryAddressLine3FromLabel = decodedStringShipments.substring(deliveryAddressLine3FromLabelStart, deliveryAddressLine3FromLabelStart + deliveryAddressLine3FromJson.length());
+        //    System.out.println("deliveryAddressLine3FromLabel = " + deliveryAddressLine3FromLabel);
+        assertThat(deliveryAddressLine3FromJson, is(equalTo(deliveryAddressLine3FromLabel)));
+
+    }
+
+
+    @DisplayName("ZPL: FedEx version and diagnostic string exists vertically along side : 568C2/01EF/05A2")
+    @Test
+    public void test24() {
+
+        String diagnosticStringFromJson = null;
+        for (int i = 0; i < fedExFusePojoShipments.getShippingUnits().get(0).getAdditionalValues().size(); i++) {
+            if (fedExFusePojoShipments.getShippingUnits().get(0).getAdditionalValues().get(i).getAdditionalValueKey().equals("Version")) {
+                diagnosticStringFromJson = fedExFusePojoShipments.getShippingUnits().get(0).getAdditionalValues().get(i).getValue();
+                //    System.out.println("diagnosticString = " + diagnosticString);
+            }
+        }
+        int diagnosticStringFromLabelStart = decodedStringShipments.indexOf("^FT747,366^A0B,19,19^FD") + 23;
+        String diagnosticStringFromLabel = decodedStringShipments.substring(diagnosticStringFromLabelStart, diagnosticStringFromLabelStart + diagnosticStringFromJson.length());
+        //    System.out.println("diagnosticStringFromLabel = " + diagnosticStringFromLabel);
+        assertThat(diagnosticStringFromJson, is(equalTo(diagnosticStringFromLabel)));
+    }
+
+
+    @DisplayName("ZPL: Delivery Address Phone Number and 'REF:' exists: (306) 244-2311")
+    @Test
+    public void test25() {
+
+
+        String deliveryAddressLine3FromJson = fedExFusePojoShipments.getDeliveryAddress().getLocalityName().toUpperCase() + ", " + fedExFusePojoShipments.getDeliveryAddress().getSubdivisionCode() + " " + fedExFusePojoShipments.getDeliveryAddress().getPostalCode();
+        //    System.out.println("deliveryAddressLine3FromJson = " + deliveryAddressLine3FromJson);
+        int deliveryAddressLine3FromLabelStart = decodedStringShipments.indexOf("^FT22,333^A0N,27,27^FD") + 22;
+        String deliveryAddressLine3FromLabel = decodedStringShipments.substring(deliveryAddressLine3FromLabelStart, deliveryAddressLine3FromLabelStart + deliveryAddressLine3FromJson.length());
+        //    System.out.println("deliveryAddressLine3FromLabel = " + deliveryAddressLine3FromLabel);
+        assertThat(deliveryAddressLine3FromJson, is(equalTo(deliveryAddressLine3FromLabel)));
+
+    }
+
+
+    @DisplayName("ZPL: Delivery Address Phone Number and 'REF:' exists: (987) 654-3211")
+    @Test
+    public void test26() {
+
+
+        String deliveryAddressPhoneNumberFromJson = fedExFusePojoShipments.getDeliveryAddress().getContacts().get(0).getPhoneNumber().replace("(", "").replace(")", "").replace(" ", "").replace("-", "");
+        //    System.out.println("deliveryAddressPhoneNumberFromJson = " + deliveryAddressPhoneNumberFromJson);
+        int deliveryAddressPhoneNumberFromLabelStart = decodedStringShipments.indexOf("^FT20,358^A0N,16,16^FD") + 22;
+        String deliveryAddressPhoneNumberFromLabel = decodedStringShipments.substring(deliveryAddressPhoneNumberFromLabelStart, deliveryAddressPhoneNumberFromLabelStart + deliveryAddressPhoneNumberFromJson.length());
+        //    System.out.println("deliveryAddressPhoneNumberFromLabel = " + deliveryAddressPhoneNumberFromLabel);
+        assertThat(deliveryAddressPhoneNumberFromJson, is(equalTo(deliveryAddressPhoneNumberFromLabel)));
+        assertThat(decodedStringShipments, containsString("^FT20,358^A0N,16,16^FD" + deliveryAddressPhoneNumberFromJson + "                       REF:^FS"));
+    }
+
+
+    @DisplayName("ZPL: 'INV:', 'PO:' and 'DEPT:' fields exist: (987) 654-3211")
+    @Test
+    public void test27() {
+
+        assertThat(decodedStringShipments, containsString("^FT20,374^A0N,16,16^FDINV:^FS"));
+        assertThat(decodedStringShipments, containsString("^FT20,391^A0N,16,16^FDPO:                                         DEPT:^FS"));
+    }
+
+
+    @DisplayName("ZPL: Horizontal lines above the PDF417 Barcode exist")
+    @Test
+    public void test28() {
+
+        assertThat(decodedStringShipments, containsString("^FO3,405^GB761,3,3,B^FS"));
+
+    }
+
+
+    @DisplayName("ZPL: Horizontal lines below the PDF417 Barcode exist")
+    @Test
+    public void test29() {
+
+        assertThat(decodedStringShipments, containsString("^FO3,669^GB761,3,3,B^FS"));
+    }
+
+
+    @DisplayName("ZPL: 'FedEx' brand exists to right of PDF417 Barcode exist")
+    @Test
+    public void test30() {
+
+        String forwarderDivisionServiceName1FromJson = fedExFusePojoShipments.getForwarderDivisionService().getName().substring(0, 5);
+    //    System.out.println("forwarderDivisionServiceName1FromJson = " + forwarderDivisionServiceName1FromJson);
+        int forwarderDivisionServiceName1FromLabelStart = decodedStringShipments.indexOf("^FT650,492^A0N,43,43^FD") + 23;
+        String forwarderDivisionServiceName1FromLabel = decodedStringShipments.substring(forwarderDivisionServiceName1FromLabelStart, forwarderDivisionServiceName1FromLabelStart + forwarderDivisionServiceName1FromJson.length());
+    //    System.out.println("forwarderDivisionServiceName1FromLabel = " + forwarderDivisionServiceName1FromLabel);
+        assertThat(forwarderDivisionServiceName1FromJson, is(equalTo(forwarderDivisionServiceName1FromLabel)));
+    }
+
+
+    @DisplayName("ZPL: Service Name exists to right of PDF417FFG-HOME")
+    @Test
+    public void test31() {
+
+        String forwarderDivisionServiceName2FromJson = fedExFusePojoShipments.getForwarderDivisionService().getName().substring(6, 19);
+    //    System.out.println("forwarderDivisionServiceName2FromJson = " + forwarderDivisionServiceName2FromJson);
+        int forwarderDivisionServiceName2FromLabelStart = decodedStringShipments.indexOf("^FT650,515^A0N,22,18^FD") + 23;
+        String forwarderDivisionServiceName2FromLabel = decodedStringShipments.substring(forwarderDivisionServiceName2FromLabelStart, forwarderDivisionServiceName2FromLabelStart + forwarderDivisionServiceName2FromJson.length());
+    //    System.out.println("forwarderDivisionServiceName2FromLabel = " + forwarderDivisionServiceName2FromLabel);
+        assertThat(forwarderDivisionServiceName2FromJson, is(equalTo(forwarderDivisionServiceName2FromLabel)));
+    }
+
+
+    @DisplayName("ZPL: Service Indicator in box exists to right of PDF417: FFG-HOME")
+    @Test
+    public void test32() {
+
+        assertThat(decodedStringShipments, containsString("^FO650,522^GB81,102,10,B^FS"));
+        assertThat(decodedStringShipments, containsString("^FT664,606^A0N,87,87^FDH^FS"));
+
     }
 
 
