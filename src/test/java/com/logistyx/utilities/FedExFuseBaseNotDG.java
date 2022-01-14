@@ -35,6 +35,7 @@ public abstract class FedExFuseBaseNotDG {
     public static double volumeInCubicMetre;
     public static String checkString;
     public static int checkDigit;
+    public static String currentDateTime;
 
     public static int totalGrossWeight;
     public static List<Float> grossWeight;
@@ -387,6 +388,8 @@ public abstract class FedExFuseBaseNotDG {
         hour = Integer.parseInt(date1.substring(11, 13)) + 5;
         minute = date1.substring(14, 16);
         second = date1.substring(17, 19);
+
+        currentDateTime = year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":" + second;
 
 
     }
