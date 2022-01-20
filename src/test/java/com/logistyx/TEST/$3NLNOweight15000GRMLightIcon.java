@@ -2,18 +2,18 @@ package com.logistyx.TEST;
 
 
 import com.logistyx.utilities.BNPBaseNotDG;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import org.junit.jupiter.api.DisplayName;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-import java.util.*;
 
-
-@DisplayName("1b - NL-NO,  weight 2 KG")
-public class $1bNlNoWeight2KG extends BNPBaseNotDG {
+@DisplayName("[+] 3 - NL-NO, weight 15000 GRM ==> Light Icon")
+public class $3NLNOweight15000GRMLightIcon extends BNPBaseNotDG {
 
     static {
         BNPBaseNotDG.shipmentsLabel();
@@ -27,7 +27,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
         assertThat(bringParcelPojoShipments.getShipmentId(), is(notNullValue()));
 //        validateResponseShipments.extract().response().prettyPrint();
-        System.out.println("decodedStringShipments = " + decodedStringShipments);
+//        System.out.println("decodedStringShipments = " + decodedStringShipments);
 //        validateResponseConveyances.extract().response().prettyPrint();
 
     }
@@ -604,14 +604,14 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
     }
 
 
-    @DisplayName("Delivery phone number, COM+<PLACEHOLDER>062222222:AL checks.")
+    @DisplayName("Delivery phone number, COM+062222222:AL checks.")
     @Test
     public void test38() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(20) = " + decodeArrList.get(20));
-        assertThat(decodeArrList.get(20).toString(), is(equalTo("COM+" + "?" + "+" + bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getPhoneNumber().replace("+", "").replace("(", "").replace(")", "").replace("-", "") + ":AL")));
+    //        System.out.println("decodeArrList.get(20) = " + decodeArrList.get(20));
+        assertThat(decodeArrList.get(20).toString(), is(equalTo("COM+" + bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getPhoneNumber().replace("+", "").replace("(", "").replace(")", "").replace("-", "") + ":AL")));
     }
 
 
