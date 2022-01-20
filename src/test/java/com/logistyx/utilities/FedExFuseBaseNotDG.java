@@ -7,8 +7,11 @@ import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.apache.commons.math3.util.Precision;
+import org.json.JSONException;
+import org.json.XML;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -51,6 +54,7 @@ public abstract class FedExFuseBaseNotDG {
     public static String decodedStringConveyancesManifest;
     public static byte[] decodedBytesConveyancesEDI;
     public static byte[] decodedBytesConveyancesManifest;
+    public static org.json.JSONObject jsonDataEDI;
 
     public static String month;
     public static String day;
@@ -391,6 +395,17 @@ public abstract class FedExFuseBaseNotDG {
 
         currentDateTime = year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":" + second;
 
+//        java.io.FileWriter fw = new java.io.FileWriter("my-file.xml");
+//            fw.write(decodedStringConveyancesEDI111);
+//            fw.close();
+
+        try {
+            jsonDataEDI = XML.toJSONObject(decodedStringConveyancesEDI);
+            String jsonString = jsonDataEDI.toString(4);
+            //System.out.println(jsonString);
+        } catch (JSONException e) {
+            System.out.println(e.toString());
+        }
 
     }
 }

@@ -27,7 +27,7 @@ public class $1bNlNoWeight2KG extends BNPBaseNotDG {
 
         assertThat(bringParcelPojoShipments.getShipmentId(), is(notNullValue()));
 //        validateResponseShipments.extract().response().prettyPrint();
-//        System.out.println("decodedStringShipments = " + decodedStringShipments);
+        System.out.println("decodedStringShipments = " + decodedStringShipments);
 //        validateResponseConveyances.extract().response().prettyPrint();
 
     }
