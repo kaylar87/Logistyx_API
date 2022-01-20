@@ -4,6 +4,7 @@ import com.logistyx.pojo.bring.parcel.NotDG.BringParcelPojo;
 import com.logistyx.utilities.interfaces.BNPJson1;
 import com.logistyx.utilities.interfaces.BNPJson2;
 import com.logistyx.utilities.interfaces.BNPJson3;
+import com.logistyx.utilities.interfaces.BNPJson4;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.ValidatableResponse;
@@ -22,7 +23,7 @@ import java.util.*;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public abstract class BNPBaseNotDG implements BNPJson3 {
+public abstract class BNPBaseNotDG implements BNPJson4 {
 
 
     public static RequestSpecification requestSpecShipments;
