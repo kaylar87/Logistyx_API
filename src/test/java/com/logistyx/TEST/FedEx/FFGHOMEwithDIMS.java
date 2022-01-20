@@ -1,10 +1,8 @@
-package com.logistyx.TEST;
+package com.logistyx.TEST.FedEx;
 
 
-import com.logistyx.utilities.FedExFuseBaseNotDG;
+import com.logistyx.utilities.abstractBaseClasses.FedExFuseBaseNotDG;
 
-import org.json.JSONObject;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

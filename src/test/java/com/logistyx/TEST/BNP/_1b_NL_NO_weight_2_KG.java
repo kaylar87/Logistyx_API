@@ -1,10 +1,9 @@
-package com.logistyx.TEST;
+package com.logistyx.TEST.BNP;
 
-import io.restassured.path.json.JsonPath;
-import org.junit.jupiter.api.Disabled;
+
+import com.logistyx.utilities.abstractBaseClasses.BNPBaseNotDG;
 import org.junit.jupiter.api.Test;
 
-import com.logistyx.utilities.BNPBaseDG;
 import org.junit.jupiter.api.DisplayName;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -13,12 +12,13 @@ import static org.hamcrest.Matchers.*;
 import java.util.*;
 
 
-@DisplayName("SU level: UN1993 (Flammable liquid, n.o.s, STOMAHESIVE PASTE, 2.3 KG)")
-public class SULevelUN1993 extends BNPBaseDG {
+@DisplayName("1b - NL-NO,  weight 2 KG")
+public class _1b_NL_NO_weight_2_KG extends BNPBaseNotDG {
 
     static {
-        BNPBaseDG.shipmentsLabel();
+        BNPBaseNotDG.shipmentsLabel();
     }
+
 
     @DisplayName("ShippingId is not NULL")
     @Test
@@ -115,7 +115,7 @@ public class SULevelUN1993 extends BNPBaseDG {
     }
 
 
-    @DisplayName("Delivery phone number: 062222222")
+    @DisplayName("Delivery phone number: +(06)2-222222")
     @Test
     public void test7() {
 
@@ -237,7 +237,7 @@ public class SULevelUN1993 extends BNPBaseDG {
     }
 
 
-    @DisplayName("Unique Shipment Identity, 12345670000041636")
+    @DisplayName("Unique Shipment Identity, 12345670000019437")
     @Test
     public void test10() {
 
@@ -273,7 +273,7 @@ public class SULevelUN1993 extends BNPBaseDG {
     }
 
 
-    @DisplayName("Icon, based on 1. package weight: 1 KGM --> Light, up to 15 kg, Converted weight: 1.0 kg")
+    @DisplayName("Icon, based on 1. package weight: 2 KGM --> Light, up to 15 kg, Converted weight: 2.0 kg")
     @Test
     public void test13() {
 
@@ -292,17 +292,17 @@ public class SULevelUN1993 extends BNPBaseDG {
     @Test
     public void test14() {
 
-        //     System.out.println("totalGrossWeight = " + totalGrossWeight);
-        //     System.out.println("bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight() = " + (bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight()));
-        //     System.out.println("grossWeight = " + grossWeight);
-        //     System.out.println("detectedNumberOfPackages = " + detectedNumberOfPackages);
+        //    System.out.println("totalGrossWeight = " + totalGrossWeight);
+        //    System.out.println("bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight() = " + (bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight()));
+        //   System.out.println("grossWeight = " + grossWeight);
+        //    System.out.println("numberOfShippingUnits = " + numberOfShippingUnits);
         assertThat(bringParcelPojoShipments.getNumberOfShippingUnits(), is(equalTo(detectedNumberOfPackages)));
-        assertThat(bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight(), is(equalTo((float) (totalGrossWeight))));
+        assertThat(bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight(), is(equalTo((double)(totalGrossWeight))));
 
     }
 
 
-    @DisplayName("1. package's Unique Package Identity, (00)112345670000046072")
+    @DisplayName("1. package's Unique Package Identity, (00)112345670000024094")
     @Test
     public void test15() {
 
@@ -316,7 +316,7 @@ public class SULevelUN1993 extends BNPBaseDG {
     }
 
 
-    @DisplayName("1. package's Package-ID, printed under barcode, (00)112345670000046072")
+    @DisplayName("1. package's Package-ID, printed under barcode, (00)112345670000024094")
     @Test
     public void test16() {
 
@@ -338,16 +338,17 @@ public class SULevelUN1993 extends BNPBaseDG {
     public void test17() {
 
 
-        //  System.out.println("detectedNumberOfPackages = " + detectedNumberOfPackages);
+        String numberOfShippingUnitsFromJson = String.valueOf(bringParcelPojoShipments.getNumberOfShippingUnits());
+        //System.out.println("numberOfShippingUnitsFromJson = " + numberOfShippingUnitsFromJson);
         int packagesFromLabelStart = decodedStringShipments.indexOf("^FT366,500^A0N,27,27^FD") + 23;
         String packagesSuffix = " / -";
-        String packagesFromLabel = decodedStringShipments.substring(packagesFromLabelStart, packagesFromLabelStart + detectedNumberOfPackages + packagesSuffix.length());
+        String packagesFromLabel = decodedStringShipments.substring(packagesFromLabelStart, packagesFromLabelStart + numberOfShippingUnitsFromJson.length() + packagesSuffix.length());
         //System.out.println("packagesFromLabel = " + packagesFromLabel);
-        assertThat(detectedNumberOfPackages + packagesSuffix, is(equalTo(packagesFromLabel)));
+        assertThat(numberOfShippingUnitsFromJson + packagesSuffix, is(equalTo(packagesFromLabel)));
     }
 
 
-    @DisplayName("1. package's sender / shipper reference, SU.ShipperRef 1/3")
+    @DisplayName("1. package's sender / shipper reference, SU.ShipperRef")
     @Test
     public void test18() {
 
@@ -363,67 +364,9 @@ public class SULevelUN1993 extends BNPBaseDG {
     }
 
 
-    @DisplayName("Services: Limited Quantities")
+    @DisplayName("UNB+UNOC:3+12BAC3DE:ZZZ+7080003248381:14+211222:1416+00000000002119 checks.")
     @Test
     public void test19() {
-
-        assertThat(decodedStringShipments, containsString("^FT30,724^A0N,22,22^FDServices:^FS"));
-        //    System.out.println("dGweightInKilos = " + dGweightInKilos);
-        //    System.out.println("dGweightUoM = " + dGweightUoM);
-        int servicesFromLabelStart = decodedStringShipments.indexOf("^FT30,762^A0N,35,35^FD") + 22;
-        String servicesFromLabel = decodedStringShipments.substring(servicesFromLabelStart, servicesFromLabelStart + ("0003 - LIMITED QUANTITY " + dGweightInKilos + " " + dGweightUoM + " Gross").length() - 1);
-        //    System.out.println("servicesFromLabel = " + servicesFromLabel);
-        assertThat(decodedStringShipments, containsString(servicesFromLabel));
-
-    }
-
-
-    @DisplayName("Verify number of non-DG (0) vs. DG labels (1)")
-    @Test
-    public void test20() {
-
-        int dgLabels = 0;
-        int nonDgLabels = 0;
-
-        for (int suIndex = 0; suIndex < detectedNumberOfPackages; suIndex++) {
-            boolean isLq = false;
-            boolean thereIsAtLeastOneDg = false;
-            for (int dangerous = 0; dangerous < bringParcelPojoShipments.getShippingUnits().get(suIndex).getDangerousGoods().size(); dangerous++) {
-
-                if (bringParcelPojoShipments.getShippingUnits().get(suIndex).getDangerousGoods().get(dangerous).getLimitedQuantity()) {
-                    isLq = true;
-                    thereIsAtLeastOneDg = true;
-                    dgLabels = dgLabels + 1; // One more DG found ...
-                    break;
-                }
-            }
-        }
-//            if (jsonMap.get("ShippingUnitItems.DangerousGoods") != null) {
-//
-//                for (int shipui = 0; shipui < bringParcelPojoShipments.getShippingUnits().get(shipui).getShippingUnitItems().size(); shipui++) {
-//                    try {
-//                        for (int dangerousSUI = 0; dangerousSUI < bringParcelPojoShipments.getShippingUnits().get(shipui).getShippingUnitItems().get(shipui).getDangerousGoods().size(); dangerousSUI++) {
-//                            if (bringParcelPojoShipments.getShippingUnits().get(shipui).getShippingUnitItems().get(shipui).getDangerousGoods().get(dangerousSUI).LimitedQuantity) {
-//                                isLq = true;
-//                                thereIsAtLeastOneDg = true;
-//                                dgLabels = dgLabels + 1; // One more DG found ...
-//                                break;
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-        System.out.println("dgLabels = " + dgLabels);
-        System.out.println("nonDgLabels = " + nonDgLabels);
-        assertThat(dgLabels + nonDgLabels, is(equalTo(detectedNumberOfPackages)));
-
-    }
-
-
-    @DisplayName("UNB+UNOC:3+12BAC3DE:ZZZ+7080003248381:14+220111:1313+00000000003830 checks.")
-    @Test
-    public void test21() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -436,9 +379,9 @@ public class SULevelUN1993 extends BNPBaseDG {
     }
 
 
-    @DisplayName("UNH+320106+IFTMIN:D:04A:UN:BIG14 checks.")
+    @DisplayName("UNH+312427+IFTMIN:D:04A:UN:BIG14 checks.")
     @Test
-    public void test22() {
+    public void test20() {
 
 
         //System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
@@ -450,9 +393,9 @@ public class SULevelUN1993 extends BNPBaseDG {
     }
 
 
-    @DisplayName("BGM+610+20220111131306236+9 checks.")
+    @DisplayName("BGM+610+20211222141626282+9 checks.")
     @Test
-    public void test23() {
+    public void test21() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
@@ -464,9 +407,9 @@ public class SULevelUN1993 extends BNPBaseDG {
     }
 
 
-    @DisplayName("DTM+137:202201111313:203 checks.")
+    @DisplayName("DTM+137:202112221416:203 checks.")
     @Test
-    public void test24() {
+    public void test22() {
 
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
@@ -477,9 +420,9 @@ public class SULevelUN1993 extends BNPBaseDG {
     }
 
 
-    @DisplayName("DTM+234:20220111:102 checks.")
+    @DisplayName("DTM+234:20211222:102 checks.")
     @Test
-    public void test25() {
+    public void test23() {
 
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
@@ -492,7 +435,7 @@ public class SULevelUN1993 extends BNPBaseDG {
 
     @DisplayName("FTX+PRD+++0330 checks.")
     @Test
-    public void test26() {
+    public void test24() {
 
 
         String productIdFromLabelShipments = decodedStringShipments.substring(decodedStringShipments.indexOf("^FT169,988^A0N,54,54^FD") + 23, decodedStringShipments.indexOf("^FT169,988^A0N,54,54^FD") + 23 + 4);
@@ -505,94 +448,80 @@ public class SULevelUN1993 extends BNPBaseDG {
     }
 
 
-    @DisplayName("FTX+SSR+++0003 checks.")
+    @DisplayName("Total: 2.0, - CNT+7:2.0:KGM checks.")
     @Test
-    public void test27() {
+    public void test25() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(7) = " + decodeArrList.get(7));
-        assertThat(decodeArrList.get(7).toString(), containsString("FTX+SSR+++0003"));
-
-    }
-
-
-    @DisplayName("Total: 42.0 - CNT+7:42.0:KGM checks.")
-    @Test
-    public void test28() {
-
-        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
-        List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(8) = " + decodeArrList.get(8));
-        assertThat(decodeArrList.get(8).toString(), containsString("CNT+7:" + bringParcelPojoShipments.getWeight() + ":" + bringParcelPojoShipments.weightUnitOfMeasure));
+//        System.out.println("decodeArrList.get(7) = " + decodeArrList.get(7));
+        assertThat(decodeArrList.get(7).toString(), containsString("CNT+7:" + weightInKilos + ":KGM"));
 
     }
 
 
     @DisplayName("Total packages 1, CNT+11:1:PCE checks.")
     @Test
-    public void test29() {
+    public void test26() {
 
-        int packagesFromLabelStart = decodedStringShipments.indexOf("^FT366,500^A0N,27,27^FD") + 23;
-        int packagesFromLabel = Integer.parseInt(decodedStringShipments.substring(packagesFromLabelStart, packagesFromLabelStart + detectedNumberOfPackages));
-        //System.out.println("packagesFromLabel = " + packagesFromLabel);
-        assertThat(packagesFromLabel, is(equalTo(detectedNumberOfPackages)));
+
+        //    System.out.println("bringParcelPojoShipments.getShippingUnits().get(0).getIndex() = " + bringParcelPojoShipments.getShippingUnits().get(0).getIndex());
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(9) = " + decodeArrList.get(9));
-        assertThat(decodeArrList.get(9).toString(), containsString("CNT+11:" + bringParcelPojoShipments.getShippingUnits().get(0).getIndex() + ":PCE"));
+        //    System.out.println("decodeArrList.get(8) = " + decodeArrList.get(8));
+        assertThat(decodeArrList.get(8).toString(), containsString("CNT+11:" + bringParcelPojoShipments.getShippingUnits().get(0).getIndex() + ":PCE"));
 
     }
 
 
     @DisplayName("Total volume 13.36, CNT+15:0.00001336:MTQ checks.")
     @Test
-    public void test30() {
+    public void test27() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(10) = " + decodeArrList.get(10));
-        assertThat(decodeArrList.get(10).toString(), containsString("CNT+15:" + String.format("%.8f", volumeInCubicMetre) + ":MTQ"));
+        //    System.out.println("decodeArrList.get(9) = " + decodeArrList.get(9));
+        assertThat(decodeArrList.get(9).toString(), containsString("CNT+15:" + String.format("%.8f", volumeInCubicMetre) + ":MTQ"));
 
     }
 
 
     @DisplayName("RFF+CU:s.ShipperRef checks.")
     @Test
-    public void test31() {
+    public void test28() {
 
 
         //    System.out.println("bringParcelPojoShipments.getShipperRef() = " + bringParcelPojoShipments.getShipperRef());
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(11) = " + decodeArrList.get(11));
-        assertThat(decodeArrList.get(11).toString(), containsString("RFF+CU:" + bringParcelPojoShipments.getShipperRef()));
+        //    System.out.println("decodeArrList.get(10) = " + decodeArrList.get(10));
+        assertThat(decodeArrList.get(10).toString(), containsString("RFF+CU:" + bringParcelPojoShipments.getShipperRef()));
 
     }
 
 
-    @DisplayName("RFF+SRN:12345670000041636 checks.")
+    @DisplayName("RFF+SRN:12345670000020662 checks.")
     @Test
-    public void test32() {
+    public void test29() {
 
 
         //    System.out.println("bringParcelPojoShipments.getForwarderRef() = " + bringParcelPojoShipments.getForwarderRef());
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(12) = " + decodeArrList.get(12));
-        assertThat(decodeArrList.get(12).toString(), containsString("RFF+SRN:" + bringParcelPojoShipments.getForwarderRef()));
+        //    System.out.println("decodeArrList.get(11) = " + decodeArrList.get(11));
+        assertThat(decodeArrList.get(11).toString(), containsString("RFF+SRN:" + bringParcelPojoShipments.getForwarderRef()));
 
     }
 
 
     @DisplayName("TDT+20++++BPI::87 checks.")
     @Test
-    public void test33() {
+    public void test30() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(13) = " + decodeArrList.get(13));
-        assertThat(decodeArrList.get(13).toString(), containsString("TDT+20++++BPI::87"));
+        //    System.out.println("decodeArrList.get(12) = " + decodeArrList.get(12));
+        assertThat(decodeArrList.get(12).toString(), containsString("TDT+20++++BPI::87"));
 
 
     }
@@ -600,154 +529,146 @@ public class SULevelUN1993 extends BNPBaseDG {
 
     @DisplayName("Pickup ADDRESS 1: NAD+CZ+01053548::87++CEVA pickups+Earl Bakkenstraat 7+HEERLEN++6422 PJ+NL checks.")
     @Test
-    public void test34() {
+    public void test31() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(14) = " + decodeArrList.get(14));
-        assertThat(decodeArrList.get(14).toString(), is(equalTo("NAD+CZ+" + bringParcelPojoShipments.getPickupForwarderDivisionAccountCode() + "::87++" + bringParcelPojoShipments.getAddresses().get(0).getReference() + "+" + bringParcelPojoShipments.getAddresses().get(0).getAddressLines().get(0).getValue() + "+" + bringParcelPojoShipments.getAddresses().get(0).getLocalityName() + "++" + bringParcelPojoShipments.getAddresses().get(0).getPostalCode() + "+" + bringParcelPojoShipments.getAddresses().get(0).getCountryCode())));
+        //    System.out.println("decodeArrList.get(13) = " + decodeArrList.get(13));
+        assertThat(decodeArrList.get(13).toString(), is(equalTo("NAD+CZ+" + bringParcelPojoShipments.getPickupForwarderDivisionAccountCode() + "::87++" + bringParcelPojoShipments.getAddresses().get(0).getReference() + "+" + bringParcelPojoShipments.getAddresses().get(0).getAddressLines().get(0).getValue() + "+" + bringParcelPojoShipments.getAddresses().get(0).getLocalityName() + "++" + bringParcelPojoShipments.getAddresses().get(0).getPostalCode() + "+" + bringParcelPojoShipments.getAddresses().get(0).getCountryCode())));
     }
 
 
     @DisplayName("Pickup Contact, CTA+IC+:Randall Flagg checks.")
     @Test
-    public void test35() {
+    public void test32() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(15) = " + decodeArrList.get(15));
-        assertThat(decodeArrList.get(15).toString(), is(equalTo("CTA+IC+:" + bringParcelPojoShipments.getAddresses().get(0).getContacts().get(0).getName())));
+        //    System.out.println("decodeArrList.get(14) = " + decodeArrList.get(14));
+        assertThat(decodeArrList.get(14).toString(), is(equalTo("CTA+IC+:" + bringParcelPojoShipments.getAddresses().get(0).getContacts().get(0).getName())));
     }
 
 
     @DisplayName("Pickup email, COM+r?.flagg@thestand?.com:EM checks.")
     @Test
-    public void test36() {
+    public void test33() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(16) = " + decodeArrList.get(16));
-        assertThat(decodeArrList.get(16).toString(), is(equalTo("COM+" + bringParcelPojoShipments.getAddresses().get(0).getContacts().get(0).getEmailAddress().replace(".", "?.") + ":EM")));
+        //    System.out.println("decodeArrList.get(15) = " + decodeArrList.get(15));
+        assertThat(decodeArrList.get(15).toString(), is(equalTo("COM+" + bringParcelPojoShipments.getAddresses().get(0).getContacts().get(0).getEmailAddress().replace(".", "?.") + ":EM")));
     }
 
 
     @DisplayName("Pickup phone COM+31688877766:AL checks.")
     @Test
-    public void test37() {
+    public void test34() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(17) = " + decodeArrList.get(17));
-        assertThat(decodeArrList.get(17).toString(), is(equalTo("COM+" + bringParcelPojoShipments.getAddresses().get(0).getContacts().get(0).getPhoneNumber() + ":AL")));
+        //    System.out.println("decodeArrList.get(16) = " + decodeArrList.get(16));
+        assertThat(decodeArrList.get(16).toString(), is(equalTo("COM+" + bringParcelPojoShipments.getAddresses().get(0).getContacts().get(0).getPhoneNumber() + ":AL")));
     }
 
 
     @DisplayName("Delivery ADDRESS 1: NAD+CN+::87++DY?.REFERENCE+Grand Hotel Oslo:Karl Johans gate 31+OSLO++0159+NO checks.")
     @Test
-    public void test38() {
+    public void test35() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(18) = " + decodeArrList.get(18));
-        assertThat(decodeArrList.get(18).toString(), is(equalTo("NAD+CN+::87++" + bringParcelPojoShipments.getAddresses().get(1).getReference().replace(".", "?.") + "+" + bringParcelPojoShipments.getDeliveryAddress().getAddressLines().get(0).getValue() + ":" + bringParcelPojoShipments.getDeliveryAddress().getAddressLines().get(1).getValue() + "+" + bringParcelPojoShipments.getDeliveryAddress().getLocalityName() + "++" + bringParcelPojoShipments.getDeliveryAddress().getPostalCode() + "+" + bringParcelPojoShipments.getDeliveryAddress().getCountryCode())));
+        //    System.out.println("decodeArrList.get(17) = " + decodeArrList.get(17));
+        assertThat(decodeArrList.get(17).toString(), is(equalTo("NAD+CN+::87++" + bringParcelPojoShipments.getAddresses().get(1).getReference().replace(".", "?.") + "+" + bringParcelPojoShipments.getDeliveryAddress().getAddressLines().get(0).getValue() + ":" + bringParcelPojoShipments.getDeliveryAddress().getAddressLines().get(1).getValue() + "+" + bringParcelPojoShipments.getDeliveryAddress().getLocalityName() + "++" + bringParcelPojoShipments.getDeliveryAddress().getPostalCode() + "+" + bringParcelPojoShipments.getDeliveryAddress().getCountryCode())));
     }
 
 
     @DisplayName("Delivery contact, CTA+IC+:DY?.Contact Name checks.")
     @Test
-    public void test39() {
+    public void test36() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(19) = " + decodeArrList.get(19));
-        assertThat(decodeArrList.get(19).toString(), is(equalTo("CTA+IC+:" + bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getName().replace(".", "?."))));
+        //    System.out.println("decodeArrList.get(18) = " + decodeArrList.get(18));
+        assertThat(decodeArrList.get(18).toString(), is(equalTo("CTA+IC+:" + bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getName().replace(".", "?."))));
     }
 
 
     @DisplayName("Delivery email, COM+delivery@email?.com:EM checks.")
     @Test
-    public void test40() {
+    public void test37() {
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        //    System.out.println("decodeArrList.get(19) = " + decodeArrList.get(19));
+        assertThat(decodeArrList.get(19).toString(), is(equalTo("COM+" + bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getEmailAddress().replace(".", "?.") + ":EM")));
+    }
+
+
+    @DisplayName("Delivery phone number, COM+<PLACEHOLDER>062222222:AL checks.")
+    @Test
+    public void test38() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
         //    System.out.println("decodeArrList.get(20) = " + decodeArrList.get(20));
-        assertThat(decodeArrList.get(20).toString(), is(equalTo("COM+" + bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getEmailAddress().replace(".", "?.") + ":EM")));
-    }
-
-
-    @DisplayName("Delivery phone number, COM+062222222:AL checks.")
-    @Test
-    public void test41() {
-
-        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
-        List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(21) = " + decodeArrList.get(21));
-        assertThat(decodeArrList.get(21).toString(), is(equalTo("COM+" + bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getPhoneNumber().replace("+", "").replace("(", "").replace(")", "").replace("-", "") + ":AL")));
+        assertThat(decodeArrList.get(20).toString(), is(equalTo("COM+" + "?" + "+" + bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getPhoneNumber().replace("+", "").replace("(", "").replace(")", "").replace("-", "") + ":AL")));
     }
 
 
     @DisplayName("ACCOUNT: NAD+FP+12BAC3DE::87 checks.")
     @Test
-    public void test42() {
+    public void test39() {
+
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        //    System.out.println("decodeArrList.get(21) = " + decodeArrList.get(21));
+        assertThat(decodeArrList.get(21).toString(), is(equalTo("NAD+FP+12BAC3DE::87")));
+
+    }
+
+
+    @DisplayName("Package #1, GID+1+1:PD")
+    @Test
+    public void test40() {
+
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
         //    System.out.println("decodeArrList.get(22) = " + decodeArrList.get(22));
-        assertThat(decodeArrList.get(22).toString(), is(equalTo("NAD+FP+12BAC3DE::87")));
-
+//        if (bringParcelPojoShipments.getShippingUnits().toString().contains("Quantity")) {
+//            assertThat(decodeArrList.get(22).toString(), is(equalTo("GID" + "+" + validateResponseShipments.extract().jsonPath().getInt("Quantity") + "+" + bringParcelPojoShipments.getNumberOfShippingUnits() + ":" + bringParcelPojoShipments.getShippingUnits().get(0).getPackageType())));
+//        } else {
+        assertThat(decodeArrList.get(22).toString(), is(equalTo("GID" + "+" + "1" + "+" + bringParcelPojoShipments.getNumberOfShippingUnits() + ":" + bringParcelPojoShipments.getShippingUnits().get(0).getPackageType())));
     }
+//    }
 
 
-    @DisplayName("Package #1, GID+1+1:BX")
+    @DisplayName("Package #1 weight ('Standard', always present; #6434), MEA+WT+G+KGM:2.0")
     @Test
-    public void test43() {
+    public void test41() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
         //    System.out.println("decodeArrList.get(23) = " + decodeArrList.get(23));
-//        if (bringParcelPojoShipments.getShippingUnits().toString().contains("Quantity")) {
-//            assertThat(decodeArrList.get(23).toString(), is(equalTo("GID" + "+" + validateResponseShipments.extract().jsonPath().getInt("Quantity") + "+" + bringParcelPojoShipments.getNumberOfShippingUnits() + ":" + bringParcelPojoShipments.getShippingUnits().get(0).getPackageType())));
-//        } else {
-        assertThat(decodeArrList.get(23).toString(), is(equalTo("GID" + "+" + "1" + "+" + bringParcelPojoShipments.getNumberOfShippingUnits() + ":" + bringParcelPojoShipments.getShippingUnits().get(0).getPackageType())));
+        assertThat(decodeArrList.get(23).toString(), is(equalTo("MEA+WT+G+KGM" + ":" + weightInKilos)));
     }
 
 
-    @DisplayName("Package #1 weight ('Standard', always present; #6434), MEA+WT+G+KGM:1.0")
+    @DisplayName("Package #1 dimensions, DIM+2+CMT:33:27:15")
     @Test
-    public void test44() {
+    public void test42() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
         //    System.out.println("decodeArrList.get(24) = " + decodeArrList.get(24));
-        assertThat(decodeArrList.get(24).toString(), is(equalTo("MEA+WT+G" + "+" + bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeightUnitOfMeasure() + ":" + weightInKilos)));
+        assertThat(decodeArrList.get(24).toString(), is(equalTo("DIM+2" + "+" + bringParcelPojoShipments.getShippingUnits().get(0).getDimensionsUnitOfMeasure() + ":" + String.format("%.0f", bringParcelPojoShipments.getShippingUnits().get(0).getLength()) + ":" + String.format("%.0f", bringParcelPojoShipments.getShippingUnits().get(0).getWidth()) + ":" + String.format("%.0f", bringParcelPojoShipments.getShippingUnits().get(0).getHeight()))));
     }
 
 
-    @DisplayName("Package #1 weight (ZLQ, DG), MEA+WT+ZLQ+KGM:1.0")
+    @DisplayName("Verify the CHECK DIGIT for 00112345670000030125 is correct. We expect: 5 for 11234567000003012")
     @Test
-    public void test45() {
-
-        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
-        List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(25) = " + decodeArrList.get(25));
-        assertThat(decodeArrList.get(25).toString(), is(equalTo("MEA+WT+ZLQ" + "+" + bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeightUnitOfMeasure() + ":" + weightInKilos)));
-    }
-
-
-    @DisplayName("Package #1 dimensions, DIM+2+CMT:11:11:11")
-    @Test
-    public void test46() {
-
-        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
-        List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(26) = " + decodeArrList.get(26));
-        assertThat(decodeArrList.get(26).toString(), is(equalTo("DIM+2" + "+" + bringParcelPojoShipments.getShippingUnits().get(0).getDimensionsUnitOfMeasure() + ":" + String.format("%.0f", bringParcelPojoShipments.getShippingUnits().get(0).getLength()) + ":" + String.format("%.0f", bringParcelPojoShipments.getShippingUnits().get(0).getWidth()) + ":" + String.format("%.0f", bringParcelPojoShipments.getShippingUnits().get(0).getHeight()))));
-    }
-
-
-    @DisplayName("Verify the CHECK DIGIT for 00112345670000046072 is correct. We expect: 2 for 11234567000004607")
-    @Test
-    public void test47() {
+    public void test43() {
 
         //    System.out.println("bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(2) = " + bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(2, 19));
         //    System.out.println("bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef() = " + bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef());
@@ -756,51 +677,51 @@ public class SULevelUN1993 extends BNPBaseDG {
     }
 
 
-    @DisplayName("Package #1 Tracking number, PCI+30+112345670000046072")
+    @DisplayName("Package #1 Tracking number, PCI+30+112345670000030125")
     @Test
-    public void test48() {
+    public void test44() {
+
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        //    System.out.println("decodeArrList.get(25) = " + decodeArrList.get(25));
+        assertThat(decodeArrList.get(25).toString(), is(equalTo("PCI+30" + "+" + bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(2))));
+    }
+
+
+    @DisplayName("Package #1 reference number, RFF+CW:SU.ShipperRef")
+    @Test
+    public void test45() {
+
+
+        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
+        List decodeArrList = Arrays.asList(decodeArr);
+        //    System.out.println("decodeArrList.get(26) = " + decodeArrList.get(26));
+        assertThat(decodeArrList.get(26).toString(), is(equalTo("RFF+CW:" + bringParcelPojoShipments.getShippingUnits().get(0).getShipperRef())));
+    }
+
+
+    @DisplayName("UNT: UNT+26+314596 checks.")
+    @Test
+    public void test46() {
 
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
         //    System.out.println("decodeArrList.get(27) = " + decodeArrList.get(27));
-        assertThat(decodeArrList.get(27).toString(), is(equalTo("PCI+30" + "+" + bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(2))));
+        assertThat(decodeArrList.get(27).toString(), is(equalTo("UNT" + "+" + (decodeArrList.indexOf(decodeArrList.get(27).toString()) - 1) + "+" + bringParcelPojoShipments.getShipmentId())));
     }
 
 
-    @DisplayName("Package #1 reference number, RFF+CW:SU.ShipperRef 1/3")
+    @DisplayName("UNT: UNZ+1+00000000002598' checks.")
     @Test
-    public void test49() {
+    public void test47() {
 
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
         //    System.out.println("decodeArrList.get(28) = " + decodeArrList.get(28));
-        assertThat(decodeArrList.get(28).toString(), is(equalTo("RFF+CW:" + bringParcelPojoShipments.getShippingUnits().get(0).getShipperRef())));
-    }
-
-
-    @DisplayName("UNT: UNT+28+320106 checks.")
-    @Test
-    public void test50() {
-
-
-        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
-        List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(29) = " + decodeArrList.get(29));
-        assertThat(decodeArrList.get(29).toString(), is(equalTo("UNT" + "+" + (decodeArrList.indexOf(decodeArrList.get(29).toString()) - 1) + "+" + bringParcelPojoShipments.getShipmentId())));
-    }
-
-
-    @DisplayName("UNT: UNZ+1+00000000003830' checks.")
-    @Test
-    public void test51() {
-
-
-        String[] decodeArr = decodedStringConveyances.split("\'\r\n");
-        List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(30) = " + decodeArrList.get(30));
-        assertThat(decodeArrList.get(30).toString().replace("'", ""), is(equalTo("UNZ+1" + "+" + decodeArrList.get(1).toString().substring((decodeArrList.get(1).toString().lastIndexOf("+") + 1)))));
+        assertThat(decodeArrList.get(28).toString().replace("'", ""), is(equalTo("UNZ+1" + "+" + decodeArrList.get(1).toString().substring((decodeArrList.get(1).toString().lastIndexOf("+") + 1)))));
 
     }
 

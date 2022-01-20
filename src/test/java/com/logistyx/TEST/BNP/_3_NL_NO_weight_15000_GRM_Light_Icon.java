@@ -1,7 +1,7 @@
-package com.logistyx.TEST;
+package com.logistyx.TEST.BNP;
 
 
-import com.logistyx.utilities.BNPBaseNotDG;
+import com.logistyx.utilities.abstractBaseClasses.BNPBaseNotDG;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.*;
 
 
 @DisplayName("[+] 3 - NL-NO, weight 15000 GRM ==> Light Icon")
-public class $3NLNOweight15000GRMLightIcon extends BNPBaseNotDG {
+public class _3_NL_NO_weight_15000_GRM_Light_Icon extends BNPBaseNotDG {
 
     static {
         BNPBaseNotDG.shipmentsLabel();

@@ -1,6 +1,6 @@
-package com.logistyx.utilities;
+package com.logistyx.utilities.abstractBaseClasses;
 
-import com.logistyx.pojo.bring.parcel.NotDG.BringParcelPojo;
+import com.logistyx.pojo.bring.parcel.DG.BringParcelPojo;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.ValidatableResponse;
@@ -17,11 +17,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static io.restassured.RestAssured.*;
-import static org.hamcrest.MatcherAssert.assertThat;
 
-public abstract class BNPBaseNotDG implements BNPJson1{
+public abstract class BNPBaseDG {
 
-
+    public static String requestJsonBodyShipments;
     public static RequestSpecification requestSpecShipments;
     public static ResponseSpecification responseSpecShipments;
     public static ValidatableResponse validateResponseShipments;
@@ -33,9 +32,12 @@ public abstract class BNPBaseNotDG implements BNPJson1{
     public static String mediumWeightIcon;
     public static String heavyWeightIcon;
     public static double weightInKilos;
+    public static double dGweightInKilos;
+    public static String dGweightUoM;
     public static double volumeInCubicMetre;
     public static String checkString;
     public static int checkDigit;
+    public static Map<String, Object> jsonMap;
 
     public static int totalGrossWeight;
     public static List<Float> grossWeight;
@@ -66,6 +68,110 @@ public abstract class BNPBaseNotDG implements BNPJson1{
     @Test
     public static void shipmentsLabel() {
 
+        requestJsonBodyShipments = "{\n" +
+                "    \"ShipperCode\": \"CEVA\",\n" +
+                "    \"ProjectCode\": \"THESTAND\",\n" +
+                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
+                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
+                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
+                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
+                "    \"Addresses\": [\n" +
+                "        {\n" +
+                "            \"Reference\": \"CEVA pickups\",\n" +
+                "            \"AddressLines\": [\n" +
+                "                {\n" +
+                "                    \"Index\": 1,\n" +
+                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"PostalCode\": \"6422 PJ\",\n" +
+                "            \"LocalityName\": \"HEERLEN\",\n" +
+                "            \"CountryCode\": \"NL\",\n" +
+                "            \"Remark\": \"Pickup location / CEVA\",\n" +
+                "            \"Contacts\": [\n" +
+                "                {\n" +
+                "                    \"Name\": \"Randall Flagg\",\n" +
+                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
+                "                    \"PhoneNumber\": \"31688877766\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"ForwarderDivisionAccounts\": null,\n" +
+                "            \"AddressTypes\": [\n" +
+                "                {\n" +
+                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"AddressTypes\": [\n" +
+                "                {\n" +
+                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"Reference\": \"DY.REFERENCE\",\n" +
+                "            \"AddressLines\": [\n" +
+                "                {\n" +
+                "                    \"Index\": 1,\n" +
+                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"Index\": 2,\n" +
+                "                    \"Value\": \"Karl Johans gate 31\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"PostalCode\": \"0159\",\n" +
+                "            \"LocalityName\": \"OSLO\",\n" +
+                "            \"CountryCode\": \"NO\",\n" +
+                "            \"Remark\": \"DY.Remark\",\n" +
+                "            \"Contacts\": [\n" +
+                "                {\n" +
+                "                    \"Name\": \"DY.Contact Name\",\n" +
+                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
+                "                    \"PhoneNumber\": \"062222222\"\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        }\n" +
+                "    ],\n" +
+                "    \"Value\": 10,\n" +
+                "    \"InsuranceValue\": 10,\n" +
+                "    \"CustomsValue\": 10,\n" +
+                "    \"IncotermCode\": \"DAP\",\n" +
+                "    \"Volume\": 13.36,\n" +
+                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
+                "    \"Weight\": 42,\n" +
+                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
+                "    \"Info\": \"S.Info\",\n" +
+                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
+                "    \"ShippingUnits\": [\n" +
+                "        {\n" +
+                "            \"ShipperRef\": \"SU.ShipperRef 1/3\",\n" +
+                "            \"ReceiverRef\": \"SU.ReceiverRef 1/3\",\n" +
+                "            \"Length\": 11,\n" +
+                "            \"Width\": 11,\n" +
+                "            \"Height\": 11,\n" +
+                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
+                "            \"Volume\": 13111,\n" +
+                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
+                "            \"PackageType\": \"BX\",\n" +
+                "            \"GrossWeight\": 1,\n" +
+                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
+                "            \"Content\": \"STOMAHESIVE PASTE\",\n" +
+                "            \"DangerousGoods\": [\n" +
+                "                {\n" +
+                "                    \"LimitedQuantity\": true,\n" +
+                "                    \"ReportableQuantity\": false,\n" +
+                "                    \"ExceptedQuantity\": false,\n" +
+                "                    \"HazardousMaterialIdentificationNumber\": \"UN1991\",\n" +
+                "                    \"ClassIdDivisionCompatibilityGroup\": \"3\",\n" +
+                "                    \"Weight\": 2.3,\n" +
+                "                    \"WeightUnitOfMeasure\": \"KGM\",\n" +
+                "                    \"TechnicalName\": \"STOMAHESIVE PASTE\",\n" +
+                "                    \"ProperShippingName\": \"Flammable liquid, n.o.s\"\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}";
 
         requestSpecShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)
@@ -83,6 +189,9 @@ public abstract class BNPBaseNotDG implements BNPJson1{
         encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
         decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
         decodedStringShipments = new String(decodedBytesShipments);
+
+        jsonMap = validateResponseShipments.extract().as(Map.class);
+
 
         upTo15kgIcon = "^FO690,601^GFA,358,711,9,:Z64:eJyFkTtOAzEQQGcxWlOsCOUWVkQkDrAlRSRyFI6QMuVEIKWnocxFUvgoLjhAyhQIM55PtBtHyrh5erZnxh64Hj4rvGUU2DRJ4EirRBNhKWcR5lNoiRkeARyqcWw6vkgRRgC3oNziPPcEVkIye6vlzoClrnQYpOdksIFXgaUZv+oEmmMLd0+fC3phS8/OGV10MJTKDhtk8JRTAQSoj2TwzkDpnisYGB4qQ930DL0BmTDdGqqttRmCjiGZSXpmG9V8GOxQYQ966wBqykBDeXL57P7l++dLPt3LyKm3P9R5zE4+soGck8Asq6Ef4FFRrEYmTE20M3FkQmUugJr7NThBFf+O+ldF:486D^FS";
         mediumWeightIcon = "^FO690,601^GFA,346,711,9,:Z64:eJyNkTFOAzEQRf/GYpciCilTRIKCA1BSwR6BZvs9wpYpImFOkCtwlOEmLikp05nZPzORKFbEcvH8POMZ27h2NI8OrzUbHFMxmGDQFBwMMvaEFLACWkLHCS4vkHjihon/ggXPWfgDKQ7UyDZgYx0KdgYFzwaHgJfYupG931TW6GqtuSmtg3QOORl02sYMkrQKTat5DigErT0yJiCvA24DtOQDQZuYAp6Ypf3taBS2sWVmciNTmDFiRjcf4uZL3JyymxPcnOGmhJmvv0Vz5jtouftPM7j7XvU0+v2FBmkGe7vRDGHJ9GH6MLIcczHvtf4QhmF4w/L4BaLZkiY=:F1CF^FS";
@@ -110,6 +219,31 @@ public abstract class BNPBaseNotDG implements BNPJson1{
             case "LBR":
             case "LBS":
                 weightInKilos = Precision.round(bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight() * 0.45359237, 1);
+                break;
+        }
+
+        dGweightUoM = bringParcelPojoShipments.getShippingUnits().get(0).getDangerousGoods().get(0).getWeightUnitOfMeasure();
+        switch (dGweightUoM) {
+            case "KG":
+            case "KGM":
+            case "KGS":
+                dGweightInKilos = bringParcelPojoShipments.getShippingUnits().get(0).getDangerousGoods().get(0).getWeight();
+                break;
+            case "G":
+            case "G ":
+            case "G  ":
+            case "GM":
+            case "GM ":
+            case "GR ":
+            case "GRM":
+            case "KG ": // Can't help, DOCS or the component thinks this is grams, no conversion
+                dGweightInKilos = Precision.round(bringParcelPojoShipments.getShippingUnits().get(0).getDangerousGoods().get(0).getWeight() * 0.001, 1);
+                break;
+            case "LB":
+            case "LB ":
+            case "LBR":
+            case "LBS":
+                dGweightInKilos = Precision.round(bringParcelPojoShipments.getShippingUnits().get(0).getDangerousGoods().get(0).getWeight() * 0.45359237, 1);
                 break;
         }
 
@@ -186,3 +320,6 @@ public abstract class BNPBaseNotDG implements BNPJson1{
 
     }
 }
+
+
+
