@@ -20,7 +20,7 @@ import java.util.*;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public abstract class BNPBaseNotDG implements BNPJson5 {
+public abstract class BNPBaseNotDG implements BNPJson6 {
 
 
     public static RequestSpecification requestSpecShipments;
