@@ -2,6 +2,7 @@ package com.logistyx.TEST.BNP;
 
 
 import com.logistyx.utilities.abstractBaseClasses.BNPBaseNotDG;
+import org.apache.commons.math3.util.Precision;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -294,10 +295,11 @@ public class _3_NL_NO_weight_15000_GRM_Light_Icon extends BNPBaseNotDG {
 
         //    System.out.println("totalGrossWeight = " + totalGrossWeight);
         //    System.out.println("bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight() = " + (bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight()));
-        //   System.out.println("grossWeight = " + grossWeight);
-        //    System.out.println("numberOfShippingUnits = " + numberOfShippingUnits);
+        //    System.out.println("grossWeight = " + grossWeight);
+        //    System.out.println("((double) (totalGrossWeight)) = " + ((double) (totalGrossWeight)));
+        //    System.out.println("(Precision.round(bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight(), 0)) = " + (Precision.round(bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight(), 0)));
         assertThat(bringParcelPojoShipments.getNumberOfShippingUnits(), is(equalTo(detectedNumberOfPackages)));
-        assertThat(bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight(), is(equalTo((double)(totalGrossWeight))));
+        assertThat(Precision.round(bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight(), 0), is(equalTo((double) (totalGrossWeight))));
 
     }
 
@@ -610,7 +612,7 @@ public class _3_NL_NO_weight_15000_GRM_Light_Icon extends BNPBaseNotDG {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-    //        System.out.println("decodeArrList.get(20) = " + decodeArrList.get(20));
+        //        System.out.println("decodeArrList.get(20) = " + decodeArrList.get(20));
         assertThat(decodeArrList.get(20).toString(), is(equalTo("COM+" + bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getPhoneNumber().replace("+", "").replace("(", "").replace(")", "").replace("-", "") + ":AL")));
     }
 
@@ -651,7 +653,7 @@ public class _3_NL_NO_weight_15000_GRM_Light_Icon extends BNPBaseNotDG {
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
         //    System.out.println("decodeArrList.get(23) = " + decodeArrList.get(23));
-        assertThat(decodeArrList.get(23).toString(), is(equalTo("MEA+WT+G+KGM" + ":" + weightInKilos)));
+        assertThat(decodeArrList.get(23).toString(), is(equalTo("MEA+WT+G+KGM" + ":" + Precision.round(weightInKilos, 1))));
     }
 
 
