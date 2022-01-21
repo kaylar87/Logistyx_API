@@ -1,4 +1,4 @@
-package com.logistyx.TEST.BNP.BNP_BUS_PRCL.Weight_Cases_NL_NO;
+package com.logistyx.TEST.All_Bring_Parcel_BNP_v303_v311.Label_And_EDI_Requests.BNP_BUS_PRCL.Weight_Cases_NL_NO;
 
 
 import com.logistyx.utilities.abstractBaseClasses.BNPBaseNotDG;
@@ -9,12 +9,13 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.lang.Math.round;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 
-@DisplayName("[+] 4d - NL-NO, weight exactly 25 KG = Medium Icon")
-public class _4d_NL_NO_weight_exactly_25_KG_Medium_Icon extends BNPBaseNotDG {
+@DisplayName("[+] 4c - NL-NO, weight 32.366 kg = Heavy icon")
+public class _4c_NL_NO_weight_32_366_kg_Heavy_icon extends BNPBaseNotDG {
 
     static {
         BNPBaseNotDG.shipmentsLabel();

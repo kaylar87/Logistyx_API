@@ -1,4 +1,4 @@
-package com.logistyx.TEST.BNP.BNP_BUS_PRCL.Weight_Cases_NL_NO;
+package com.logistyx.TEST.All_Bring_Parcel_BNP_v303_v311.Label_And_EDI_Requests.BNP_BUS_PRCL.Weight_Cases_NL_NO;
 
 
 import com.logistyx.utilities.abstractBaseClasses.BNPBaseNotDG;

@@ -1,4 +1,4 @@
-package com.logistyx.TEST.BNP.BNP_BUS_PRCL.Weight_Cases_NL_NO;
+package com.logistyx.TEST.All_Bring_Parcel_BNP_v303_v311.Label_And_EDI_Requests.BNP_BUS_PRCL.Weight_Cases_NL_NO;
 
 
 import com.logistyx.utilities.abstractBaseClasses.BNPBaseNotDG;
@@ -13,8 +13,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 
-@DisplayName("[+] 4a - NL-NO, weight 15001 GRM")
-public class _4a_NL_NO_weight_15001_GRM extends BNPBaseNotDG {
+@DisplayName("[+] 4b - NL-NO, weight 15051 GRM ==>Medium Icon")
+public class _4b_NL_NO_weight_15051_GRM_Medium_Icon extends BNPBaseNotDG {
 
     static {
         BNPBaseNotDG.shipmentsLabel();
