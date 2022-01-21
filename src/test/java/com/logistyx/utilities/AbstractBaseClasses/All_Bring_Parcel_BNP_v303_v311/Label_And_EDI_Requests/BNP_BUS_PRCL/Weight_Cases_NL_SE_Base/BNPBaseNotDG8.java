@@ -1,7 +1,6 @@
-package com.logistyx.utilities.abstractBaseClasses.Weight_Cases_NL_SE_Base;
+package com.logistyx.utilities.AbstractBaseClasses.All_Bring_Parcel_BNP_v303_v311.Label_And_EDI_Requests.BNP_BUS_PRCL.Weight_Cases_NL_SE_Base;
 
 import com.logistyx.pojo.bring.parcel.NotDG.BringParcelPojo;
-import com.logistyx.utilities.interfaces.BNP.BNP_BUS_PRCL.Weight_Cases_NL_NO.BNPJson5;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.ValidatableResponse;
@@ -19,7 +18,7 @@ import java.util.*;
 
 import static io.restassured.RestAssured.*;
 
-public abstract class BNPBaseNotDG9 {
+public abstract class BNPBaseNotDG8 {
 
     public static String requestJsonBodyShipments;
     public static RequestSpecification requestSpecShipments;
@@ -111,6 +110,10 @@ public abstract class BNPBaseNotDG9 {
                 "                {\n" +
                 "                    \"Index\": 1,\n" +
                 "                    \"Value\": \"Bryggargatan 12\"\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"Index\": 2,\n" +
+                "                    \"Value\": \"Den glider in 1995\"\n" +
                 "                }\n" +
                 "            ],\n" +
                 "            \"PostalCode\": \"10131\",\n" +
@@ -132,8 +135,8 @@ public abstract class BNPBaseNotDG9 {
                 "    \"IncotermCode\": \"DAP\",\n" +
                 "    \"Volume\": 13.36,\n" +
                 "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 62,\n" +
-                "    \"WeightUnitOfMeasure\": \"LBR\",\n" +
+                "    \"Weight\": 15000,\n" +
+                "    \"WeightUnitOfMeasure\": \"GRM\",\n" +
                 "    \"Info\": \"S.Info\",\n" +
                 "    \"RequestedPickupDateTime\": \"2022-01-21T15:17:17.147Z\",\n" +
                 "    \"ShippingUnits\": [\n" +
@@ -147,8 +150,8 @@ public abstract class BNPBaseNotDG9 {
                 "            \"Volume\": 13360,\n" +
                 "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
                 "            \"PackageType\": \"BX\",\n" +
-                "            \"GrossWeight\": 62,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"LBR\",\n" +
+                "            \"GrossWeight\": 15000,\n" +
+                "            \"GrossWeightUnitOfMeasure\": \"GRM\",\n" +
                 "            \"Content\": \"001010000000008853\"\n" +
                 "        }\n" +
                 "    ]\n" +

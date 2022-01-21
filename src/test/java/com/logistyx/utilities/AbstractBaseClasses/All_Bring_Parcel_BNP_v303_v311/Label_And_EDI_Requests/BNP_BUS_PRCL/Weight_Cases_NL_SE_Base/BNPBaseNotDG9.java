@@ -1,15 +1,6 @@
-package com.logistyx.utilities.abstractBaseClasses;
+package com.logistyx.utilities.AbstractBaseClasses.All_Bring_Parcel_BNP_v303_v311.Label_And_EDI_Requests.BNP_BUS_PRCL.Weight_Cases_NL_SE_Base;
 
 import com.logistyx.pojo.bring.parcel.NotDG.BringParcelPojo;
-import com.logistyx.utilities.interfaces.BNP.BNP_BUS_PRCL.Weight_Cases_NL_NO.BNPJson1;
-import com.logistyx.utilities.interfaces.BNP.BNP_BUS_PRCL.Weight_Cases_NL_NO.BNPJson2;
-import com.logistyx.utilities.interfaces.BNP.BNP_BUS_PRCL.Weight_Cases_NL_NO.BNPJson3;
-import com.logistyx.utilities.interfaces.BNP.BNP_BUS_PRCL.Weight_Cases_NL_NO.BNPJson4;
-import com.logistyx.utilities.interfaces.BNP.BNP_BUS_PRCL.Weight_Cases_NL_NO.BNPJson5;
-import com.logistyx.utilities.interfaces.BNP.BNP_BUS_PRCL.Weight_Cases_NL_NO.BNPJson6;
-import com.logistyx.utilities.interfaces.BNP.BNP_BUS_PRCL.Weight_Cases_NL_SE.BNPJson7;
-import com.logistyx.utilities.interfaces.BNP.BNP_BUS_PRCL.Weight_Cases_NL_SE.BNPJson8;
-import com.logistyx.utilities.interfaces.BNP.BNP_BUS_PRCL.Weight_Cases_NL_SE.BNPJson9;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.ValidatableResponse;
@@ -19,7 +10,6 @@ import org.apache.commons.math3.util.Precision;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.text.DateFormat;
@@ -27,12 +17,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static io.restassured.RestAssured.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 
-public abstract class BNPBaseNotDG implements BNPJson1 {
+public abstract class BNPBaseNotDG9 {
 
-
+    public static String requestJsonBodyShipments;
     public static RequestSpecification requestSpecShipments;
     public static ResponseSpecification responseSpecShipments;
     public static ValidatableResponse validateResponseShipments;
@@ -77,6 +65,93 @@ public abstract class BNPBaseNotDG implements BNPJson1 {
     @Test
     public static void shipmentsLabel() {
 
+        requestJsonBodyShipments = "{\n" +
+                "    \"ShipperCode\": \"CEVA\",\n" +
+                "    \"ProjectCode\": \"THESTAND\",\n" +
+                "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
+                "    \"ForwarderDivisionCode\": \"BNP\",\n" +
+                "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
+                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
+                "    \"Addresses\": [\n" +
+                "        {\n" +
+                "            \"Reference\": \"CEVA pickups\",\n" +
+                "            \"AddressLines\": [\n" +
+                "                {\n" +
+                "                    \"Index\": 1,\n" +
+                "                    \"Value\": \"Earl Bakkenstraat 7\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"PostalCode\": \"6422 PJ\",\n" +
+                "            \"LocalityName\": \"HEERLEN\",\n" +
+                "            \"CountryCode\": \"NL\",\n" +
+                "            \"Remark\": \"Pickup location / CEVA\",\n" +
+                "            \"Contacts\": [\n" +
+                "                {\n" +
+                "                    \"Name\": \"Randall Flagg\",\n" +
+                "                    \"EmailAddress\": \"r.flagg@thestand.com\",\n" +
+                "                    \"PhoneNumber\": \"31688877766\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"ForwarderDivisionAccounts\": null,\n" +
+                "            \"AddressTypes\": [\n" +
+                "                {\n" +
+                "                    \"AddressTypeCode\": \"PICKUP\"\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"AddressTypes\": [\n" +
+                "                {\n" +
+                "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"Reference\": \"Freys Hotel\",\n" +
+                "            \"AddressLines\": [\n" +
+                "                {\n" +
+                "                    \"Index\": 1,\n" +
+                "                    \"Value\": \"Bryggargatan 12\"\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"PostalCode\": \"10131\",\n" +
+                "            \"LocalityName\": \"STOCKHOLM\",\n" +
+                "            \"CountryCode\": \"SE\",\n" +
+                "            \"Remark\": \"Delivery/Sweden\",\n" +
+                "            \"Contacts\": [\n" +
+                "                {\n" +
+                "                    \"Name\": \"Carl Gustav King\",\n" +
+                "                    \"EmailAddress\": \"stockholm@email.com\",\n" +
+                "                    \"PhoneNumber\": \"+46633333333\"\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        }\n" +
+                "    ],\n" +
+                "    \"Value\": 10,\n" +
+                "    \"InsuranceValue\": 10,\n" +
+                "    \"CustomsValue\": 10,\n" +
+                "    \"IncotermCode\": \"DAP\",\n" +
+                "    \"Volume\": 13.36,\n" +
+                "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
+                "    \"Weight\": 62,\n" +
+                "    \"WeightUnitOfMeasure\": \"LBR\",\n" +
+                "    \"Info\": \"S.Info\",\n" +
+                "    \"RequestedPickupDateTime\": \"2022-01-21T15:17:17.147Z\",\n" +
+                "    \"ShippingUnits\": [\n" +
+                "        {\n" +
+                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
+                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
+                "            \"Length\": 33,\n" +
+                "            \"Width\": 27,\n" +
+                "            \"Height\": 15,\n" +
+                "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
+                "            \"Volume\": 13360,\n" +
+                "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
+                "            \"PackageType\": \"BX\",\n" +
+                "            \"GrossWeight\": 62,\n" +
+                "            \"GrossWeightUnitOfMeasure\": \"LBR\",\n" +
+                "            \"Content\": \"001010000000008853\"\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}";
 
         requestSpecShipments = given().header("Shipper-Code", "CEVA")
                 .accept(ContentType.JSON)

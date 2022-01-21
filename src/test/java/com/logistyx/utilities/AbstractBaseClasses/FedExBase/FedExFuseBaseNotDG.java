@@ -1,4 +1,4 @@
-package com.logistyx.utilities.abstractBaseClasses;
+package com.logistyx.utilities.AbstractBaseClasses.FedExBase;
 
 import com.logistyx.pojo.fedex.fuse.NotDG.FedExFusePojo;
 import io.restassured.http.ContentType;

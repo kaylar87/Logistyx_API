@@ -1,9 +1,8 @@
 package com.logistyx.TEST.All_Bring_Parcel_BNP_v303_v311.Label_And_EDI_Requests.BNP_BUS_PRCL.Weight_Cases_NL_NO;
 
 
-import com.logistyx.utilities.abstractBaseClasses.BNPBaseNotDG;
+import com.logistyx.utilities.AbstractBaseClasses.All_Bring_Parcel_BNP_v303_v311.Label_And_EDI_Requests.BNP_BUS_PRCL.Weight_Cases_NL_NO_Base.BNPBaseNotDG1;
 import org.apache.commons.math3.util.Precision;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.DisplayName;
@@ -15,10 +14,10 @@ import java.util.*;
 
 
 @DisplayName("1b - NL-NO,  weight 2 KG")
-public class _1b_NL_NO_weight_2_KG extends BNPBaseNotDG {
+public class _1b_NL_NO_weight_2_KG extends BNPBaseNotDG1 {
 
     static {
-        BNPBaseNotDG.shipmentsLabel();
+        BNPBaseNotDG1.shipmentsLabel();
     }
 
 

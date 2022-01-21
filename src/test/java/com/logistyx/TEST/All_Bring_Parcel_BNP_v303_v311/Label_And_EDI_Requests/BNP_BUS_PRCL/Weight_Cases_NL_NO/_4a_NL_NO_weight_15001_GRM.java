@@ -1,7 +1,7 @@
 package com.logistyx.TEST.All_Bring_Parcel_BNP_v303_v311.Label_And_EDI_Requests.BNP_BUS_PRCL.Weight_Cases_NL_NO;
 
 
-import com.logistyx.utilities.abstractBaseClasses.BNPBaseNotDG;
+import com.logistyx.utilities.AbstractBaseClasses.All_Bring_Parcel_BNP_v303_v311.Label_And_EDI_Requests.BNP_BUS_PRCL.Weight_Cases_NL_NO_Base.BNPBaseNotDG3;
 import org.apache.commons.math3.util.Precision;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,10 +14,10 @@ import static org.hamcrest.Matchers.*;
 
 
 @DisplayName("[+] 4a - NL-NO, weight 15001 GRM")
-public class _4a_NL_NO_weight_15001_GRM extends BNPBaseNotDG {
+public class _4a_NL_NO_weight_15001_GRM extends BNPBaseNotDG3 {
 
     static {
-        BNPBaseNotDG.shipmentsLabel();
+        BNPBaseNotDG3.shipmentsLabel();
     }
 
 

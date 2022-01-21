@@ -1,7 +1,7 @@
 package com.logistyx.TEST.FedEx;
 
 
-import com.logistyx.utilities.abstractBaseClasses.FedExFuseBaseNotDG;
+import com.logistyx.utilities.AbstractBaseClasses.FedExBase.FedExFuseBaseNotDG;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

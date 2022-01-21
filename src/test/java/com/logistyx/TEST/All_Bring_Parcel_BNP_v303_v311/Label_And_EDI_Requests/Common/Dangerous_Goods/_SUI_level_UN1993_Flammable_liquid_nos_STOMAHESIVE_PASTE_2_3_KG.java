@@ -2,7 +2,7 @@ package com.logistyx.TEST.All_Bring_Parcel_BNP_v303_v311.Label_And_EDI_Requests.
 
 import org.junit.jupiter.api.Test;
 
-import com.logistyx.utilities.abstractBaseClasses.BNPBaseDG;
+import com.logistyx.utilities.AbstractBaseClasses.All_Bring_Parcel_BNP_v303_v311.Label_And_EDI_Requests.Common.Dangerous_Goods.BNPBaseDG;
 import org.junit.jupiter.api.DisplayName;
 
 import static org.hamcrest.MatcherAssert.assertThat;

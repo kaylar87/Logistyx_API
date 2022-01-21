@@ -1,6 +1,6 @@
-package com.logistyx.utilities.abstractBaseClasses;
+package com.logistyx.utilities.AbstractBaseClasses.All_Bring_Parcel_BNP_v303_v311.Label_And_EDI_Requests.BNP_BUS_PRCL.Weight_Cases_NL_NO_Base;
 
-import com.logistyx.pojo.bring.parcel.DG.BringParcelPojo;
+import com.logistyx.pojo.bring.parcel.NotDG.BringParcelPojo;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.ValidatableResponse;
@@ -18,7 +18,7 @@ import java.util.*;
 
 import static io.restassured.RestAssured.*;
 
-public abstract class BNPBaseDG {
+public abstract class BNPBaseNotDG2 {
 
     public static String requestJsonBodyShipments;
     public static RequestSpecification requestSpecShipments;
@@ -32,12 +32,9 @@ public abstract class BNPBaseDG {
     public static String mediumWeightIcon;
     public static String heavyWeightIcon;
     public static double weightInKilos;
-    public static double dGweightInKilos;
-    public static String dGweightUoM;
     public static double volumeInCubicMetre;
     public static String checkString;
     public static int checkDigit;
-    public static Map<String, Object> jsonMap;
 
     public static int totalGrossWeight;
     public static List<Float> grossWeight;
@@ -76,7 +73,7 @@ public abstract class BNPBaseDG {
                 "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
                 "    \"ShipperRef\": \"s.ShipperRef\",\n" +
                 "    \"Addresses\": [\n" +
-                "        {\n" +
+                "                {\n" +
                 "            \"Reference\": \"CEVA pickups\",\n" +
                 "            \"AddressLines\": [\n" +
                 "                {\n" +
@@ -114,7 +111,7 @@ public abstract class BNPBaseDG {
                 "                    \"Index\": 1,\n" +
                 "                    \"Value\": \"Grand Hotel Oslo\"\n" +
                 "                },\n" +
-                "                {\n" +
+                "                                {\n" +
                 "                    \"Index\": 2,\n" +
                 "                    \"Value\": \"Karl Johans gate 31\"\n" +
                 "                }\n" +
@@ -138,37 +135,24 @@ public abstract class BNPBaseDG {
                 "    \"IncotermCode\": \"DAP\",\n" +
                 "    \"Volume\": 13.36,\n" +
                 "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 42,\n" +
-                "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
+                "    \"Weight\": 15000,\n" +
+                "    \"WeightUnitOfMeasure\": \"GRM\",\n" +
                 "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
+                "    \"RequestedPickupDateTime\": \"2022-01-20T19:23:46.823Z\",\n" +
                 "    \"ShippingUnits\": [\n" +
                 "        {\n" +
-                "            \"ShipperRef\": \"SU.ShipperRef 1/3\",\n" +
-                "            \"ReceiverRef\": \"SU.ReceiverRef 1/3\",\n" +
-                "            \"Length\": 11,\n" +
-                "            \"Width\": 11,\n" +
-                "            \"Height\": 11,\n" +
+                "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
+                "            \"ReceiverRef\": \"SU.ReceiverRef\",\n" +
+                "            \"Length\": 33,\n" +
+                "            \"Width\": 27,\n" +
+                "            \"Height\": 15,\n" +
                 "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
-                "            \"Volume\": 13111,\n" +
+                "            \"Volume\": 13360,\n" +
                 "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
                 "            \"PackageType\": \"BX\",\n" +
-                "            \"GrossWeight\": 1,\n" +
-                "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
-                "            \"Content\": \"STOMAHESIVE PASTE\",\n" +
-                "            \"DangerousGoods\": [\n" +
-                "                {\n" +
-                "                    \"LimitedQuantity\": true,\n" +
-                "                    \"ReportableQuantity\": false,\n" +
-                "                    \"ExceptedQuantity\": false,\n" +
-                "                    \"HazardousMaterialIdentificationNumber\": \"UN1991\",\n" +
-                "                    \"ClassIdDivisionCompatibilityGroup\": \"3\",\n" +
-                "                    \"Weight\": 2.3,\n" +
-                "                    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "                    \"TechnicalName\": \"STOMAHESIVE PASTE\",\n" +
-                "                    \"ProperShippingName\": \"Flammable liquid, n.o.s\"\n" +
-                "                }\n" +
-                "            ]\n" +
+                "            \"GrossWeight\": 15000,\n" +
+                "            \"GrossWeightUnitOfMeasure\": \"GRM\",\n" +
+                "            \"Content\": \"001010000000008853\"\n" +
                 "        }\n" +
                 "    ]\n" +
                 "}";
@@ -189,9 +173,6 @@ public abstract class BNPBaseDG {
         encodedStringFromPostmanShipments = bringParcelPojoShipments.getDocuments().get(0).getContent();
         decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
         decodedStringShipments = new String(decodedBytesShipments);
-
-        jsonMap = validateResponseShipments.extract().as(Map.class);
-
 
         upTo15kgIcon = "^FO690,601^GFA,358,711,9,:Z64:eJyFkTtOAzEQQGcxWlOsCOUWVkQkDrAlRSRyFI6QMuVEIKWnocxFUvgoLjhAyhQIM55PtBtHyrh5erZnxh64Hj4rvGUU2DRJ4EirRBNhKWcR5lNoiRkeARyqcWw6vkgRRgC3oNziPPcEVkIye6vlzoClrnQYpOdksIFXgaUZv+oEmmMLd0+fC3phS8/OGV10MJTKDhtk8JRTAQSoj2TwzkDpnisYGB4qQ930DL0BmTDdGqqttRmCjiGZSXpmG9V8GOxQYQ966wBqykBDeXL57P7l++dLPt3LyKm3P9R5zE4+soGck8Asq6Ef4FFRrEYmTE20M3FkQmUugJr7NThBFf+O+ldF:486D^FS";
         mediumWeightIcon = "^FO690,601^GFA,346,711,9,:Z64:eJyNkTFOAzEQRf/GYpciCilTRIKCA1BSwR6BZvs9wpYpImFOkCtwlOEmLikp05nZPzORKFbEcvH8POMZ27h2NI8OrzUbHFMxmGDQFBwMMvaEFLACWkLHCS4vkHjihon/ggXPWfgDKQ7UyDZgYx0KdgYFzwaHgJfYupG931TW6GqtuSmtg3QOORl02sYMkrQKTat5DigErT0yJiCvA24DtOQDQZuYAp6Ypf3taBS2sWVmciNTmDFiRjcf4uZL3JyymxPcnOGmhJmvv0Vz5jtouftPM7j7XvU0+v2FBmkGe7vRDGHJ9GH6MLIcczHvtf4QhmF4w/L4BaLZkiY=:F1CF^FS";
@@ -219,31 +200,6 @@ public abstract class BNPBaseDG {
             case "LBR":
             case "LBS":
                 weightInKilos = Precision.round(bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight() * 0.45359237, 1);
-                break;
-        }
-
-        dGweightUoM = bringParcelPojoShipments.getShippingUnits().get(0).getDangerousGoods().get(0).getWeightUnitOfMeasure();
-        switch (dGweightUoM) {
-            case "KG":
-            case "KGM":
-            case "KGS":
-                dGweightInKilos = bringParcelPojoShipments.getShippingUnits().get(0).getDangerousGoods().get(0).getWeight();
-                break;
-            case "G":
-            case "G ":
-            case "G  ":
-            case "GM":
-            case "GM ":
-            case "GR ":
-            case "GRM":
-            case "KG ": // Can't help, DOCS or the component thinks this is grams, no conversion
-                dGweightInKilos = Precision.round(bringParcelPojoShipments.getShippingUnits().get(0).getDangerousGoods().get(0).getWeight() * 0.001, 1);
-                break;
-            case "LB":
-            case "LB ":
-            case "LBR":
-            case "LBS":
-                dGweightInKilos = Precision.round(bringParcelPojoShipments.getShippingUnits().get(0).getDangerousGoods().get(0).getWeight() * 0.45359237, 1);
                 break;
         }
 
@@ -319,7 +275,6 @@ public abstract class BNPBaseDG {
 
 
     }
+
+
 }
-
-
-

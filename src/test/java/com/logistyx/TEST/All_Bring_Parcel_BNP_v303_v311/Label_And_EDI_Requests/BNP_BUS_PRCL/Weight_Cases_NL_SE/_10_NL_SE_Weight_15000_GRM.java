@@ -1,8 +1,7 @@
 package com.logistyx.TEST.All_Bring_Parcel_BNP_v303_v311.Label_And_EDI_Requests.BNP_BUS_PRCL.Weight_Cases_NL_SE;
 
 
-import com.logistyx.utilities.abstractBaseClasses.BNPBaseNotDG;
-import com.logistyx.utilities.abstractBaseClasses.Weight_Cases_NL_SE_Base.BNPBaseNotDG7;
+import com.logistyx.utilities.AbstractBaseClasses.All_Bring_Parcel_BNP_v303_v311.Label_And_EDI_Requests.BNP_BUS_PRCL.Weight_Cases_NL_SE_Base.BNPBaseNotDG7;
 import org.apache.commons.math3.util.Precision;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

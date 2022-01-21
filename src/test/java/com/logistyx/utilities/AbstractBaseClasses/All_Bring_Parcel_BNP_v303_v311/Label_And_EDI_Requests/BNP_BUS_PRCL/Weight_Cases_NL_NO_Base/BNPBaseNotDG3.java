@@ -1,7 +1,6 @@
-package com.logistyx.utilities.abstractBaseClasses.Weight_Cases_NL_SE_Base;
+package com.logistyx.utilities.AbstractBaseClasses.All_Bring_Parcel_BNP_v303_v311.Label_And_EDI_Requests.BNP_BUS_PRCL.Weight_Cases_NL_NO_Base;
 
 import com.logistyx.pojo.bring.parcel.NotDG.BringParcelPojo;
-import com.logistyx.utilities.interfaces.BNP.BNP_BUS_PRCL.Weight_Cases_NL_NO.BNPJson5;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.ValidatableResponse;
@@ -19,7 +18,7 @@ import java.util.*;
 
 import static io.restassured.RestAssured.*;
 
-public abstract class BNPBaseNotDG8 {
+public abstract class BNPBaseNotDG3 {
 
     public static String requestJsonBodyShipments;
     public static RequestSpecification requestSpecShipments;
@@ -72,9 +71,9 @@ public abstract class BNPBaseNotDG8 {
                 "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
                 "    \"ForwarderDivisionCode\": \"BNP\",\n" +
                 "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-                "    \"ShipperRef\": \"s.ShipperRef\",\n" +
+                "    \"ShipperRef\": \"BNP-ZPL\",\n" +
                 "    \"Addresses\": [\n" +
-                "        {\n" +
+                "                {\n" +
                 "            \"Reference\": \"CEVA pickups\",\n" +
                 "            \"AddressLines\": [\n" +
                 "                {\n" +
@@ -106,26 +105,26 @@ public abstract class BNPBaseNotDG8 {
                 "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
                 "                }\n" +
                 "            ],\n" +
-                "            \"Reference\": \"Freys Hotel\",\n" +
+                "            \"Reference\": \"DY.REFERENCE\",\n" +
                 "            \"AddressLines\": [\n" +
                 "                {\n" +
                 "                    \"Index\": 1,\n" +
-                "                    \"Value\": \"Bryggargatan 12\"\n" +
+                "                    \"Value\": \"Grand Hotel Oslo\"\n" +
                 "                },\n" +
-                "                {\n" +
+                "                                {\n" +
                 "                    \"Index\": 2,\n" +
-                "                    \"Value\": \"Den glider in 1995\"\n" +
+                "                    \"Value\": \"Karl Johans gate 31\"\n" +
                 "                }\n" +
                 "            ],\n" +
-                "            \"PostalCode\": \"10131\",\n" +
-                "            \"LocalityName\": \"STOCKHOLM\",\n" +
-                "            \"CountryCode\": \"SE\",\n" +
-                "            \"Remark\": \"Delivery/Sweden\",\n" +
+                "            \"PostalCode\": \"0159\",\n" +
+                "            \"LocalityName\": \"OSLO\",\n" +
+                "            \"CountryCode\": \"NO\",\n" +
+                "            \"Remark\": \"DY.Remark\",\n" +
                 "            \"Contacts\": [\n" +
                 "                {\n" +
-                "                    \"Name\": \"Carl Gustav King\",\n" +
-                "                    \"EmailAddress\": \"stockholm@email.com\",\n" +
-                "                    \"PhoneNumber\": \"+46633333333\"\n" +
+                "                    \"Name\": \"DY.Contact Name\",\n" +
+                "                    \"EmailAddress\": \"delivery@email.com\",\n" +
+                "                    \"PhoneNumber\": \"062222222\"\n" +
                 "                }\n" +
                 "            ]\n" +
                 "        }\n" +
@@ -136,10 +135,10 @@ public abstract class BNPBaseNotDG8 {
                 "    \"IncotermCode\": \"DAP\",\n" +
                 "    \"Volume\": 13.36,\n" +
                 "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "    \"Weight\": 15000,\n" +
+                "    \"Weight\": 15001,\n" +
                 "    \"WeightUnitOfMeasure\": \"GRM\",\n" +
                 "    \"Info\": \"S.Info\",\n" +
-                "    \"RequestedPickupDateTime\": \"2022-01-21T15:17:17.147Z\",\n" +
+                "    \"RequestedPickupDateTime\": \"2022-01-20T20:39:33.027Z\",\n" +
                 "    \"ShippingUnits\": [\n" +
                 "        {\n" +
                 "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
@@ -151,7 +150,7 @@ public abstract class BNPBaseNotDG8 {
                 "            \"Volume\": 13360,\n" +
                 "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
                 "            \"PackageType\": \"BX\",\n" +
-                "            \"GrossWeight\": 15000,\n" +
+                "            \"GrossWeight\": 15001,\n" +
                 "            \"GrossWeightUnitOfMeasure\": \"GRM\",\n" +
                 "            \"Content\": \"001010000000008853\"\n" +
                 "        }\n" +
