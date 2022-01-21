@@ -1,7 +1,7 @@
-package com.logistyx.utilities.interfaces;
+package com.logistyx.utilities.interfaces.BNP.BNP_BUS_PRCL.Weight_Cases_NL_NO;
 
-public interface BNPJson2 {
-    String requestJsonBodyShipments = "{\n" +
+public interface BNPJson1 {
+   String requestJsonBodyShipments = "{\n" +
             "    \"ShipperCode\": \"CEVA\",\n" +
             "    \"ProjectCode\": \"THESTAND\",\n" +
             "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
@@ -9,7 +9,7 @@ public interface BNPJson2 {
             "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
             "    \"ShipperRef\": \"s.ShipperRef\",\n" +
             "    \"Addresses\": [\n" +
-            "                {\n" +
+            "        {\n" +
             "            \"Reference\": \"CEVA pickups\",\n" +
             "            \"AddressLines\": [\n" +
             "                {\n" +
@@ -28,7 +28,12 @@ public interface BNPJson2 {
             "                    \"PhoneNumber\": \"31688877766\"\n" +
             "                }\n" +
             "            ],\n" +
-            "            \"ForwarderDivisionAccounts\": null,\n" +
+            "            \"ForwarderDivisionAccounts\": [\n" +
+            "                {\n" +
+            "                    \"ForwarderDivisionCode\": \"BNP\",\n" +
+            "                    \"AccountCode\": \"01053548\"\n" +
+            "                }\n" +
+            "            ],\n" +
             "            \"AddressTypes\": [\n" +
             "                {\n" +
             "                    \"AddressTypeCode\": \"PICKUP\"\n" +
@@ -47,7 +52,7 @@ public interface BNPJson2 {
             "                    \"Index\": 1,\n" +
             "                    \"Value\": \"Grand Hotel Oslo\"\n" +
             "                },\n" +
-            "                                {\n" +
+            "                {\n" +
             "                    \"Index\": 2,\n" +
             "                    \"Value\": \"Karl Johans gate 31\"\n" +
             "                }\n" +
@@ -60,7 +65,7 @@ public interface BNPJson2 {
             "                {\n" +
             "                    \"Name\": \"DY.Contact Name\",\n" +
             "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-            "                    \"PhoneNumber\": \"062222222\"\n" +
+            "                    \"PhoneNumber\": \"+(06)2-222222\"\n" +
             "                }\n" +
             "            ]\n" +
             "        }\n" +
@@ -71,10 +76,10 @@ public interface BNPJson2 {
             "    \"IncotermCode\": \"DAP\",\n" +
             "    \"Volume\": 13.36,\n" +
             "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-            "    \"Weight\": 15000,\n" +
-            "    \"WeightUnitOfMeasure\": \"GRM\",\n" +
+            "    \"Weight\": 2,\n" +
+            "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
             "    \"Info\": \"S.Info\",\n" +
-            "    \"RequestedPickupDateTime\": \"2022-01-20T19:23:46.823Z\",\n" +
+            "    \"RequestedPickupDateTime\": \"2020-10-06T11:32:15Z\",\n" +
             "    \"ShippingUnits\": [\n" +
             "        {\n" +
             "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
@@ -85,9 +90,9 @@ public interface BNPJson2 {
             "            \"DimensionsUnitOfMeasure\": \"CMT\",\n" +
             "            \"Volume\": 13360,\n" +
             "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
-            "            \"PackageType\": \"BX\",\n" +
-            "            \"GrossWeight\": 15000,\n" +
-            "            \"GrossWeightUnitOfMeasure\": \"GRM\",\n" +
+            "            \"PackageType\": \"PD\",\n" +
+            "            \"GrossWeight\": 2,\n" +
+            "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
             "            \"Content\": \"001010000000008853\"\n" +
             "        }\n" +
             "    ]\n" +

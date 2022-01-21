@@ -1,7 +1,8 @@
 package com.logistyx.utilities.abstractBaseClasses;
 
 import com.logistyx.pojo.bring.parcel.NotDG.BringParcelPojo;
-import com.logistyx.utilities.interfaces.*;
+import com.logistyx.utilities.interfaces.BNP.BNP_BUS_PRCL.Weight_Cases_NL_NO.BNPJson1;
+import com.logistyx.utilities.interfaces.BNP.BNP_BUS_PRCL.Weight_Cases_NL_SE.BNPJson7;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.ValidatableResponse;
@@ -20,7 +21,7 @@ import java.util.*;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public abstract class BNPBaseNotDG implements BNPJson6 {
+public abstract class BNPBaseNotDG implements BNPJson7 {
 
 
     public static RequestSpecification requestSpecShipments;

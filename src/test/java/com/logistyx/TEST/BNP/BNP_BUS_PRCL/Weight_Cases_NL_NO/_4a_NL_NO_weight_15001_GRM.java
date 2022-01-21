@@ -1,4 +1,4 @@
-package com.logistyx.TEST.BNP;
+package com.logistyx.TEST.BNP.BNP_BUS_PRCL.Weight_Cases_NL_NO;
 
 
 import com.logistyx.utilities.abstractBaseClasses.BNPBaseNotDG;
@@ -9,13 +9,12 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static java.lang.Math.round;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 
-@DisplayName("[+] 4c - NL-NO, weight 32.366 kg = Heavy icon")
-public class _4c_NL_NO_weight_32_366_kg_Heavy_icon extends BNPBaseNotDG {
+@DisplayName("[+] 4a - NL-NO, weight 15001 GRM")
+public class _4a_NL_NO_weight_15001_GRM extends BNPBaseNotDG {
 
     static {
         BNPBaseNotDG.shipmentsLabel();
@@ -457,8 +456,8 @@ public class _4c_NL_NO_weight_32_366_kg_Heavy_icon extends BNPBaseNotDG {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(7) = " + decodeArrList.get(7));
-        assertThat(decodeArrList.get(7).toString(), containsString("CNT+7:" + Precision.round(weightInKilos, 1) + ":KGM"));
+//        System.out.println("decodeArrList.get(7) = " + decodeArrList.get(7));
+        assertThat(decodeArrList.get(7).toString(), containsString("CNT+7:" + weightInKilos + ":KGM"));
 
     }
 

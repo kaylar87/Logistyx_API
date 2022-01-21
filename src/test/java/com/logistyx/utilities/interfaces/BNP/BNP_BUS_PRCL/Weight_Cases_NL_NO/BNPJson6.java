@@ -1,6 +1,6 @@
-package com.logistyx.utilities.interfaces;
+package com.logistyx.utilities.interfaces.BNP.BNP_BUS_PRCL.Weight_Cases_NL_NO;
 
-public interface BNPJson5 {
+public interface BNPJson6 {
    String requestJsonBodyShipments = "{\n" +
            "    \"ShipperCode\": \"CEVA\",\n" +
            "    \"ProjectCode\": \"THESTAND\",\n" +
@@ -9,7 +9,7 @@ public interface BNPJson5 {
            "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
            "    \"ShipperRef\": \"s.ShipperRef\",\n" +
            "    \"Addresses\": [\n" +
-           "                {\n" +
+           "        {\n" +
            "            \"Reference\": \"CEVA pickups\",\n" +
            "            \"AddressLines\": [\n" +
            "                {\n" +
@@ -47,7 +47,7 @@ public interface BNPJson5 {
            "                    \"Index\": 1,\n" +
            "                    \"Value\": \"Grand Hotel Oslo\"\n" +
            "                },\n" +
-           "                                {\n" +
+           "                {\n" +
            "                    \"Index\": 2,\n" +
            "                    \"Value\": \"Karl Johans gate 31\"\n" +
            "                }\n" +
@@ -71,7 +71,7 @@ public interface BNPJson5 {
            "    \"IncotermCode\": \"DAP\",\n" +
            "    \"Volume\": 13.36,\n" +
            "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-           "    \"Weight\": 32.366,\n" +
+           "    \"Weight\": 25.000000,\n" +
            "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
            "    \"Info\": \"S.Info\",\n" +
            "    \"RequestedPickupDateTime\": \"2022-01-20T20:39:33.027Z\",\n" +
@@ -86,7 +86,7 @@ public interface BNPJson5 {
            "            \"Volume\": 13360,\n" +
            "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
            "            \"PackageType\": \"BX\",\n" +
-           "            \"GrossWeight\": 32.366,\n" +
+           "            \"GrossWeight\": 25.000000,\n" +
            "            \"GrossWeightUnitOfMeasure\": \"KGM\",\n" +
            "            \"Content\": \"001010000000008853\"\n" +
            "        }\n" +

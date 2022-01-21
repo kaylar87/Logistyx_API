@@ -1,4 +1,4 @@
-package com.logistyx.TEST.BNP;
+package com.logistyx.TEST.BNP.Weight_Cases_NL_SE;
 
 
 import com.logistyx.utilities.abstractBaseClasses.BNPBaseNotDG;
@@ -13,8 +13,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 
-@DisplayName("[+] 3 - NL-NO, weight 15000 GRM ==> Light Icon")
-public class _3_NL_NO_weight_15000_GRM_Light_Icon extends BNPBaseNotDG {
+@DisplayName("10 - NL-SE, weight 15000 GRM")
+public class _10_NL_SE_Weight_15000_GRM extends BNPBaseNotDG {
 
     static {
         BNPBaseNotDG.shipmentsLabel();
@@ -72,45 +72,40 @@ public class _3_NL_NO_weight_15000_GRM_Light_Icon extends BNPBaseNotDG {
     }
 
 
-    @DisplayName("DELIVERY address details: Grand Hotel Oslo, NO-0159, OSLO")
+    @DisplayName("DELIVERY address details: Bryggargatan 12, SE-10131 STOCKHOLM")
     @Test
     public void test5() {
 
 
         String deliveryAddressName1FromJson = bringParcelPojoShipments.getDeliveryAddress().getAddressLines().get(0).getValue();
-        //System.out.println("deliveryAddressName1FromJson = " + deliveryAddressName1FromJson);
+    //    System.out.println("deliveryAddressName1FromJson = " + deliveryAddressName1FromJson);
         int deliveryAddressName1FromLabelStart = decodedStringShipments.indexOf("^FT51,304^A0N,33,33^FD") + 22;
         String deliveryAddressName1FromLabel = decodedStringShipments.substring(deliveryAddressName1FromLabelStart, deliveryAddressName1FromLabelStart + deliveryAddressName1FromJson.length());
-        //System.out.println("deliveryAddressName1FromLabel = " + deliveryAddressName1FromLabel);
+    //    System.out.println("deliveryAddressName1FromLabel = " + deliveryAddressName1FromLabel);
         assertThat(deliveryAddressName1FromJson, is(equalTo(deliveryAddressName1FromLabel)));
 
-        String deliveryAddressName2FromJson = bringParcelPojoShipments.getDeliveryAddress().getAddressLines().get(1).getValue();
-        //System.out.println("deliveryAddressName2FromJson = " + deliveryAddressName2FromJson);
-        int deliveryAddressName2FromLabelStart = decodedStringShipments.indexOf("^FT51,337^A0N,33,33^FD") + 22;
-        String deliveryAddressName2FromLabel = decodedStringShipments.substring(deliveryAddressName2FromLabelStart, deliveryAddressName2FromLabelStart + deliveryAddressName2FromJson.length());
-        //System.out.println("deliveryAddressName2FromLabel = " + deliveryAddressName2FromLabel);
-        assertThat(deliveryAddressName2FromJson, is(equalTo(deliveryAddressName2FromLabel)));
-
         String deliveryAddressName3FromJson = bringParcelPojoShipments.getDeliveryAddress().getCountryCode() + "-" + bringParcelPojoShipments.getDeliveryAddress().getPostalCode() + " " + bringParcelPojoShipments.getDeliveryAddress().getLocalityName();
-        //System.out.println("deliveryAddressName3FromJson = " + deliveryAddressName3FromJson);
-        int deliveryAddressName3FromLabelStart = decodedStringShipments.indexOf("^FT51,380^A0N,46,46^FD") + 22;
+    //    System.out.println("deliveryAddressName3FromJson = " + deliveryAddressName3FromJson);
+        int deliveryAddressName3FromLabelStart = decodedStringShipments.indexOf("^FT51,348^A0N,46,46^FD") + 22;
         String deliveryAddressName3FromLabel = decodedStringShipments.substring(deliveryAddressName3FromLabelStart, deliveryAddressName3FromLabelStart + deliveryAddressName3FromJson.length());
-        //System.out.println("deliveryAddressName3FromLabel = " + deliveryAddressName3FromLabel);
+    //    System.out.println("deliveryAddressName3FromLabel = " + deliveryAddressName3FromLabel);
         assertThat(deliveryAddressName3FromJson, is(equalTo(deliveryAddressName3FromLabel)));
+
+
 
     }
 
 
-    @DisplayName("Delivery person details: DY.Contact Name")
+    @DisplayName("Delivery person details: Carl Gustav King")
     @Test
     public void test6() {
 
 
         String deliveryPersonDetailsFromJson = bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getName();
-        //System.out.println("deliveryPersonDetailsFromJson = " + deliveryPersonDetailsFromJson);
+    //    System.out.println("deliveryPersonDetailsFromJson = " + deliveryPersonDetailsFromJson);
         int deliveryPersonDetailsFromLabelStart = decodedStringShipments.indexOf("^FT51,272^A0N,33,33^FD") + 22;
         String deliveryPersonDetailsFromLabel = decodedStringShipments.substring(deliveryPersonDetailsFromLabelStart, deliveryPersonDetailsFromLabelStart + deliveryPersonDetailsFromJson.length());
-        //System.out.println("deliveryPersonDetailsFromLabel = " + deliveryPersonDetailsFromLabel);
+    //    System.out.println("deliveryPersonDetailsFromLabel = " + deliveryPersonDetailsFromLabel);
         assertThat(deliveryPersonDetailsFromJson, is(equalTo(deliveryPersonDetailsFromLabel)));
 
     }
@@ -573,14 +568,14 @@ public class _3_NL_NO_weight_15000_GRM_Light_Icon extends BNPBaseNotDG {
     }
 
 
-    @DisplayName("Delivery ADDRESS 1: NAD+CN+::87++DY?.REFERENCE+Grand Hotel Oslo:Karl Johans gate 31+OSLO++0159+NO checks.")
+    @DisplayName("Delivery ADDRESS 1: NAD+CN+::87++Freys Hotel+Bryggargatan 12+STOCKHOLM++10131+SE checks.")
     @Test
     public void test35() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(17) = " + decodeArrList.get(17));
-        assertThat(decodeArrList.get(17).toString(), is(equalTo("NAD+CN+::87++" + bringParcelPojoShipments.getAddresses().get(1).getReference().replace(".", "?.") + "+" + bringParcelPojoShipments.getDeliveryAddress().getAddressLines().get(0).getValue() + ":" + bringParcelPojoShipments.getDeliveryAddress().getAddressLines().get(1).getValue() + "+" + bringParcelPojoShipments.getDeliveryAddress().getLocalityName() + "++" + bringParcelPojoShipments.getDeliveryAddress().getPostalCode() + "+" + bringParcelPojoShipments.getDeliveryAddress().getCountryCode())));
+    //   System.out.println("decodeArrList.get(17) = " + decodeArrList.get(17));
+        assertThat(decodeArrList.get(17).toString(), is(equalTo("NAD+CN+::87++" + bringParcelPojoShipments.getAddresses().get(1).getReference() + "+" + bringParcelPojoShipments.getDeliveryAddress().getAddressLines().get(0).getValue() + "+" + bringParcelPojoShipments.getDeliveryAddress().getLocalityName() + "++" + bringParcelPojoShipments.getDeliveryAddress().getPostalCode() + "+" + bringParcelPojoShipments.getDeliveryAddress().getCountryCode())));
     }
 
 
@@ -606,14 +601,14 @@ public class _3_NL_NO_weight_15000_GRM_Light_Icon extends BNPBaseNotDG {
     }
 
 
-    @DisplayName("Delivery phone number, COM+062222222:AL checks.")
+    @DisplayName("Delivery phone number, COM+<PLACEHOLDER>062222222:AL checks.")
     @Test
     public void test38() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //        System.out.println("decodeArrList.get(20) = " + decodeArrList.get(20));
-        assertThat(decodeArrList.get(20).toString(), is(equalTo("COM+" + bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getPhoneNumber().replace("+", "").replace("(", "").replace(")", "").replace("-", "") + ":AL")));
+        //    System.out.println("decodeArrList.get(20) = " + decodeArrList.get(20));
+        assertThat(decodeArrList.get(20).toString(), is(equalTo("COM+" + "?" + "+" + bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getPhoneNumber().replace("+", "").replace("(", "").replace(")", "").replace("-", "") + ":AL")));
     }
 
 

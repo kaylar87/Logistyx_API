@@ -1,15 +1,15 @@
-package com.logistyx.utilities.interfaces;
+package com.logistyx.utilities.interfaces.BNP.BNP_BUS_PRCL.Weight_Cases_NL_SE;
 
-public interface BNPJson3 {
+public interface BNPJson7 {
    String requestJsonBodyShipments = "{\n" +
            "    \"ShipperCode\": \"CEVA\",\n" +
            "    \"ProjectCode\": \"THESTAND\",\n" +
            "    \"ShippingFlowCode\": \"OUTBOUND\",\n" +
            "    \"ForwarderDivisionCode\": \"BNP\",\n" +
            "    \"ForwarderServiceCode\": \"BNP-BUS-PRCL\",\n" +
-           "    \"ShipperRef\": \"BNP-ZPL\",\n" +
+           "    \"ShipperRef\": \"s.ShipperRef\",\n" +
            "    \"Addresses\": [\n" +
-           "                {\n" +
+           "        {\n" +
            "            \"Reference\": \"CEVA pickups\",\n" +
            "            \"AddressLines\": [\n" +
            "                {\n" +
@@ -41,26 +41,22 @@ public interface BNPJson3 {
            "                    \"AddressTypeCode\": \"DELIVERY\"\n" +
            "                }\n" +
            "            ],\n" +
-           "            \"Reference\": \"DY.REFERENCE\",\n" +
+           "            \"Reference\": \"Freys Hotel\",\n" +
            "            \"AddressLines\": [\n" +
            "                {\n" +
            "                    \"Index\": 1,\n" +
-           "                    \"Value\": \"Grand Hotel Oslo\"\n" +
-           "                },\n" +
-           "                                {\n" +
-           "                    \"Index\": 2,\n" +
-           "                    \"Value\": \"Karl Johans gate 31\"\n" +
+           "                    \"Value\": \"Bryggargatan 12\"\n" +
            "                }\n" +
            "            ],\n" +
-           "            \"PostalCode\": \"0159\",\n" +
-           "            \"LocalityName\": \"OSLO\",\n" +
-           "            \"CountryCode\": \"NO\",\n" +
-           "            \"Remark\": \"DY.Remark\",\n" +
+           "            \"PostalCode\": \"10131\",\n" +
+           "            \"LocalityName\": \"STOCKHOLM\",\n" +
+           "            \"CountryCode\": \"SE\",\n" +
+           "            \"Remark\": \"Delivery/Sweden\",\n" +
            "            \"Contacts\": [\n" +
            "                {\n" +
-           "                    \"Name\": \"DY.Contact Name\",\n" +
-           "                    \"EmailAddress\": \"delivery@email.com\",\n" +
-           "                    \"PhoneNumber\": \"062222222\"\n" +
+           "                    \"Name\": \"Carl Gustav King\",\n" +
+           "                    \"EmailAddress\": \"stockholm@email.com\",\n" +
+           "                    \"PhoneNumber\": \"+46633333333\"\n" +
            "                }\n" +
            "            ]\n" +
            "        }\n" +
@@ -71,10 +67,10 @@ public interface BNPJson3 {
            "    \"IncotermCode\": \"DAP\",\n" +
            "    \"Volume\": 13.36,\n" +
            "    \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-           "    \"Weight\": 15001,\n" +
+           "    \"Weight\": 15000,\n" +
            "    \"WeightUnitOfMeasure\": \"GRM\",\n" +
            "    \"Info\": \"S.Info\",\n" +
-           "    \"RequestedPickupDateTime\": \"2022-01-20T20:39:33.027Z\",\n" +
+           "    \"RequestedPickupDateTime\": \"2022-01-21T14:22:17.59Z\",\n" +
            "    \"ShippingUnits\": [\n" +
            "        {\n" +
            "            \"ShipperRef\": \"SU.ShipperRef\",\n" +
@@ -86,7 +82,7 @@ public interface BNPJson3 {
            "            \"Volume\": 13360,\n" +
            "            \"VolumeUnitOfMeasure\": \"QCM\",\n" +
            "            \"PackageType\": \"BX\",\n" +
-           "            \"GrossWeight\": 15001,\n" +
+           "            \"GrossWeight\": 15000,\n" +
            "            \"GrossWeightUnitOfMeasure\": \"GRM\",\n" +
            "            \"Content\": \"001010000000008853\"\n" +
            "        }\n" +

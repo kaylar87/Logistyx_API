@@ -1,20 +1,20 @@
-package com.logistyx.TEST.BNP;
+package com.logistyx.TEST.BNP.BNP_BUS_PRCL.Weight_Cases_NL_NO;
 
 
 import com.logistyx.utilities.abstractBaseClasses.BNPBaseNotDG;
 import org.apache.commons.math3.util.Precision;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import org.junit.jupiter.api.DisplayName;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-import java.util.*;
 
-
-@DisplayName("1b - NL-NO,  weight 2 KG")
-public class _1b_NL_NO_weight_2_KG extends BNPBaseNotDG {
+@DisplayName("[+] 3 - NL-NO, weight 15000 GRM ==> Light Icon")
+public class _3_NL_NO_weight_15000_GRM_Light_Icon extends BNPBaseNotDG {
 
     static {
         BNPBaseNotDG.shipmentsLabel();
@@ -606,14 +606,14 @@ public class _1b_NL_NO_weight_2_KG extends BNPBaseNotDG {
     }
 
 
-    @DisplayName("Delivery phone number, COM+<PLACEHOLDER>062222222:AL checks.")
+    @DisplayName("Delivery phone number, COM+062222222:AL checks.")
     @Test
     public void test38() {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(20) = " + decodeArrList.get(20));
-        assertThat(decodeArrList.get(20).toString(), is(equalTo("COM+" + "?" + "+" + bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getPhoneNumber().replace("+", "").replace("(", "").replace(")", "").replace("-", "") + ":AL")));
+        //        System.out.println("decodeArrList.get(20) = " + decodeArrList.get(20));
+        assertThat(decodeArrList.get(20).toString(), is(equalTo("COM+" + bringParcelPojoShipments.getDeliveryAddress().getContacts().get(0).getPhoneNumber().replace("+", "").replace("(", "").replace(")", "").replace("-", "") + ":AL")));
     }
 
 
