@@ -607,7 +607,7 @@ public class _4c_NL_NO_weight_32_366_kg_Heavy_icon extends BNPBaseNotDG {
     }
 
 
-    @DisplayName("Delivery phone number, COM+<PLACEHOLDER>062222222:AL checks.")
+    @DisplayName("Delivery phone number, COM+?+062222222:AL checks.")
     @Test
     public void test38() {
 

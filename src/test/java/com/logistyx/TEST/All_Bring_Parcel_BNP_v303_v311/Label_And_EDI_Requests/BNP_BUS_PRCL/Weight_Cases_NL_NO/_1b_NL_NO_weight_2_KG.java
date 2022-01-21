@@ -3,6 +3,7 @@ package com.logistyx.TEST.All_Bring_Parcel_BNP_v303_v311.Label_And_EDI_Requests.
 
 import com.logistyx.utilities.abstractBaseClasses.BNPBaseNotDG;
 import org.apache.commons.math3.util.Precision;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.DisplayName;
@@ -27,6 +28,7 @@ public class _1b_NL_NO_weight_2_KG extends BNPBaseNotDG {
 
 
         assertThat(bringParcelPojoShipments.getShipmentId(), is(notNullValue()));
+//        System.out.println("requestJsonBodyShipments = " + requestJsonBodyShipments);
 //        validateResponseShipments.extract().response().prettyPrint();
 //        System.out.println("decodedStringShipments = " + decodedStringShipments);
 //        validateResponseConveyances.extract().response().prettyPrint();
@@ -727,5 +729,4 @@ public class _1b_NL_NO_weight_2_KG extends BNPBaseNotDG {
 
     }
 
-
-}
+ }

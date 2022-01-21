@@ -2,6 +2,8 @@ package com.logistyx.TEST.All_Bring_Parcel_BNP_v303_v311.Label_And_EDI_Requests.
 
 
 import com.logistyx.utilities.abstractBaseClasses.BNPBaseNotDG;
+import com.logistyx.utilities.abstractBaseClasses.Weight_Cases_NL_SE_Base.BNPBaseNotDG8;
+import com.logistyx.utilities.abstractBaseClasses.Weight_Cases_NL_SE_Base.BNPBaseNotDG9;
 import org.apache.commons.math3.util.Precision;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,10 +16,10 @@ import static org.hamcrest.Matchers.*;
 
 
 @DisplayName("10a - NL-SE, weight 62 lbs")
-public class _10a_NL_SE_Weight_62_lbs extends BNPBaseNotDG {
+public class _10a_NL_SE_Weight_62_lbs extends BNPBaseNotDG9 {
 
     static {
-        BNPBaseNotDG.shipmentsLabel();
+        BNPBaseNotDG9.shipmentsLabel();
     }
 
 
