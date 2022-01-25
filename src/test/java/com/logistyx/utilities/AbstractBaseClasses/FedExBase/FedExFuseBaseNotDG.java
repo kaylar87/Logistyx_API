@@ -21,6 +21,7 @@ import java.util.*;
 
 import static io.restassured.RestAssured.*;
 
+
 public abstract class FedExFuseBaseNotDG {
 
     public static String requestJsonBodyShipments;
