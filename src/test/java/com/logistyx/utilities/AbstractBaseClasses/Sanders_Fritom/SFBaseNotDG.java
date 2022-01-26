@@ -62,6 +62,8 @@ public abstract class SFBaseNotDG {
     public static String second;
 
     public static org.json.JSONObject jsonDataEDI;
+    public static String puCountryFromCountryCodeFromJson;
+    public static String dyCountryFromCountryCodeFromJson;
 
 
     @BeforeAll
@@ -315,6 +317,64 @@ public abstract class SFBaseNotDG {
             //System.out.println(jsonString);
         } catch (JSONException e) {
             System.out.println(e.toString());
+        }
+
+        puCountryFromCountryCodeFromJson = sandersFritomPojoShipments.getAddresses().get(1).getCountryCode();
+        switch (puCountryFromCountryCodeFromJson) {
+            case "NL":
+                puCountryFromCountryCodeFromJson = "Netherlands";
+                break;
+            case "IT":
+                puCountryFromCountryCodeFromJson = "Italy";
+                break;
+            case "AE":
+                puCountryFromCountryCodeFromJson = "Arabic Emirates";
+                break;
+            case "KW":
+                puCountryFromCountryCodeFromJson = "Kuwait";
+                break;
+            case "ES":
+                puCountryFromCountryCodeFromJson = "Spain";
+                break;
+            case "CH":
+                puCountryFromCountryCodeFromJson = "Switzerland";
+                break;
+            case "DE":
+                puCountryFromCountryCodeFromJson = "Germany";
+                break;
+            case "PT":
+                puCountryFromCountryCodeFromJson = "Portugal";
+                break;
+
+        }
+
+        dyCountryFromCountryCodeFromJson = sandersFritomPojoShipments.getAddresses().get(0).getCountryCode();
+        switch (dyCountryFromCountryCodeFromJson) {
+            case "NL":
+                dyCountryFromCountryCodeFromJson = "Netherlands";
+                break;
+            case "IT":
+                dyCountryFromCountryCodeFromJson = "Italy";
+                break;
+            case "AE":
+                dyCountryFromCountryCodeFromJson = "Arabic Emirates";
+                break;
+            case "KW":
+                dyCountryFromCountryCodeFromJson = "Kuwait";
+                break;
+            case "ES":
+                dyCountryFromCountryCodeFromJson = "Spain";
+                break;
+            case "CH":
+                dyCountryFromCountryCodeFromJson = "Switzerland";
+                break;
+            case "DE":
+                dyCountryFromCountryCodeFromJson = "Germany";
+                break;
+            case "PT":
+                dyCountryFromCountryCodeFromJson = "Portugal";
+                break;
+
         }
 
     }
