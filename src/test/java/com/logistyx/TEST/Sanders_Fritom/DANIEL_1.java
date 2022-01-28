@@ -39,7 +39,6 @@ public class DANIEL_1 extends SFBaseNotDG {
 //        System.out.println("decodedStringConveyances = " + decodedStringConveyances);
 //        System.out.println("jsonDataEDI = " + jsonDataEDI);
 
-        System.out.println("hour = " + hour);
 
     }
 
