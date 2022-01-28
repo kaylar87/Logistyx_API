@@ -185,6 +185,8 @@ public abstract class BNPBaseNotDG implements BNPJson1 {
         second = date1.substring(17, 19);
 
 
+
+
     }
 
 

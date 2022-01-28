@@ -64,6 +64,10 @@ public abstract class SFBaseNotDG {
     public static org.json.JSONObject jsonDataEDI;
     public static String puCountryFromCountryCodeFromJson;
     public static String dyCountryFromCountryCodeFromJson;
+    public static List<String> loadingRestrictionFromJsonList;
+    public static Map<String, String> loadingRestrictionValueFromJsonMap;
+    public static String date1;
+    public static String currentDateTime;
 
 
     @BeforeAll
@@ -169,7 +173,7 @@ public abstract class SFBaseNotDG {
                 "            \"DimensionsUnitOfMeasure\": \"CM\",\n" +
                 "            \"Volume\": 135200.36,\n" +
                 "            \"VolumeUnitOfMeasure\": \"CMQ\",\n" +
-                "            \"PackageType\": \"CT\",\n" +
+                "            \"PackageType\": \"PC\",\n" +
                 "            \"GrossWeight\": 12.13,\n" +
                 "            \"GrossWeightUnitOfMeasure\": \"KG\",\n" +
                 "            \"Content\": \"This is the description of the sUnit content value\",\n" +
@@ -301,7 +305,7 @@ public abstract class SFBaseNotDG {
 
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         Date date = new Date();
-        String date1 = dateFormat.format(date);
+        date1 = dateFormat.format(date);
         month = date1.substring(0, 2);
         day = date1.substring(3, 5);
         year = Integer.parseInt(date1.substring(6, 10));
@@ -310,6 +314,7 @@ public abstract class SFBaseNotDG {
         minute = date1.substring(14, 16);
         second = date1.substring(17, 19);
 
+        currentDateTime = year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":" + second + "Z";
 
         try {
             jsonDataEDI = XML.toJSONObject(decodedStringConveyances);
@@ -374,10 +379,19 @@ public abstract class SFBaseNotDG {
             case "PT":
                 dyCountryFromCountryCodeFromJson = "Portugal";
                 break;
+        }
 
+        loadingRestrictionValueFromJsonMap = new LinkedHashMap<>();
+        loadingRestrictionFromJsonList = sandersFritomPojoShipments.getForwarderServiceIndicators().getAdditionalServices();
+        for (int i = 0; i < loadingRestrictionFromJsonList.size() - 1; i++) {
+            if (loadingRestrictionFromJsonList.get(i).equals("PICKUP_ROOF_LOAD")) {
+                loadingRestrictionValueFromJsonMap.put("PICKUP_ROOF_LOAD", "Dak");
+            } else if (loadingRestrictionFromJsonList.get(i).equals("PICKUP_HIAB")) {
+                loadingRestrictionValueFromJsonMap.put("PICKUP_HIAB", "Kraan");
+            } else if (loadingRestrictionFromJsonList.get(i).equals("PICKUP_SIDE_LOAD")) {
+                loadingRestrictionValueFromJsonMap.put("PICKUP_SIDE_LOAD", "Zijkant");
+            }
         }
 
     }
-
-
 }
