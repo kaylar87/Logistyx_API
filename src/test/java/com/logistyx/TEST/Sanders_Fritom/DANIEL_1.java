@@ -376,34 +376,307 @@ public class DANIEL_1 extends SFBaseNotDG {
     @Test
     public void test31() {
 
-    //    System.out.println("loadingRestrictionValueFromJsonMap.get(\"PICKUP_ROOF_LOAD\") = " + loadingRestrictionValueFromJsonMap.get("PICKUP_ROOF_LOAD"));
+        //    System.out.println("restrictionValueFromJsonMap.get(\"PICKUP_ROOF_LOAD\") = " + restrictionValueFromJsonMap.get("PICKUP_ROOF_LOAD"));
         String loadingRestrictionEDI = (String) jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getJSONObject("RESTRICTIONS").getJSONArray("RESTRICTION").get(0);
-    //    System.out.println("loadingRestrictionEDI = " + loadingRestrictionEDI);
-        assertThat(loadingRestrictionValueFromJsonMap.get("PICKUP_ROOF_LOAD"), is(equalTo(loadingRestrictionEDI)));
+        //    System.out.println("loadingRestrictionEDI = " + loadingRestrictionEDI);
+        assertThat(restrictionValueFromJsonMap.get("PICKUP_ROOF_LOAD"), is(equalTo(loadingRestrictionEDI)));
     }
 
 
-    @DisplayName("EDI - loading Restriction PICKUP_HIAB -> <RESTRICTION>Kraan</RESTRICTION>")
+    @DisplayName("EDI - loading Restriction = PICKUP_HIAB -> <RESTRICTION>Kraan</RESTRICTION>")
     @Test
     public void test32() {
 
-        //    System.out.println("loadingRestrictionValueFromJsonMap.get(\"PICKUP_HIAB\") = " + loadingRestrictionValueFromJsonMap.get("PICKUP_HIAB"));
+        //    System.out.println("restrictionValueFromJsonMap.get(\"PICKUP_HIAB\") = " + restrictionValueFromJsonMap.get("PICKUP_HIAB"));
         String loadingRestrictionEDI = (String) jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getJSONObject("RESTRICTIONS").getJSONArray("RESTRICTION").get(1);
         //    System.out.println("loadingRestrictionEDI = " + loadingRestrictionEDI);
-        assertThat(loadingRestrictionValueFromJsonMap.get("PICKUP_HIAB"), is(equalTo(loadingRestrictionEDI)));
+        assertThat(restrictionValueFromJsonMap.get("PICKUP_HIAB"), is(equalTo(loadingRestrictionEDI)));
     }
 
 
-    @DisplayName("EDI - loading Restriction PICKUP_SIDE_LOAD -> <RESTRICTION>Zijkant</RESTRICTION>")
+    @DisplayName("EDI - loading Restriction = PICKUP_SIDE_LOAD -> <RESTRICTION>Zijkant</RESTRICTION>")
     @Test
     public void test33() {
 
-        //    System.out.println("loadingRestrictionValueFromJsonMap.get(\"PICKUP_SIDE_LOAD\") = " + loadingRestrictionValueFromJsonMap.get("PICKUP_SIDE_LOAD"));
+        //    System.out.println("restrictionValueFromJsonMap.get(\"PICKUP_SIDE_LOAD\") = " + restrictionValueFromJsonMap.get("PICKUP_SIDE_LOAD"));
         String loadingRestrictionEDI = (String) jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getJSONObject("RESTRICTIONS").getJSONArray("RESTRICTION").get(2);
         //    System.out.println("loadingRestrictionEDI = " + loadingRestrictionEDI);
-        assertThat(loadingRestrictionValueFromJsonMap.get("PICKUP_SIDE_LOAD"), is(equalTo(loadingRestrictionEDI)));
+        assertThat(restrictionValueFromJsonMap.get("PICKUP_SIDE_LOAD"), is(equalTo(loadingRestrictionEDI)));
 
     }
 
 
- }
+    @DisplayName("EDI - loading Correct pick up start time")
+    @Test
+    public void test34() {
+
+        String loadingCorrectPickUpStartTimeFromJson = sandersFritomPojoShipments.getRequestedPickupWindowBeginDateTime().substring(11, 19);
+        //    System.out.println("loadingCorrectPickUpStartTimeFromJson = " + loadingCorrectPickUpStartTimeFromJson);
+        String loadingCorrectPickUpStartTimeEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("TIME1");
+        //    System.out.println("loadingCorrectPickUpStartTimeEDI = " + loadingCorrectPickUpStartTimeEDI);
+        assertThat(loadingCorrectPickUpStartTimeFromJson, is(equalTo(loadingCorrectPickUpStartTimeEDI)));
+    }
+
+
+    @DisplayName("EDI - loading Correct pick up end time")
+    @Test
+    public void test35() {
+
+        String loadingCorrectPickUpEndTimeFromJson = sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime().substring(11, 19);
+        //    System.out.println("loadingCorrectPickUpEndTimeFromJson = " + loadingCorrectPickUpEndTimeFromJson);
+        String loadingCorrectPickUpEndTimeEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("TIME2");
+        //    System.out.println("loadingCorrectPickUpEndTimeEDI = " + loadingCorrectPickUpEndTimeEDI);
+        assertThat(loadingCorrectPickUpEndTimeFromJson, is(equalTo(loadingCorrectPickUpEndTimeEDI)));
+    }
+
+
+    @DisplayName("EDI - loading Name : <NAME><![CDATA[PUREF0001]]></NAME>")
+    @Test
+    public void test36() {
+
+        String loadingNameFromJson = sandersFritomPojoShipments.getAddresses().get(1).getReference();
+        //    System.out.println("loadingNameFromJson = " + loadingNameFromJson);
+        String loadingNameEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getJSONObject("ADDRESS").getString("NAME");
+        //    System.out.println("loadingNameEDI = " + loadingNameEDI);
+        assertThat(loadingNameFromJson, is(equalTo(loadingNameEDI)));
+    }
+
+
+    @DisplayName("EDI - loading Name2 : <NAME2><![CDATA[Pickup Name One]]></NAME2>")
+    @Test
+    public void test37() {
+
+        String loadingName2FromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getName();
+        //    System.out.println("loadingName2FromJson = " + loadingName2FromJson);
+        String loadingName2EDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getJSONObject("ADDRESS").getString("NAME2");
+        //    System.out.println("loadingName2EDI = " + loadingName2EDI);
+        assertThat(loadingName2FromJson, is(equalTo(loadingName2EDI)));
+    }
+
+
+    @DisplayName("EDI - loading Address : <ADDRESS><![CDATA[De Grens 27 TEST]]></ADDRESS>")
+    @Test
+    public void test38() {
+
+        String loadingAddressFromJson = sandersFritomPojoShipments.getPickupAddress().getAddressLines().get(0).getValue();
+        //    System.out.println("loadingAddressFromJson = " + loadingAddressFromJson);
+        String loadingAddressEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getJSONObject("ADDRESS").getString("ADDRESS");
+        //    System.out.println("loadingAddressEDI = " + loadingAddressEDI);
+        assertThat(loadingAddressFromJson, is(equalTo(loadingAddressEDI)));
+    }
+
+
+    @DisplayName("EDI - loading postalCode : <POSTALCODE>5921CC</POSTALCODE>")
+    @Test
+    public void test39() {
+
+        String loadingPostalCodeFromJson = sandersFritomPojoShipments.getPickupAddress().getPostalCode();
+        //    System.out.println("loadingPostalCodeFromJson = " + loadingPostalCodeFromJson);
+        String loadingPostalCodeEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getJSONObject("ADDRESS").getString("POSTALCODE");
+        //    System.out.println("loadingPostalCodeEDI = " + loadingPostalCodeEDI);
+        assertThat(loadingPostalCodeFromJson, is(equalTo(loadingPostalCodeEDI)));
+    }
+
+
+    @DisplayName("EDI - loading City : <CITY><![CDATA[Heijen]]></CITY>")
+    @Test
+    public void test40() {
+
+        String loadingCityFromJson = sandersFritomPojoShipments.getPickupAddress().getLocalityName();
+        //    System.out.println("loadingCityFromJson = " + loadingCityFromJson);
+        String loadingCityEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getJSONObject("ADDRESS").getString("CITY");
+        //    System.out.println("loadingCityEDI = " + loadingCityEDI);
+        assertThat(loadingCityFromJson, is(equalTo(loadingCityEDI)));
+    }
+
+
+    @DisplayName("EDI - loading phoneNumber : <PHONE>31497532323</PHONE>")
+    @Test
+    public void test41() {
+
+        String loadingPhoneNumberFromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getPhoneNumber();
+        //    System.out.println("loadingPhoneNumberFromJson = " + loadingPhoneNumberFromJson);
+        String loadingPhoneNumberEDI = String.valueOf(jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getJSONObject("ADDRESS").getBigInteger("PHONE"));
+        //    System.out.println("loadingPhoneNumberEDI = " + loadingPhoneNumberEDI);
+        assertThat(loadingPhoneNumberFromJson, is(equalTo(loadingPhoneNumberEDI)));
+    }
+
+
+    @DisplayName("EDI - loading Email : <EMAIL>vaiser@hotmail.com</EMAIL>")
+    @Test
+    public void test42() {
+
+        String loadingEmailFromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getEmailAddress();
+        //    System.out.println("loadingEmailFromJson = " + loadingEmailFromJson);
+        String loadingEmailEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getJSONObject("ADDRESS").getString("EMAIL");
+        //    System.out.println("loadingEmailEDI = " + loadingEmailEDI);
+        assertThat(loadingEmailFromJson, is(equalTo(loadingEmailEDI)));
+    }
+
+
+    @DisplayName("EDI - unloading Restriction = DELIVERY_ROOF_LOAD -> <RESTRICTION>Dak</RESTRICTION>")
+    @Test
+    public void test43() {
+
+        //    System.out.println("restrictionValueFromJsonMap.get(\"DELIVERY_ROOF_LOAD\") = " + restrictionValueFromJsonMap.get("DELIVERY_ROOF_LOAD"));
+        String unloadingRestrictionEDI = (String) jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getJSONObject("RESTRICTIONS").getJSONArray("RESTRICTION").get(0);
+        //    System.out.println("unloadingRestrictionEDI = " + unloadingRestrictionEDI);
+        assertThat(restrictionValueFromJsonMap.get("DELIVERY_ROOF_LOAD"), is(equalTo(unloadingRestrictionEDI)));
+
+    }
+
+
+    @DisplayName("EDI - unloading Correct delivery start time - <TIME1>12:00:00</TIME1> - hardcoded in composer settings")
+    @Test
+    public void test44() {
+
+
+        String unloadingCorrectDeliveryStartTimeEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getString("TIME1");
+        //    System.out.println("unloadingCorrectDeliveryStartTimeEDI = " + unloadingCorrectDeliveryStartTimeEDI);
+        assertThat(unloadingCorrectDeliveryStartTimeEDI, is(equalTo("12:00:00")));
+    }
+
+
+    @DisplayName("EDI - unloading Correct delivery end time - <TIME2>17:00:00</TIME2> - hardcoded in composer settings")
+    @Test
+    public void test45() {
+
+        String unloadingCorrectDeliveryEndTimeEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getString("TIME2");
+    //    System.out.println("unloadingCorrectDeliveryEndTimeEDI = " + unloadingCorrectDeliveryEndTimeEDI);
+        assertThat(unloadingCorrectDeliveryEndTimeEDI, is(equalTo("17:00:00")));
+    }
+
+
+    @DisplayName("EDI - unloading Name : <NAME><![CDATA[FLE >><<01105]]></NAME>")
+    @Test
+    public void test46() {
+
+        String unloadingNameFromJson = sandersFritomPojoShipments.getAddresses().get(0).getReference();
+        //    System.out.println("unloadingNameFromJson = " + unloadingNameFromJson);
+        String unloadingNameEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getJSONObject("ADDRESS").getString("NAME");
+        //    System.out.println("unloadingNameEDI = " + unloadingNameEDI);
+        assertThat(unloadingNameFromJson, is(equalTo(unloadingNameEDI)));
+    }
+
+
+    @DisplayName("EDI - unloading Name2 : <NAME2><![CDATA[Delivery Co<<ntact Name 1]]></NAME2>")
+    @Test
+    public void test47() {
+
+        String unloadingName2FromJson = sandersFritomPojoShipments.getAddresses().get(0).getContacts().get(0).getName();
+        //    System.out.println("unloadingName2FromJson = " + unloadingName2FromJson);
+        String unloadingName2EDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getJSONObject("ADDRESS").getString("NAME2");
+        //    System.out.println("unloadingName2EDI = " + unloadingName2EDI);
+        assertThat(unloadingName2FromJson, is(equalTo(unloadingName2EDI)));
+    }
+
+
+    @DisplayName("EDI - unloading address : <ADDRESS><![CDATA[Weena 10017 TEST]]></ADDRESS>")
+    @Test
+    public void test48() {
+
+        String unloadingAddressFromJson = sandersFritomPojoShipments.getDeliveryAddress().getAddressLines().get(0).getValue();
+    //    System.out.println("unloadingAddressFromJson = " + unloadingAddressFromJson);
+        String unloadingAddressEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getJSONObject("ADDRESS").getString("ADDRESS");
+    //    System.out.println("unloadingAddressEDI = " + unloadingAddressEDI);
+        assertThat(unloadingAddressFromJson, is(equalTo(unloadingAddressEDI)));
+    }
+
+
+    @DisplayName("EDI - unloading address 2 : <ADDRESS2><![CDATA[Delivery address two]]></ADDRESS2>")
+    @Test
+    public void test49() {
+
+        String unloadingAddress2FromJson = sandersFritomPojoShipments.getDeliveryAddress().getAddressLines().get(1).getValue();
+    //    System.out.println("unloadingAddress2FromJson = " + unloadingAddress2FromJson);
+        String unloadingAddress2EDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getJSONObject("ADDRESS").getString("ADDRESS2");
+    //    System.out.println("unloadingAddress2EDI = " + unloadingAddress2EDI);
+        assertThat(unloadingAddress2FromJson, is(equalTo(unloadingAddress2EDI)));
+    }
+
+
+    @DisplayName("EDI - unloading postalCode : <POSTALCODE>0001001</POSTALCODE>")
+    @Test
+    public void test50() {
+
+        String unloadingPostalCodeFromJson = sandersFritomPojoShipments.getDeliveryAddress().getPostalCode();
+    //    System.out.println("unloadingPostalCodeFromJson = " + unloadingPostalCodeFromJson);
+        String unloadingPostalCodeEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getJSONObject("ADDRESS").getString("POSTALCODE");
+    //    System.out.println("unloadingPostalCodeEDI = " + unloadingPostalCodeEDI);
+        assertThat(unloadingPostalCodeEDI, is(equalTo(unloadingPostalCodeEDI)));
+    }
+
+
+    @DisplayName("EDI - unloading City : <CITY><![CDATA[VITORIA]]></CITY>")
+    @Test
+    public void test51() {
+
+        String unloadingCityFromJson = sandersFritomPojoShipments.getDeliveryAddress().getLocalityName();
+    //    System.out.println("unloadingCityFromJson = " + unloadingCityFromJson);
+        String unloadingCityEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getJSONObject("ADDRESS").getString("CITY");
+    //    System.out.println("unloadingCityEDI = " + unloadingCityEDI);
+        assertThat(unloadingCityFromJson, is(equalTo(unloadingCityEDI)));
+    }
+
+
+    @DisplayName("EDI - unloading phoneNumber : <PHONE>(31)497-532-323</PHONE>")
+    @Test
+    public void test52() {
+
+        String unloadingPhoneNumberFromJson = sandersFritomPojoShipments.getDeliveryAddress().getContacts().get(0).getPhoneNumber();
+    //    System.out.println("unloadingPhoneNumberFromJson = " + unloadingPhoneNumberFromJson);
+        String unloadingPhoneNumberEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getJSONObject("ADDRESS").getString("PHONE");
+    //   System.out.println("unloadingPhoneNumberEDI = " + unloadingPhoneNumberEDI);
+        assertThat(unloadingPhoneNumberFromJson, is(equalTo(unloadingPhoneNumberEDI)));
+    }
+
+
+    @DisplayName("EDI - unloading Email : <EMAIL>vaiser@hotmail.com</EMAIL>")
+    @Test
+    public void test53() {
+
+        String unloadingEmailFromJson = sandersFritomPojoShipments.getDeliveryAddress().getContacts().get(0).getEmailAddress();
+    //    System.out.println("unloadingEmailFromJson = " + unloadingEmailFromJson);
+        String unloadingEmailEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getJSONObject("ADDRESS").getString("EMAIL");
+    //    System.out.println("unloadingEmailEDI = " + unloadingEmailEDI);
+        assertThat(unloadingEmailFromJson, is(equalTo(unloadingEmailEDI)));
+    }
+
+
+    @DisplayName("EDI - orderline 0 description : This is the description of the sUnit content value")
+    @Test
+    public void test54() {
+
+        String orderlineDescriptionFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getContent();
+    //    System.out.println("orderlineDescriptionFromJson = " + orderlineDescriptionFromJson);
+        String orderlineDescriptionEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("ORDERLINES").getJSONObject("ORDERLINE").getString("ITEMDESCRIPTION");
+    //    System.out.println("orderlineDescriptionEDI = " + orderlineDescriptionEDI);
+        assertThat(orderlineDescriptionFromJson, containsString(orderlineDescriptionEDI));
+    }
+
+
+    @DisplayName("EDI - orderline 0 reference : 4706850")
+    @Test
+    public void test55() {
+
+        String orderlineReferenceFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getShipperRef();
+    //    System.out.println("orderlineReferenceFromJson = " + orderlineReferenceFromJson);
+        String orderlineReferenceEDI = String.valueOf(jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("ORDERLINES").getJSONObject("ORDERLINE").getInt("REFERENCE"));
+    //    System.out.println("orderlineReferenceEDI = " + orderlineReferenceEDI);
+        assertThat(orderlineReferenceFromJson, is(equalTo(orderlineReferenceEDI)));
+    }
+
+
+    @DisplayName("EDI - orderline 0 quantity : 1")
+    @Test
+    public void test56() {
+
+        int orderlineQuantityFromJson = sandersFritomPojoShipments.getNumberOfShippingUnits();
+    //    System.out.println("orderlineQuantityFromJson = " + orderlineQuantityFromJson);
+        int orderlineQuantityEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("ORDERLINES").getJSONObject("ORDERLINE").getInt("QUANTITY");
+    //    System.out.println("orderlineQuantityEDI = " + orderlineQuantityEDI);
+        assertThat(orderlineQuantityFromJson, is(equalTo(orderlineQuantityEDI)));
+    }
+
+
+}

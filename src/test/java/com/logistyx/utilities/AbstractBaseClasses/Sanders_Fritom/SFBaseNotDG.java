@@ -64,8 +64,8 @@ public abstract class SFBaseNotDG {
     public static org.json.JSONObject jsonDataEDI;
     public static String puCountryFromCountryCodeFromJson;
     public static String dyCountryFromCountryCodeFromJson;
-    public static List<String> loadingRestrictionFromJsonList;
-    public static Map<String, String> loadingRestrictionValueFromJsonMap;
+    public static List<String> restrictionFromJsonList;
+    public static Map<String, String> restrictionValueFromJsonMap;
     public static String date1;
     public static String currentDateTime;
 
@@ -381,16 +381,19 @@ public abstract class SFBaseNotDG {
                 break;
         }
 
-        loadingRestrictionValueFromJsonMap = new LinkedHashMap<>();
-        loadingRestrictionFromJsonList = sandersFritomPojoShipments.getForwarderServiceIndicators().getAdditionalServices();
-        for (int i = 0; i < loadingRestrictionFromJsonList.size() - 1; i++) {
-            if (loadingRestrictionFromJsonList.get(i).equals("PICKUP_ROOF_LOAD")) {
-                loadingRestrictionValueFromJsonMap.put("PICKUP_ROOF_LOAD", "Dak");
-            } else if (loadingRestrictionFromJsonList.get(i).equals("PICKUP_HIAB")) {
-                loadingRestrictionValueFromJsonMap.put("PICKUP_HIAB", "Kraan");
-            } else if (loadingRestrictionFromJsonList.get(i).equals("PICKUP_SIDE_LOAD")) {
-                loadingRestrictionValueFromJsonMap.put("PICKUP_SIDE_LOAD", "Zijkant");
+        restrictionValueFromJsonMap = new LinkedHashMap<>();
+        restrictionFromJsonList = sandersFritomPojoShipments.getForwarderServiceIndicators().getAdditionalServices();
+        for (int i = 0; i < restrictionFromJsonList.size(); i++) {
+            if (restrictionFromJsonList.get(i).equals("PICKUP_ROOF_LOAD")) {
+                restrictionValueFromJsonMap.put("PICKUP_ROOF_LOAD", "Dak");
+            } else if (restrictionFromJsonList.get(i).equals("PICKUP_HIAB")) {
+                restrictionValueFromJsonMap.put("PICKUP_HIAB", "Kraan");
+            } else if (restrictionFromJsonList.get(i).equals("PICKUP_SIDE_LOAD")) {
+                restrictionValueFromJsonMap.put("PICKUP_SIDE_LOAD", "Zijkant");
+            }else if (restrictionFromJsonList.get(i).equals("DELIVERY_ROOF_LOAD")){
+                restrictionValueFromJsonMap.put("DELIVERY_ROOF_LOAD", "Dak");
             }
+
         }
 
     }
