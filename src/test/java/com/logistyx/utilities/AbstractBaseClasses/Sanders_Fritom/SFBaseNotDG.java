@@ -19,6 +19,8 @@ import org.junit.jupiter.api.Test;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.*;
 
 import static io.restassured.RestAssured.*;
@@ -38,6 +40,9 @@ public abstract class SFBaseNotDG {
     public static String heavyWeightIcon;
     public static double weightInKilos;
     public static double volumeInCubicMetre;
+    public static double lengthInMetre;
+    public static double widthInMetre;
+    public static double heightInMetre;
     public static String checkString;
     public static int checkDigit;
 
@@ -64,10 +69,13 @@ public abstract class SFBaseNotDG {
     public static org.json.JSONObject jsonDataEDI;
     public static String puCountryFromCountryCodeFromJson;
     public static String dyCountryFromCountryCodeFromJson;
+    public static String unitcodeFromJson;
     public static List<String> restrictionFromJsonList;
     public static Map<String, String> restrictionValueFromJsonMap;
+    public static Map<String, String> unitcodeValueFromJsonMap;
     public static String date1;
     public static String currentDateTime;
+    public static OffsetDateTime dateTimeUTC;
 
 
     @BeforeAll
@@ -220,38 +228,51 @@ public abstract class SFBaseNotDG {
 //        heavyWeightIcon = "^FO677,601^GFA,510,869,11,:Z64:eJxt0j1Ow0AQBeDZbBQjEeEDgGQfgZKKHAVfAImSzttR5jSI0kYcgCNkJSoa5Aq5cDy8mf2JFWEp8ZfxZryzM3R2mTGz7DKvXlziM/WJT+TldouPxw8swZ+NoxvrNY8lcCA7ExVE63KkInBTTWTZ0YZoBRL3tAbbIZPB3UBbJEGEdqNElVivxNuQbaPfiaXQsnKSYri3TvIIvemp1Q3jPZ5YicSNYRd5awNLpkrTIjFT8Tklrg6BSEzdpCsZ5N/I0fCXy/xIUcvvMTojSR9ZZjKK8pEH7CiSF/RpQQc2iY7qwD3TP+yWdCf6RF5yOHHMfJikv7rf/Zx4RBV3MYojq3PFfZ2PxGe2I3j5+A3uhETXTL6a6nioTTk3wooPvmCNVkf2NnXo1RsZB8zGgMpDVM9DuymtaEKPpXteBkQ7iKgOgQyFl6lArokwBNpkdNv0PyzUsdOjkLSG+U1vYcwrPGzD8FdYcE/nLPBwe+JFoKXl9QeoUytL:4EBF^FS";
 //
 //
-//        switch (bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeightUnitOfMeasure()) {
-//            case "KG":
-//            case "KGM":
-//            case "KGS":
-//                weightInKilos = bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight();
-//                break;
-//            case "G":
-//            case "G ":
-//            case "G  ":
-//            case "GM":
-//            case "GM ":
-//            case "GR ":
-//            case "GRM":
-//            case "KG ": // Can't help, DOCS or the component thinks this is grams, no conversion
-//                weightInKilos = Precision.round(bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight() * 0.001, 1);
-//                break;
-//            case "LB":
-//            case "LB ":
-//            case "LBR":
-//            case "LBS":
-//                weightInKilos = Precision.round(bringParcelPojoShipments.getShippingUnits().get(0).getGrossWeight() * 0.45359237, 1);
-//                break;
-//        }
-//
-//        switch (bringParcelPojoShipments.getVolumeUnitOfMeasure()) {
-//            case "MTQ":
-//                volumeInCubicMetre = Precision.round(bringParcelPojoShipments.getVolume(), 8);
-//                break;
-//            case "CMQ":
-//                volumeInCubicMetre = Precision.round(bringParcelPojoShipments.getVolume() / 1000000, 8);
-//                break;
-//        }
+        switch (sandersFritomPojoShipments.getShippingUnits().get(0).getGrossWeightUnitOfMeasure()) {
+            case "KG":
+            case "KGM":
+            case "KGS":
+                weightInKilos = sandersFritomPojoShipments.getShippingUnits().get(0).getGrossWeight();
+                break;
+            case "G":
+            case "G ":
+            case "G  ":
+            case "GM":
+            case "GM ":
+            case "GR ":
+            case "GRM":
+            case "KG ": // Can't help, DOCS or the component thinks this is grams, no conversion
+                weightInKilos = Precision.round(sandersFritomPojoShipments.getShippingUnits().get(0).getGrossWeight() * 0.001, 1);
+                break;
+            case "LB":
+            case "LB ":
+            case "LBR":
+            case "LBS":
+                weightInKilos = Precision.round(sandersFritomPojoShipments.getShippingUnits().get(0).getGrossWeight() * 0.45359237, 1);
+                break;
+        }
+
+        switch (sandersFritomPojoShipments.getShippingUnits().get(0).getVolumeUnitOfMeasure()) {
+            case "MTQ":
+                volumeInCubicMetre = Precision.round(sandersFritomPojoShipments.getShippingUnits().get(0).getVolume(), 8);
+                break;
+            case "CMQ":
+                volumeInCubicMetre = Precision.round(sandersFritomPojoShipments.getShippingUnits().get(0).getVolume() / 1000000, 8);
+                break;
+        }
+
+        switch (sandersFritomPojoShipments.getShippingUnits().get(0).getDimensionsUnitOfMeasure()) {
+            case "M":
+                lengthInMetre = Precision.round(sandersFritomPojoShipments.getShippingUnits().get(0).getLength(), 2);
+                widthInMetre = Precision.round(sandersFritomPojoShipments.getShippingUnits().get(0).getLength(), 2);
+                heightInMetre = Precision.round(sandersFritomPojoShipments.getShippingUnits().get(0).getLength(), 2);
+                break;
+            case "CM":
+                lengthInMetre = Precision.round(sandersFritomPojoShipments.getShippingUnits().get(0).getLength() / 100, 2);
+                widthInMetre = Precision.round(sandersFritomPojoShipments.getShippingUnits().get(0).getLength() / 100, 2);
+                heightInMetre = Precision.round(sandersFritomPojoShipments.getShippingUnits().get(0).getLength() / 100, 2);
+                break;
+        }
 //
 //        checkString = bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(2, 19);
 //        int evenSum = 0;
@@ -390,11 +411,71 @@ public abstract class SFBaseNotDG {
                 restrictionValueFromJsonMap.put("PICKUP_HIAB", "Kraan");
             } else if (restrictionFromJsonList.get(i).equals("PICKUP_SIDE_LOAD")) {
                 restrictionValueFromJsonMap.put("PICKUP_SIDE_LOAD", "Zijkant");
-            }else if (restrictionFromJsonList.get(i).equals("DELIVERY_ROOF_LOAD")){
+            } else if (restrictionFromJsonList.get(i).equals("DELIVERY_ROOF_LOAD")) {
                 restrictionValueFromJsonMap.put("DELIVERY_ROOF_LOAD", "Dak");
             }
 
         }
+
+        unitcodeValueFromJsonMap = new LinkedHashMap<>();
+        unitcodeFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getPackageType();
+        switch (unitcodeFromJson) {
+            case "PB":
+                unitcodeValueFromJsonMap.put("PB", "PAL3");
+                break;
+            case "AH":
+                unitcodeValueFromJsonMap.put("AH", "PAL1");
+                break;
+            case "DG":
+                unitcodeValueFromJsonMap.put("DG", "CHEP BLOK");
+                break;
+            case "ED":
+                unitcodeValueFromJsonMap.put("ED", "IBC");
+                break;
+            case "EH":
+                unitcodeValueFromJsonMap.put("EH", "IBC EURO");
+                break;
+            case "EE":
+                unitcodeValueFromJsonMap.put("EE", "EURO");
+                break;
+            case "PE":
+                unitcodeValueFromJsonMap.put("PB", "PAL2");
+                break;
+            case "DH":
+                unitcodeValueFromJsonMap.put("DH", "CHEP EURO");
+                break;
+            case "AF":
+                unitcodeValueFromJsonMap.put("AF", "DUSS");
+                break;
+            case "CL":
+                unitcodeValueFromJsonMap.put("CL", "COLLI");
+                break;
+            case "PC":
+                unitcodeValueFromJsonMap.put("PC", "PAK");
+                break;
+            case "PK":
+                unitcodeValueFromJsonMap.put("PK", "PAK");
+                break;
+            case "IG":
+                unitcodeValueFromJsonMap.put("IG", "PAK");
+                break;
+            case "PA":
+                unitcodeValueFromJsonMap.put("PA", "PAK");
+                break;
+            case "BX":
+                unitcodeValueFromJsonMap.put("BX", "PAK");
+                break;
+            case "CT":
+                unitcodeValueFromJsonMap.put("CT", "PAK");
+                break;
+            case "CS":
+                unitcodeValueFromJsonMap.put("CS", "PAK");
+                break;
+        }
+
+
+        dateTimeUTC = OffsetDateTime.now(ZoneOffset.UTC);
+        //    System.out.println(dateTimeUTC);
 
     }
 }
