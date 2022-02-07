@@ -1,7 +1,7 @@
 package com.logistyx.TEST.Sanders_Fritom;
 
 
-import com.logistyx.utilities.AbstractBaseClasses.All_Bring_Parcel_BNP_v303_v311.Label_And_EDI_Requests.BNP_BUS_PRCL.Weight_Cases_NL_NO_Base.BNPBaseNotDG1;
+
 import com.logistyx.utilities.AbstractBaseClasses.Sanders_Fritom.SFBaseNotDG;
 import org.apache.commons.math3.util.Precision;
 import org.json.simple.JSONArray;
@@ -31,7 +31,7 @@ public class DANIEL_1 extends SFBaseNotDG {
     public void test1() {
 
 
-//        assertThat(sandersFritomPojoShipments.getShipmentId(), is(notNullValue()));
+        assertThat(sandersFritomPojoShipments.getShipmentId(), is(notNullValue()));
 //        System.out.println("requestJsonBodyShipments = " + requestJsonBodyShipments);
 //        validateResponseShipments.extract().response().prettyPrint();
 //        System.out.println("decodedStringShipments = " + decodedStringShipments);
@@ -59,9 +59,100 @@ public class DANIEL_1 extends SFBaseNotDG {
     }
 
 
-    @DisplayName("ZPL - PU countryCode converted to Spain")
+    @DisplayName("ZPL Carrier : Sanders Fritom")
     @Test
     public void test4() {
+
+        String carrierFromJson = sandersFritomPojoShipments.getForwarderDivision().getName();
+    //    System.out.println("carrierFromJson = " + carrierFromJson);
+        int carrierFromLabelStart = decodedStringShipments.indexOf("^FT25,47^A0N,39,38^FH^FD") + 24;
+        String carrierFromLabel = decodedStringShipments.substring(carrierFromLabelStart, carrierFromLabelStart + carrierFromJson.length());
+    //    System.out.println("carrierFromLabel = " + carrierFromLabel);
+        assertThat(carrierFromJson, is(equalTo(carrierFromLabel)));
+    }
+
+
+    @DisplayName("ZPL Service : SFT Standard service")
+    @Test
+    public void test5() {
+
+        String serviceFromJson = sandersFritomPojoShipments.getForwarderDivisionService().getName();
+    //    System.out.println("serviceFromJson = " + serviceFromJson);
+        int serviceFromLabelStart = decodedStringShipments.indexOf("^FT25,103^A0N,39,38^FH^FD") + 25;
+        String serviceFromLabel = decodedStringShipments.substring(serviceFromLabelStart, serviceFromLabelStart + serviceFromJson.length());
+    //    System.out.println("serviceFromLabel = " + serviceFromLabel);
+        assertThat(serviceFromJson, is(equalTo(serviceFromLabel)));
+    }
+
+
+    @DisplayName("ZPL Origin - Name : PUREF0001")
+    @Test
+    public void test6() {
+
+        String nameFromJson = sandersFritomPojoShipments.getPickupAddress().getReference();
+    //    System.out.println("nameFromJson = " + nameFromJson);
+        int nameFromLabelStart = decodedStringShipments.indexOf("^FT786,16^A0R,23,24^FH^FD") + 25;
+        String nameFromLabel = decodedStringShipments.substring(nameFromLabelStart, nameFromLabelStart + nameFromJson.length());
+    //    System.out.println("nameFromLabel = " + nameFromLabel);
+        assertThat(nameFromJson, is(equalTo(nameFromLabel)));
+    }
+
+
+    @DisplayName("ZPL Origin - Name2 : Pickup Name One")
+    @Test
+    public void test7() {
+
+        String name2FromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getName();
+    //    System.out.println("name2FromJson = " + name2FromJson);
+        int name2FromLabelStart = decodedStringShipments.indexOf("^FT761,16^A0R,23,24^FH^FD") + 25;
+        String name2FromLabel = decodedStringShipments.substring(name2FromLabelStart, name2FromLabelStart + name2FromJson.length());
+    //    System.out.println("name2FromLabel = " + name2FromLabel);
+        assertThat(name2FromJson, is(equalTo(name2FromLabel)));
+    }
+
+
+    @DisplayName("ZPL Origin - Street : De Grens 27 TEST")
+    @Test
+    public void test8() {
+
+        String streetFromJson = sandersFritomPojoShipments.getPickupAddress().getAddressLines().get(0).getValue();
+    //    System.out.println("streetFromJson = " + streetFromJson);
+        int streetFromLabelStart = decodedStringShipments.indexOf("^FT736,16^A0R,23,24^FH^FD") + 25;
+        String streetFromLabel = decodedStringShipments.substring(streetFromLabelStart, streetFromLabelStart + streetFromJson.length());
+    //    System.out.println("streetFromLabel = " + streetFromLabel);
+        assertThat(streetFromJson, is(equalTo(streetFromLabel)));
+    }
+
+
+    @DisplayName("ZPL Origin - PostalCode : 5921CC")
+    @Test
+    public void test9() {
+
+        String postalCodeFromJson = sandersFritomPojoShipments.getPickupAddress().getPostalCode();
+    //    System.out.println("postalCodeFromJson = " + postalCodeFromJson);
+        int postalCodeFromLabelStart = decodedStringShipments.indexOf("^FT711,16^A0R,23,24^FH^FD") + 25;
+        String postalCodeFromLabel = decodedStringShipments.substring(postalCodeFromLabelStart, postalCodeFromLabelStart + postalCodeFromJson.length());
+    //    System.out.println("postalCodeFromLabel = " + postalCodeFromLabel);
+        assertThat(postalCodeFromJson, is(equalTo(postalCodeFromLabel)));
+    }
+
+
+    @DisplayName("ZPL Origin - City : Heijen")
+    @Test
+    public void test10() {
+
+        String cityFromJson = sandersFritomPojoShipments.getPickupAddress().getLocalityName();
+    //    System.out.println("cityFromJson = " + cityFromJson);
+        int cityFromLabelStart = decodedStringShipments.indexOf("^FT711,16^A0R,23,24^FH^FD") + 32;
+        String cityFromLabel = decodedStringShipments.substring(cityFromLabelStart, cityFromLabelStart + cityFromJson.length());
+    //    System.out.println("cityFromLabel = " + cityFromLabel);
+        assertThat(cityFromJson, is(equalTo(cityFromLabel)));
+    }
+
+
+    @DisplayName("ZPL Origin - countryCode converted to Spain")
+    @Test
+    public void test11() {
 
         //    System.out.println("puCountryFromCountryCodeFromJson = " + puCountryFromCountryCodeFromJson);
         int puCountryFromCountryCodeFromLabelStart = decodedStringShipments.indexOf("^FT686,16^A0R,23,24^FH^FD") + 25;
@@ -72,9 +163,35 @@ public class DANIEL_1 extends SFBaseNotDG {
     }
 
 
+    @DisplayName("ZPL Origin - PhoneNumber : (31)497-532-323")
+    @Test
+    public void test12() {
+
+        String phoneNumberFromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getPhoneNumber();
+    //    System.out.println("phoneNumberFromJson = " + phoneNumberFromJson);
+        int phoneNumberFromLabelStart = decodedStringShipments.indexOf("^FT96,285^A0N,23,24^FH^FDtel: ") + 30;
+        String phoneNumberFromLabel = decodedStringShipments.substring(phoneNumberFromLabelStart, phoneNumberFromLabelStart + phoneNumberFromJson.length()+4);
+    //    System.out.println("phoneNumberFromLabel = " + phoneNumberFromLabel);
+        assertThat(phoneNumberFromJson, is(equalTo(phoneNumberFromLabel.replace("(", "").replace(")", "").replace("-", ""))));
+    }
+
+
+    @DisplayName("ZPL Origin - Remark : Remark value")
+    @Test
+    public void test13() {
+
+        String remarkFromJson = sandersFritomPojoShipments.getPickupAddress().getRemark();
+    //    System.out.println("remarkFromJson = " + remarkFromJson);
+        int remarkFromLabelStart = decodedStringShipments.indexOf("^FT636,16^A0R,23,24^FH^FD") + 25;
+        String remarkFromLabel = decodedStringShipments.substring(remarkFromLabelStart, remarkFromLabelStart + remarkFromJson.length());
+    //    System.out.println("remarkFromLabel = " + remarkFromLabel);
+        assertThat(remarkFromJson, is(equalTo(remarkFromLabel)));
+    }
+
+
     @DisplayName("ZPL - DY countryCode converted to Switzerland")
     @Test
-    public void test5() {
+    public void test14() {
 
         //    System.out.println("dyCountryFromCountryCodeFromJson = " + dyCountryFromCountryCodeFromJson);
         int dyCountryFromCountryCodeFromLabelStart = decodedStringShipments.indexOf("^FT96,260^A0N,23,24^FH^FD") + 25;
@@ -87,7 +204,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("ZPL - SU index / Total SU 1 OF 1")
     @Test
-    public void test6() {
+    public void test15() {
 
         String suIndexFromJson = String.valueOf(sandersFritomPojoShipments.getShippingUnits().get(0).getIndex());
         //    System.out.println("suIndexFromJson = " + suIndexFromJson);
@@ -104,7 +221,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - contains - version Data : <?xml version=\"1.0\" encoding=\"UTF-8\" ?>")
     @Test
-    public void test7() {
+    public void test16() {
 
         assertThat(decodedStringConveyances, containsString("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"));
     }
@@ -112,7 +229,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - contains <FRITOM_SHIPMENT_XML>")
     @Test
-    public void test8() {
+    public void test17() {
 
 
         assertThat(decodedStringConveyances, containsString("<FRITOM_SHIPMENT_XML>"));
@@ -121,7 +238,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - FritomCompany = SandersFritom")
     @Test
-    public void test9() {
+    public void test18() {
 
         String fritomCompanyEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getString("FRITOMCOMPANY");
         //    System.out.println("fritomCompanyEDI = " + fritomCompanyEDI);
@@ -132,7 +249,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - TIMESTAMP: <TIMESTAMP>2022-02-04T16:04:34</TIMESTAMP>")
     @Test
-    public void test10() {
+    public void test19() {
 
         String timestampEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getString("TIMESTAMP");
     //    System.out.println("timestampEDI = " + timestampEDI);
@@ -143,7 +260,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - Version = <VERSION>1.5</VERSION>")
     @Test
-    public void test11() {
+    public void test20() {
 
         String versionEDI = String.valueOf(jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getDouble("VERSION"));
         //    System.out.println("versionEDI = " + versionEDI);
@@ -153,7 +270,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - trackingID = (set to s.ShipperRef) 4706850")
     @Test
-    public void test12() {
+    public void test21() {
 
         String trackingIdFromJson = sandersFritomPojoShipments.getShipperRef();
         //    System.out.println("trackingIdFromJson = " + trackingIdFromJson);
@@ -165,7 +282,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - REFERENCE = (set to s.ShipperRef) 4706850")
     @Test
-    public void test13() {
+    public void test22() {
 
         String referenceFromJson = sandersFritomPojoShipments.getShipperRef();
     //    System.out.println("referenceFromJson = " + referenceFromJson);
@@ -177,7 +294,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - COD_AMOUNT present <COD_AMOUNT/>")
     @Test
-    public void test14() {
+    public void test23() {
 
         assertThat(decodedStringConveyances, containsString("<COD_AMOUNT/>"));
     }
@@ -185,7 +302,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - COD_VAL present <COD_VAL/>")
     @Test
-    public void test15() {
+    public void test24() {
 
         assertThat(decodedStringConveyances, containsString("<COD_VAL/>"));
     }
@@ -193,7 +310,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - IncotermCode = <INCOTERMS>CPT</INCOTERMS>")
     @Test
-    public void test16() {
+    public void test25() {
 
         String incotermCodeFromJson = sandersFritomPojoShipments.getIncotermCode();
         //    System.out.println("incotermCodeFromJson = " + incotermCodeFromJson);
@@ -205,7 +322,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - customer CODE : <CODE>968888021</CODE>")
     @Test
-    public void test17() {
+    public void test26() {
 
         String customerCodeFromJson = sandersFritomPojoShipments.getPickupForwarderDivisionAccountCode();
         //    System.out.println("customerCodeFromJson = " + customerCodeFromJson);
@@ -217,7 +334,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - customer Name : <NAME><![CDATA[PUREF0001]]></NAME>")
     @Test
-    public void test18() {
+    public void test27() {
 
         String customerNameFromJson = sandersFritomPojoShipments.getAddresses().get(1).getReference();
         //    System.out.println("customerNameFromJson = " + customerNameFromJson);
@@ -229,7 +346,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - customer Name2 : <NAME2><![CDATA[Pickup Name One]]></NAME2>")
     @Test
-    public void test19() {
+    public void test28() {
 
         String customerName2FromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getName();
         //    System.out.println("customerName2FromJson = " + customerName2FromJson);
@@ -241,7 +358,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - customer Address : <ADDRESS><![CDATA[De Grens 27 TEST]]></ADDRESS>")
     @Test
-    public void test20() {
+    public void test29() {
 
         String customerAddressFromJson = sandersFritomPojoShipments.getPickupAddress().getAddressLines().get(0).getValue();
         //    System.out.println("customerAddressFromJson = " + customerAddressFromJson);
@@ -253,7 +370,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - customer postalCode : <POSTALCODE>5921CC</POSTALCODE>")
     @Test
-    public void test21() {
+    public void test30() {
 
         String customerPostalCodeFromJson = sandersFritomPojoShipments.getPickupAddress().getPostalCode();
         //    System.out.println("customerPostalCodeFromJson = " + customerPostalCodeFromJson);
@@ -265,7 +382,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - customer City : <CITY><![CDATA[Heijen]]></CITY>")
     @Test
-    public void test22() {
+    public void test31() {
 
         String customerCityFromJson = sandersFritomPojoShipments.getPickupAddress().getLocalityName();
         //    System.out.println("customerCityFromJson = " + customerCityFromJson);
@@ -277,7 +394,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - customer countryCode : <COUNTRYCODE>ES</COUNTRYCODE>")
     @Test
-    public void test23() {
+    public void test32() {
 
         String customerCountryCodeFromJson = sandersFritomPojoShipments.getPickupAddress().getCountryCode();
     //    System.out.println("customerCountryCodeFromJson = " + customerCountryCodeFromJson);
@@ -289,7 +406,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - customer phoneNumber : <PHONE>31497532323</PHONE>")
     @Test
-    public void test24() {
+    public void test33() {
 
         String customerPhoneNumberFromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getPhoneNumber();
         //    System.out.println("customerPhoneNumberFromJson = " + customerPhoneNumberFromJson);
@@ -301,7 +418,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - customer Email : <EMAIL>vaiser@hotmail.com</EMAIL>")
     @Test
-    public void test25() {
+    public void test34() {
 
         String customerEmailFromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getEmailAddress();
         //    System.out.println("customerEmailFromJson = " + customerEmailFromJson);
@@ -313,7 +430,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - invoice CODE : <CODE>968888021</CODE>")
     @Test
-    public void test26() {
+    public void test35() {
 
         String invoiceCodeFromJson = sandersFritomPojoShipments.getPickupForwarderDivisionAccountCode();
         //    System.out.println("invoiceCodeFromJson = " + invoiceCodeFromJson);
@@ -325,7 +442,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - invoice Name : <NAME><![CDATA[PUREF0001]]></NAME>")
     @Test
-    public void test27() {
+    public void test36() {
 
         String invoiceNameFromJson = sandersFritomPojoShipments.getAddresses().get(1).getReference();
         //    System.out.println("invoiceNameFromJson = " + invoiceNameFromJson);
@@ -337,7 +454,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - invoice Name2 : <NAME2><![CDATA[Pickup Name One]]></NAME2>  ")
     @Test
-    public void test28() {
+    public void test37() {
 
         String invoiceName2FromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getName();
         //    System.out.println("invoiceName2FromJson = " + invoiceName2FromJson);
@@ -349,7 +466,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - invoice Address : <ADDRESS><![CDATA[De Grens 27 TEST]]></ADDRESS>")
     @Test
-    public void test29() {
+    public void test38() {
 
         String invoiceAddressFromJson = sandersFritomPojoShipments.getPickupAddress().getAddressLines().get(0).getValue();
         //    System.out.println("invoiceAddressFromJson = " + invoiceAddressFromJson);
@@ -361,7 +478,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - invoice postalCode : <POSTALCODE>5921CC</POSTALCODE>")
     @Test
-    public void test30() {
+    public void test39() {
 
         String invoicePostalCodeFromJson = sandersFritomPojoShipments.getPickupAddress().getPostalCode();
         //    System.out.println("invoicePostalCodeFromJson = " + invoicePostalCodeFromJson);
@@ -373,7 +490,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - invoice City : <CITY><![CDATA[Heijen]]></CITY>")
     @Test
-    public void test31() {
+    public void test40() {
 
         String invoiceCityFromJson = sandersFritomPojoShipments.getPickupAddress().getLocalityName();
         //    System.out.println("invoiceCityFromJson = " + invoiceCityFromJson);
@@ -385,7 +502,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - invoice countryCode : <COUNTRYCODE>ES</COUNTRYCODE>")
     @Test
-    public void test32() {
+    public void test41() {
 
         String invoiceCountryCodeFromJson = sandersFritomPojoShipments.getPickupAddress().getCountryCode();
     //    System.out.println("invoiceCountryCodeFromJson = " + invoiceCountryCodeFromJson);
@@ -397,7 +514,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - invoice phoneNumber : <PHONE>31497532323</PHONE>")
     @Test
-    public void test33() {
+    public void test42() {
 
         String invoicePhoneNumberFromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getPhoneNumber();
         //    System.out.println("invoicePhoneNumberFromJson = " + invoicePhoneNumberFromJson);
@@ -409,7 +526,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - invoice Email : <EMAIL>vaiser@hotmail.com</EMAIL>")
     @Test
-    public void test34() {
+    public void test43() {
 
         String invoiceEmailFromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getEmailAddress();
         //    System.out.println("invoiceEmailFromJson = " + invoiceEmailFromJson);
@@ -421,7 +538,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - loading Restriction = PICKUP_ROOF_LOAD -> <RESTRICTION>Dak</RESTRICTION>")
     @Test
-    public void test35() {
+    public void test44() {
 
         //    System.out.println("restrictionValueFromJsonMap.get(\"PICKUP_ROOF_LOAD\") = " + restrictionValueFromJsonMap.get("PICKUP_ROOF_LOAD"));
         String loadingRestrictionEDI = (String) jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getJSONObject("RESTRICTIONS").getJSONArray("RESTRICTION").get(0);
@@ -432,7 +549,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - loading Restriction = PICKUP_HIAB -> <RESTRICTION>Kraan</RESTRICTION>")
     @Test
-    public void test36() {
+    public void test45() {
 
         //    System.out.println("restrictionValueFromJsonMap.get(\"PICKUP_HIAB\") = " + restrictionValueFromJsonMap.get("PICKUP_HIAB"));
         String loadingRestrictionEDI = (String) jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getJSONObject("RESTRICTIONS").getJSONArray("RESTRICTION").get(1);
@@ -443,7 +560,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - loading Restriction = PICKUP_SIDE_LOAD -> <RESTRICTION>Zijkant</RESTRICTION>")
     @Test
-    public void test37() {
+    public void test46() {
 
         //    System.out.println("restrictionValueFromJsonMap.get(\"PICKUP_SIDE_LOAD\") = " + restrictionValueFromJsonMap.get("PICKUP_SIDE_LOAD"));
         String loadingRestrictionEDI = (String) jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getJSONObject("RESTRICTIONS").getJSONArray("RESTRICTION").get(2);
@@ -455,7 +572,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - loading Correct pick up start date")
     @Test
-    public void test38() {
+    public void test47() {
 
         String loadingCorrectPickUpStartDateFromJson = sandersFritomPojoShipments.getRequestedPickupWindowBeginDateTime().substring(0, 10);
     //    System.out.println("loadingCorrectPickUpStartDateFromJson = " + loadingCorrectPickUpStartDateFromJson);
@@ -467,7 +584,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - loading Correct pick up end date")
     @Test
-    public void test39() {
+    public void test48() {
 
         String loadingCorrectPickUpEndDateFromJson = sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime().substring(0, 10);
     //    System.out.println("loadingCorrectPickUpEndDateFromJson = " + loadingCorrectPickUpEndDateFromJson);
@@ -480,7 +597,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - loading Correct pick up start time")
     @Test
-    public void test40() {
+    public void test49() {
 
         String loadingCorrectPickUpStartTimeFromJson = sandersFritomPojoShipments.getRequestedPickupWindowBeginDateTime().substring(11, 19);
         //    System.out.println("loadingCorrectPickUpStartTimeFromJson = " + loadingCorrectPickUpStartTimeFromJson);
@@ -492,7 +609,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - loading Correct pick up end time")
     @Test
-    public void test41() {
+    public void test50() {
 
         String loadingCorrectPickUpEndTimeFromJson = sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime().substring(11, 19);
         //    System.out.println("loadingCorrectPickUpEndTimeFromJson = " + loadingCorrectPickUpEndTimeFromJson);
@@ -504,7 +621,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - loading Name : <NAME><![CDATA[PUREF0001]]></NAME>")
     @Test
-    public void test42() {
+    public void test51() {
 
         String loadingNameFromJson = sandersFritomPojoShipments.getAddresses().get(1).getReference();
         //    System.out.println("loadingNameFromJson = " + loadingNameFromJson);
@@ -516,7 +633,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - loading Name2 : <NAME2><![CDATA[Pickup Name One]]></NAME2>")
     @Test
-    public void test43() {
+    public void test52() {
 
         String loadingName2FromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getName();
         //    System.out.println("loadingName2FromJson = " + loadingName2FromJson);
@@ -528,7 +645,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - loading Address : <ADDRESS><![CDATA[De Grens 27 TEST]]></ADDRESS>")
     @Test
-    public void test44() {
+    public void test53() {
 
         String loadingAddressFromJson = sandersFritomPojoShipments.getPickupAddress().getAddressLines().get(0).getValue();
         //    System.out.println("loadingAddressFromJson = " + loadingAddressFromJson);
@@ -540,7 +657,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - loading postalCode : <POSTALCODE>5921CC</POSTALCODE>")
     @Test
-    public void test45() {
+    public void test54() {
 
         String loadingPostalCodeFromJson = sandersFritomPojoShipments.getPickupAddress().getPostalCode();
         //    System.out.println("loadingPostalCodeFromJson = " + loadingPostalCodeFromJson);
@@ -552,7 +669,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - loading City : <CITY><![CDATA[Heijen]]></CITY>")
     @Test
-    public void test46() {
+    public void test55() {
 
         String loadingCityFromJson = sandersFritomPojoShipments.getPickupAddress().getLocalityName();
         //    System.out.println("loadingCityFromJson = " + loadingCityFromJson);
@@ -564,7 +681,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - loading countryCode : <COUNTRYCODE>ES</COUNTRYCODE>")
     @Test
-    public void test47() {
+    public void test56() {
 
         String loadingCountryCodeFromJson = sandersFritomPojoShipments.getPickupAddress().getCountryCode();
     //    System.out.println("loadingCountryCodeFromJson = " + loadingCountryCodeFromJson);
@@ -576,7 +693,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - loading phoneNumber : <PHONE>31497532323</PHONE>")
     @Test
-    public void test48() {
+    public void test57() {
 
         String loadingPhoneNumberFromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getPhoneNumber();
         //    System.out.println("loadingPhoneNumberFromJson = " + loadingPhoneNumberFromJson);
@@ -588,7 +705,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - loading Email : <EMAIL>vaiser@hotmail.com</EMAIL>")
     @Test
-    public void test49() {
+    public void test58() {
 
         String loadingEmailFromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getEmailAddress();
         //    System.out.println("loadingEmailFromJson = " + loadingEmailFromJson);
@@ -600,7 +717,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - unloading Restriction = DELIVERY_ROOF_LOAD -> <RESTRICTION>Dak</RESTRICTION>")
     @Test
-    public void test50() {
+    public void test59() {
 
         //    System.out.println("restrictionValueFromJsonMap.get(\"DELIVERY_ROOF_LOAD\") = " + restrictionValueFromJsonMap.get("DELIVERY_ROOF_LOAD"));
         String unloadingRestrictionEDI = (String) jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getJSONObject("RESTRICTIONS").getJSONArray("RESTRICTION").get(0);
@@ -612,7 +729,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - unloading Correct delivery date")
     @Test
-    public void test51() {
+    public void test60() {
 
         String unloadingCorrectDeliveryDateFromJson = sandersFritomPojoShipments.getRequestedDeliveryDateTime().substring(0, 10);
     //    System.out.println("unloadingCorrectDeliveryDateFromJson = " + unloadingCorrectDeliveryDateFromJson);
@@ -625,7 +742,7 @@ public class DANIEL_1 extends SFBaseNotDG {
     @Disabled
     @DisplayName("EDI - unloading Correct pick up end date")
     @Test
-    public void test52() {
+    public void test61() {
 
         String unloadingCorrectPickUpEndDateFromJson = sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime().substring(0, 10);
     //    System.out.println("unloadingCorrectPickUpEndDateFromJson = " + unloadingCorrectPickUpEndDateFromJson);
@@ -637,7 +754,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - unloading Correct delivery start time - <TIME1>12:00:00</TIME1> - hardcoded in composer settings")
     @Test
-    public void test53() {
+    public void test62() {
 
 
         String unloadingCorrectDeliveryStartTimeEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getString("TIME1");
@@ -648,7 +765,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - unloading Correct delivery end time - <TIME2>17:00:00</TIME2> - hardcoded in composer settings")
     @Test
-    public void test54() {
+    public void test63() {
 
         String unloadingCorrectDeliveryEndTimeEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getString("TIME2");
     //    System.out.println("unloadingCorrectDeliveryEndTimeEDI = " + unloadingCorrectDeliveryEndTimeEDI);
@@ -658,7 +775,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - unloading Name : <NAME><![CDATA[FLE >><<01105]]></NAME>")
     @Test
-    public void test55() {
+    public void test64() {
 
         String unloadingNameFromJson = sandersFritomPojoShipments.getAddresses().get(0).getReference();
         //    System.out.println("unloadingNameFromJson = " + unloadingNameFromJson);
@@ -670,7 +787,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - unloading Name2 : <NAME2><![CDATA[Delivery Co<<ntact Name 1]]></NAME2>")
     @Test
-    public void test56() {
+    public void test65() {
 
         String unloadingName2FromJson = sandersFritomPojoShipments.getAddresses().get(0).getContacts().get(0).getName();
         //    System.out.println("unloadingName2FromJson = " + unloadingName2FromJson);
@@ -682,7 +799,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - unloading address : <ADDRESS><![CDATA[Weena 10017 TEST]]></ADDRESS>")
     @Test
-    public void test57() {
+    public void test66() {
 
         String unloadingAddressFromJson = sandersFritomPojoShipments.getDeliveryAddress().getAddressLines().get(0).getValue();
     //    System.out.println("unloadingAddressFromJson = " + unloadingAddressFromJson);
@@ -694,7 +811,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - unloading address 2 : <ADDRESS2><![CDATA[Delivery address two]]></ADDRESS2>")
     @Test
-    public void test58() {
+    public void test67() {
 
         String unloadingAddress2FromJson = sandersFritomPojoShipments.getDeliveryAddress().getAddressLines().get(1).getValue();
     //    System.out.println("unloadingAddress2FromJson = " + unloadingAddress2FromJson);
@@ -706,7 +823,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - unloading postalCode : <POSTALCODE>0001001</POSTALCODE>")
     @Test
-    public void test59() {
+    public void test68() {
 
         String unloadingPostalCodeFromJson = sandersFritomPojoShipments.getDeliveryAddress().getPostalCode();
     //    System.out.println("unloadingPostalCodeFromJson = " + unloadingPostalCodeFromJson);
@@ -718,7 +835,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - unloading City : <CITY><![CDATA[VITORIA]]></CITY>")
     @Test
-    public void test60() {
+    public void test69() {
 
         String unloadingCityFromJson = sandersFritomPojoShipments.getDeliveryAddress().getLocalityName();
     //    System.out.println("unloadingCityFromJson = " + unloadingCityFromJson);
@@ -730,7 +847,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - unloading countryCode : <COUNTRYCODE>CH</COUNTRYCODE>")
     @Test
-    public void test61() {
+    public void test70() {
 
         String unloadingCountryCodeFromJson = sandersFritomPojoShipments.getDeliveryAddress().getCountryCode();
     //    System.out.println("unloadingCountryCodeFromJson = " + unloadingCountryCodeFromJson);
@@ -742,7 +859,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - unloading phoneNumber : <PHONE>(31)497-532-323</PHONE>")
     @Test
-    public void test62() {
+    public void test71() {
 
         String unloadingPhoneNumberFromJson = sandersFritomPojoShipments.getDeliveryAddress().getContacts().get(0).getPhoneNumber();
     //    System.out.println("unloadingPhoneNumberFromJson = " + unloadingPhoneNumberFromJson);
@@ -754,7 +871,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - unloading Email : <EMAIL>vaiser@hotmail.com</EMAIL>")
     @Test
-    public void test63() {
+    public void test72() {
 
         String unloadingEmailFromJson = sandersFritomPojoShipments.getDeliveryAddress().getContacts().get(0).getEmailAddress();
     //    System.out.println("unloadingEmailFromJson = " + unloadingEmailFromJson);
@@ -766,7 +883,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - orderline Description : This is the description of the sUnit content value")
     @Test
-    public void test64() {
+    public void test73() {
 
         String orderlineDescriptionFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getContent();
     //    System.out.println("orderlineDescriptionFromJson = " + orderlineDescriptionFromJson);
@@ -779,7 +896,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - orderline UnitCode : <UNITCODE>PAK</UNITCODE>")
     @Test
-    public void test65() {
+    public void test74() {
 
         String orderLineUnitCodeFromJsonConverted = unitcodeValueFromJsonMap.get(unitcodeFromJson);
     //    System.out.println("orderLineUnitCodeFromJsonConverted = " + orderLineUnitCodeFromJsonConverted);
@@ -792,7 +909,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - orderline Quantity : 1")
     @Test
-    public void test67() {
+    public void test75() {
 
         int orderlineQuantityFromJson = sandersFritomPojoShipments.getNumberOfShippingUnits();
         //    System.out.println("orderlineQuantityFromJson = " + orderlineQuantityFromJson);
@@ -804,7 +921,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - orderline GrossWeight : <GROSS_WEIGHT>12.13</GROSS_WEIGHT>")
     @Test
-    public void test68() {
+    public void test76() {
 
         double orderlineGrossWeightFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getGrossWeight();
     //    System.out.println("orderlineGrossWeightFromJson = " + orderlineGrossWeightFromJson);
@@ -816,7 +933,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - orderline NetWeight : <NET_WEIGHT>12.13</NET_WEIGHT>")
     @Test
-    public void test69() {
+    public void test77() {
 
         double orderlineNetWeightFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getNetWeight();
     //    System.out.println("orderlineNetWeightFromJson = " + orderlineNetWeightFromJson);
@@ -828,7 +945,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - orderline Length : <LENGTH>37.00</LENGTH>")
     @Test
-    public void test70() {
+    public void test78() {
 
         double orderlineLengthFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getLength();
     //    System.out.println("orderlineLengthFromJson = " + orderlineLengthFromJson);
@@ -840,7 +957,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - orderline Width : <WIDTH>26.50</WIDTH>")
     @Test
-    public void test71() {
+    public void test79() {
 
         double orderlineWidthFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getWidth();
     //    System.out.println("orderlineWidthFromJson = " + orderlineWidthFromJson);
@@ -852,7 +969,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - orderline Height : <HEIGHT>4.00</HEIGHT>")
     @Test
-    public void test72() {
+    public void test80() {
 
         double orderlineHeightFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getWidth();
     //    System.out.println("orderlineHeightFromJson = " + orderlineHeightFromJson);
@@ -864,7 +981,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - orderline Volume : <VOLUME>0.14</VOLUME>")
     @Test
-    public void test73() {
+    public void test81() {
 
         double orderlineVolumeFromJson = volumeInCubicMetre;
     //    System.out.println("orderlineVolumeFromJson = " + orderlineVolumeFromJson);
@@ -876,7 +993,7 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - orderline Loadingmeter : <LOADINGMETER>408.54</LOADINGMETER>")
     @Test
-    public void test74() {
+    public void test82() {
 
         double orderlineLengthFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getLength();
         double orderlineWidthFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getWidth();
@@ -890,13 +1007,25 @@ public class DANIEL_1 extends SFBaseNotDG {
 
     @DisplayName("EDI - orderline 0 reference : 4706850")
     @Test
-    public void test75() {
+    public void test83() {
 
         String orderlineReferenceFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getShipperRef();
     //    System.out.println("orderlineReferenceFromJson = " + orderlineReferenceFromJson);
         String orderlineReferenceEDI = String.valueOf(jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("ORDERLINES").getJSONObject("ORDERLINE").getInt("REFERENCE"));
     //    System.out.println("orderlineReferenceEDI = " + orderlineReferenceEDI);
         assertThat(orderlineReferenceFromJson, is(equalTo(orderlineReferenceEDI)));
+    }
+
+
+    @DisplayName("Verify the CHECK DIGIT for 00112345671000002587 is correct. We expect: 7 for 11234567100000258")
+    @Test
+    public void test84() {
+
+    //    System.out.println("sandersFritomPojoShipments.getShippingUnits().get(0).getAdditionalValues().get(0).getValue().substring(2, 19) = " + sandersFritomPojoShipments.getShippingUnits().get(0).getAdditionalValues().get(0).getValue().substring(2, 19));
+    //    System.out.println("sandersFritomPojoShipments.getShippingUnits().get(0).getAdditionalValues().get(0).getValue() = " + sandersFritomPojoShipments.getShippingUnits().get(0).getAdditionalValues().get(0).getValue());
+    //    System.out.println("checkDigit = " + checkDigit);
+        assertThat(sandersFritomPojoShipments.getShippingUnits().get(0).getAdditionalValues().get(0).getValue().substring(19, 20), is(equalTo(String.valueOf(checkDigit))));
+
     }
 
 

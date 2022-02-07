@@ -160,6 +160,8 @@ public abstract class SFBaseNotDG {
                 "    \"RequestedPickupWindowBeginDateTime\": \"2022-01-26T21:16:17.565Z\",\n" +
                 "    \"RequestedPickupWindowEndDateTime\": \"2022-01-26T21:15:13.000Z\",\n" +
                 "    \"RequestedDeliveryDateTime\": \"2022-01-29T21:16:17.565Z\",\n" +
+                "    \"RequestedDeliveryWindowBeginDateTime\": \"2022-01-29T21:16:17.565Z\",\n" +
+                "    \"RequestedDeliveryWindowEndDateTime\": \"2022-01-29T23:16:17.565Z\",\n" +
                 "    \"ForwarderServiceIndicators\": {\n" +
                 "        \"AdditionalServices\": [\n" +
                 "            \"PICKUP_ROOF_LOAD\",\n" +
@@ -273,24 +275,24 @@ public abstract class SFBaseNotDG {
                 heightInMetre = Precision.round(sandersFritomPojoShipments.getShippingUnits().get(0).getLength() / 100, 2);
                 break;
         }
-//
-//        checkString = bringParcelPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(2, 19);
-//        int evenSum = 0;
-//        int oddSum = 0;
-//        if (checkString.length() != 17) {
-//            throw new IllegalArgumentException("Data length must be 17 to calculate SSCC-18 check digit.");
-//        } else {
-//            for (int i = 0; i < checkString.length(); i++) {
-//                if ((i + 1) % 2 == 0) {
-//                    evenSum += Integer.parseInt(String.valueOf(checkString.charAt(i)));
-//                } else {
-//                    oddSum += Integer.parseInt(String.valueOf(checkString.charAt(i)));
-//                }
-//            }
-//            checkDigit = 10 - ((evenSum + (oddSum * 3)) % 10);
-//        }
-//
-//
+
+        checkString = sandersFritomPojoShipments.getShippingUnits().get(0).getAdditionalValues().get(0).getValue().substring(2, 19);
+        int evenSum = 0;
+        int oddSum = 0;
+        if (checkString.length() != 17) {
+            throw new IllegalArgumentException("Data length must be 17 to calculate SSCC-18 check digit.");
+        } else {
+            for (int i = 0; i < checkString.length(); i++) {
+                if ((i + 1) % 2 == 0) {
+                    evenSum += Integer.parseInt(String.valueOf(checkString.charAt(i)));
+                } else {
+                    oddSum += Integer.parseInt(String.valueOf(checkString.charAt(i)));
+                }
+            }
+            checkDigit = 10 - ((evenSum + (oddSum * 3)) % 10);
+        }
+
+
         JsonPath jsonPath = validateResponseShipments.extract().jsonPath();
         grossWeight = jsonPath.get("ShippingUnits.GrossWeight");
         detectedNumberOfPackages = sandersFritomPojoShipments.getShippingUnits().size();
