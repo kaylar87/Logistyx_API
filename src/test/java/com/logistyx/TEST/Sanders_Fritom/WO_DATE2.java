@@ -1,27 +1,19 @@
 package com.logistyx.TEST.Sanders_Fritom;
 
 
-import com.logistyx.utilities.AbstractBaseClasses.Sanders_Fritom.SFBaseNotDG;
-import org.apache.commons.math3.util.Precision;
-import org.json.simple.JSONArray;
-import org.junit.jupiter.api.Disabled;
+import com.logistyx.utilities.AbstractBaseClasses.Sanders_Fritom.SFBaseNotDG_WO_DATE2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 
 @DisplayName("DANIEL.1")
-public class DANIEL_1 extends SFBaseNotDG {
+public class WO_DATE2 extends SFBaseNotDG_WO_DATE2 {
 
     static {
-        SFBaseNotDG.shipmentsLabel();
+        SFBaseNotDG_WO_DATE2.shipmentsLabel();
     }
 
 
@@ -416,10 +408,10 @@ public class DANIEL_1 extends SFBaseNotDG {
     public void test31() {
 
         String postCodeFromJson = sandersFritomPojoShipments.getDeliveryAddress().getCountryCode() + "/" + sandersFritomPojoShipments.getDeliveryAddress().getPostalCode();
-    //    System.out.println("postCodeFromJson = " + postCodeFromJson);
+        //    System.out.println("postCodeFromJson = " + postCodeFromJson);
         int postCodeFromLabelStart = decodedStringShipments.indexOf("^FT320,330^A0N,45,45^FH^FD") + 26;
         String postCodeFromLabel = decodedStringShipments.substring(postCodeFromLabelStart, postCodeFromLabelStart + postCodeFromJson.length());
-    //    System.out.println("postCodeFromLabel = " + postCodeFromLabel);
+        //    System.out.println("postCodeFromLabel = " + postCodeFromLabel);
         assertThat(postCodeFromJson, is(equalTo(postCodeFromLabel)));
     }
 
@@ -779,11 +771,11 @@ public class DANIEL_1 extends SFBaseNotDG {
     @Test
     public void test63() {
 
-        String loadingCorrectPickUpStartDateFromJson = sandersFritomPojoShipments.getRequestedPickupWindowBeginDateTime().substring(0, 10);
-        //    System.out.println("loadingCorrectPickUpStartDateFromJson = " + loadingCorrectPickUpStartDateFromJson);
-        String loadingCorrectPickUpStartDateEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("DATE1");
-        //    System.out.println("loadingCorrectPickUpStartDateEDI = " + loadingCorrectPickUpStartDateEDI);
-        assertThat(loadingCorrectPickUpStartDateFromJson, is(equalTo(loadingCorrectPickUpStartDateEDI)));
+        String loadingDate1FromJson = sandersFritomPojoShipments.getRequestedPickupDateTime().substring(0, 10);
+        //    System.out.println("loadingDate1FromJson = " + loadingDate1FromJson);
+        String loadingDate1EDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("DATE1");
+        //    System.out.println("loadingDate1EDI = " + loadingDate1EDI);
+        assertThat(loadingDate1FromJson, is(equalTo(loadingDate1EDI)));
     }
 
 
@@ -791,11 +783,15 @@ public class DANIEL_1 extends SFBaseNotDG {
     @Test
     public void test64() {
 
-        String loadingCorrectPickUpEndDateFromJson = sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime().substring(0, 10);
-        //    System.out.println("loadingCorrectPickUpEndDateFromJson = " + loadingCorrectPickUpEndDateFromJson);
-        String loadingCorrectPickUpEndDateEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("DATE2");
-        //    System.out.println("loadingCorrectPickUpEndDateEDI = " + loadingCorrectPickUpEndDateEDI);
-        assertThat(loadingCorrectPickUpEndDateFromJson, is(equalTo(loadingCorrectPickUpEndDateEDI)));
+        if (sandersFritomPojoShipments.getRequestedPickupDateTime().equals(sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime())) {
+            assertThat(jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("DATE2"), is(equalTo("")));
+        } else {
+            String loadingDate2FromJson = sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime().substring(0, 10);
+            //    System.out.println("loadingDate2FromJson = " + loadingDate2FromJson);
+            String loadingDate2EDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("DATE2");
+            //    System.out.println("loadingDate2EDI = " + loadingDate2EDI);
+            assertThat(loadingDate2FromJson, is(equalTo(loadingDate2EDI)));
+        }
     }
 
 
@@ -803,23 +799,60 @@ public class DANIEL_1 extends SFBaseNotDG {
     @Test
     public void test65() {
 
-        String loadingCorrectPickUpStartTimeFromJson = sandersFritomPojoShipments.getRequestedPickupWindowBeginDateTime().substring(11, 19);
-        //    System.out.println("loadingCorrectPickUpStartTimeFromJson = " + loadingCorrectPickUpStartTimeFromJson);
-        String loadingCorrectPickUpStartTimeEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("TIME1");
-        //    System.out.println("loadingCorrectPickUpStartTimeEDI = " + loadingCorrectPickUpStartTimeEDI);
-        assertThat(loadingCorrectPickUpStartTimeFromJson, is(equalTo(loadingCorrectPickUpStartTimeEDI)));
-    }
+        if (requestJsonBodyShipments.contains("RequestedPickupWindowBeginDateTime") && requestJsonBodyShipments.contains("RequestedPickupWindowEndDateTime")) {
+            if (sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime() != null) {
+                String loadingTime1FromJson = sandersFritomPojoShipments.getRequestedPickupWindowBeginDateTime().substring(11, 19);
+                String loadingTime1FromSettings = "08:00:00";
+                String loadingTime1EDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("TIME1");
 
+                if (sandersFritomPojoShipments.getRequestedPickupDateTime().equals(sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime())) {
+                    if (sandersFritomPojoShipments.getRequestedPickupWindowBeginDateTime() != null) {
+                        assertThat(loadingTime1FromJson, is(equalTo(loadingTime1EDI)));
+                    } else {
+                        assertThat(loadingTime1FromSettings, is(equalTo(loadingTime1EDI)));
+                    }
+                } else {
+                    assertThat(loadingTime1EDI, is(equalTo("")));
+                    System.out.println("Time1 is empty");
+                }
+            } else {
+                assertThat(sandersFritomPojoShipments.getRequestedPickupWindowBeginDateTime(), nullValue());
+                System.out.println("'RequestedPickupDateTime' or 'RequestedPickupWindowEndDateTime' are null");
+            }
+        } else {
+            assertThat(jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("TIME1"), is(equalTo("08:00:00")));
+            System.out.println("RequestJsonBodyShipments does not contains 'RequestedPickupWindowBeginDateTime' or 'RequestedPickupWindowEndDateTime'");
+        }
+    }
 
     @DisplayName("EDI - loading Correct pick up end time")
     @Test
     public void test66() {
 
-        String loadingCorrectPickUpEndTimeFromJson = sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime().substring(11, 19);
-        //    System.out.println("loadingCorrectPickUpEndTimeFromJson = " + loadingCorrectPickUpEndTimeFromJson);
-        String loadingCorrectPickUpEndTimeEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("TIME2");
-        //    System.out.println("loadingCorrectPickUpEndTimeEDI = " + loadingCorrectPickUpEndTimeEDI);
-        assertThat(loadingCorrectPickUpEndTimeFromJson, is(equalTo(loadingCorrectPickUpEndTimeEDI)));
+        if (requestJsonBodyShipments.contains("RequestedPickupWindowEndDateTime")) {
+            if (sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime() != null) {
+                String loadingTime2FromJson = sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime().substring(11, 19);
+                String loadingTime2FromSettings = "17:00:00";
+                String loadingTime2EDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("TIME2");
+
+                if (sandersFritomPojoShipments.getRequestedPickupDateTime().equals(sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime())) {
+                    if (sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime() != null) {
+                        assertThat(loadingTime2FromJson, is(equalTo(loadingTime2EDI)));
+                    } else {
+                        assertThat(loadingTime2FromSettings, is(equalTo(loadingTime2EDI)));
+                    }
+                } else {
+                    assertThat(loadingTime2EDI, is(equalTo("")));
+                    System.out.println("Time2 is empty");
+                }
+            } else {
+                assertThat(sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime(), nullValue());
+                System.out.println("'RequestedPickupWindowEndDateTime' is null");
+            }
+        } else {
+            assertThat(jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("TIME2"), is(equalTo("17:00:00")));
+            System.out.println("RequestJsonBodyShipments does not contains 'RequestedPickupWindowEndDateTime'");
+        }
     }
 
 
@@ -935,35 +968,58 @@ public class DANIEL_1 extends SFBaseNotDG {
     @Test
     public void test76() {
 
-        String unloadingCorrectDeliveryDateFromJson = sandersFritomPojoShipments.getRequestedDeliveryDateTime().substring(0, 10);
-        //    System.out.println("unloadingCorrectDeliveryDateFromJson = " + unloadingCorrectDeliveryDateFromJson);
-        String unloadingCorrectDeliveryDateEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getString("DATE1");
-        //    System.out.println("unloadingCorrectDeliveryDateEDI = " + unloadingCorrectDeliveryDateEDI);
-        assertThat(unloadingCorrectDeliveryDateFromJson, is(equalTo(unloadingCorrectDeliveryDateEDI)));
+        String unloadingDate1FromJson = sandersFritomPojoShipments.getRequestedDeliveryDateTime().substring(0, 10);
+        //    System.out.println("unloadingDate1FromJson = " + unloadingDate1FromJson);
+        String unloadingDate1EDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getString("DATE1");
+        //    System.out.println("unloadingDate1EDI = " + unloadingDate1EDI);
+        assertThat(unloadingDate1FromJson, is(equalTo(unloadingDate1EDI)));
     }
 
 
-    @Disabled
     @DisplayName("EDI - unloading Correct pick up end date")
     @Test
     public void test77() {
 
-        String unloadingCorrectPickUpEndDateFromJson = sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime().substring(0, 10);
-        //    System.out.println("unloadingCorrectPickUpEndDateFromJson = " + unloadingCorrectPickUpEndDateFromJson);
-        String unloadingCorrectPickUpEndDateEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getString("DATE2");
-        //    System.out.println("unloadingCorrectPickUpEndDateEDI = " + unloadingCorrectPickUpEndDateEDI);
-        assertThat(unloadingCorrectPickUpEndDateFromJson, is(equalTo(unloadingCorrectPickUpEndDateEDI)));
+        if (sandersFritomPojoShipments.getRequestedDeliveryDateTime().equals(sandersFritomPojoShipments.getRequestedDeliveryWindowEndDateTime())) {
+            assertThat(jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getString("DATE2"), is(equalTo("")));
+        } else {
+            String unloadingDate2FromJson = sandersFritomPojoShipments.getRequestedDeliveryWindowEndDateTime().toString().substring(0, 10);
+            //    System.out.println("unloadingDate2FromJson = " + unloadingDate2FromJson);
+            String unloadingDate2EDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getString("DATE2");
+            //   System.out.println("unloadingDate2EDI = " + unloadingDate2EDI);
+            assertThat(unloadingDate2FromJson, is(equalTo(unloadingDate2EDI)));
+        }
     }
 
 
-    @DisplayName("EDI - unloading Correct delivery start time - <TIME1>12:00:00</TIME1> - hardcoded in composer settings")
+    @DisplayName("EDI - unloading Correct delivery start time")
     @Test
     public void test78() {
 
+        if (requestJsonBodyShipments.contains("RequestedDeliveryWindowBeginDateTime") && requestJsonBodyShipments.contains("RequestedDeliveryWindowEndDateTime")) {
+            if (sandersFritomPojoShipments.getRequestedDeliveryWindowEndDateTime() != null) {
+                String unloadingTime1FromJson = sandersFritomPojoShipments.getRequestedDeliveryWindowBeginDateTime().toString().substring(11, 19);
+                String unloadingTime1FromSettings = "12:00:00";
+                String unloadingTime1EDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getString("TIME1");
 
-        String unloadingCorrectDeliveryStartTimeEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getString("TIME1");
-        //    System.out.println("unloadingCorrectDeliveryStartTimeEDI = " + unloadingCorrectDeliveryStartTimeEDI);
-        assertThat(unloadingCorrectDeliveryStartTimeEDI, is(equalTo("12:00:00")));
+                if (sandersFritomPojoShipments.getRequestedDeliveryDateTime().equals(sandersFritomPojoShipments.getRequestedDeliveryWindowEndDateTime())) {
+                    if (sandersFritomPojoShipments.getRequestedDeliveryWindowBeginDateTime() != null) {
+                        assertThat(unloadingTime1FromJson, is(equalTo(unloadingTime1EDI)));
+                    } else {
+                        assertThat(unloadingTime1FromSettings, is(equalTo(unloadingTime1EDI)));
+                    }
+                } else {
+                    assertThat(unloadingTime1EDI, is(equalTo("")));
+                    System.out.println("Time1 is empty");
+                }
+            } else {
+                assertThat(sandersFritomPojoShipments.getRequestedDeliveryWindowBeginDateTime(), nullValue());
+                System.out.println("'RequestedDeliveryDateTime' or 'RequestedDeliveryWindowEndDateTime' are null");
+            }
+        } else {
+            assertThat(jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getString("TIME1"), is(equalTo("08:00:00")));
+            System.out.println("RequestJsonBodyShipments does not contains 'RequestedDeliveryWindowBeginDateTime' or 'RequestedDeliveryWindowEndDateTime'");
+        }
     }
 
 
@@ -971,9 +1027,30 @@ public class DANIEL_1 extends SFBaseNotDG {
     @Test
     public void test79() {
 
-        String unloadingCorrectDeliveryEndTimeEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getString("TIME2");
-        //    System.out.println("unloadingCorrectDeliveryEndTimeEDI = " + unloadingCorrectDeliveryEndTimeEDI);
-        assertThat(unloadingCorrectDeliveryEndTimeEDI, is(equalTo("17:00:00")));
+        if (requestJsonBodyShipments.contains("RequestedDeliveryWindowEndDateTime")) {
+            if (sandersFritomPojoShipments.getRequestedDeliveryWindowEndDateTime() != null) {
+                String unloadingTime2FromJson = sandersFritomPojoShipments.getRequestedDeliveryWindowEndDateTime().toString().substring(11, 19);
+                String unloadingTime2FromSettings = "17:00:00";
+                String unloadingTime2EDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getString("TIME2");
+
+                if (sandersFritomPojoShipments.getRequestedDeliveryDateTime().equals(sandersFritomPojoShipments.getRequestedDeliveryWindowEndDateTime())) {
+                    if (sandersFritomPojoShipments.getRequestedDeliveryWindowEndDateTime() != null) {
+                        assertThat(unloadingTime2FromJson, is(equalTo(unloadingTime2EDI)));
+                    } else {
+                        assertThat(unloadingTime2FromSettings, is(equalTo(unloadingTime2EDI)));
+                    }
+                } else {
+                    assertThat(unloadingTime2EDI, is(equalTo("")));
+                    System.out.println("Time2 is empty");
+                }
+            } else {
+                assertThat(sandersFritomPojoShipments.getRequestedDeliveryWindowEndDateTime(), nullValue());
+                System.out.println("'RequestedDeliveryWindowEndDateTime' is null");
+            }
+        } else {
+            assertThat(jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getString("TIME2"), is(equalTo("17:00:00")));
+            System.out.println("RequestJsonBodyShipments does not contains 'RequestedDeliveryWindowEndDateTime'");
+        }
     }
 
 

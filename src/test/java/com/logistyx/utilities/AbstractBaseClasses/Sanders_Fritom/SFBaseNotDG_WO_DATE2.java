@@ -25,7 +25,7 @@ import java.util.*;
 
 import static io.restassured.RestAssured.*;
 
-public abstract class SFBaseNotDG {
+public abstract class SFBaseNotDG_WO_DATE2 {
 
     public static String requestJsonBodyShipments;
     public static RequestSpecification requestSpecShipments;
@@ -156,12 +156,12 @@ public abstract class SFBaseNotDG {
                 "    \"IncotermCode\": \"CPT\",\n" +
                 "    \"Weight\": 18.18,\n" +
                 "    \"WeightUnitOfMeasure\": \"KGM\",\n" +
-                "    \"RequestedPickupDateTime\": \"2022-01-26T21:16:17.565Z\",\n" +
-                "    \"RequestedPickupWindowBeginDateTime\": \"2022-01-26T21:16:17.565Z\",\n" +
-                "    \"RequestedPickupWindowEndDateTime\": \"2022-01-26T21:15:13.000Z\",\n" +
+                "    \"RequestedPickupDateTime\": \"2022-01-27T21:16:17.565Z\",\n" +
+                "    \"RequestedPickupWindowBeginDateTime\": \"2022-01-27T21:16:17.565Z\",\n" +
+                "    \"RequestedPickupWindowEndDateTime\": \"2022-01-27T21:16:17.565Z\",\n" +
                 "    \"RequestedDeliveryDateTime\": \"2022-01-29T21:16:17.565Z\",\n" +
                 "    \"RequestedDeliveryWindowBeginDateTime\": \"2022-01-29T21:16:17.565Z\",\n" +
-                "    \"RequestedDeliveryWindowEndDateTime\": \"2022-01-29T23:16:17.565Z\",\n" +
+                "    \"RequestedDeliveryWindowEndDateTime\": \"2022-01-29T21:16:17.565Z\",\n" +
                 "    \"ForwarderServiceIndicators\": {\n" +
                 "        \"AdditionalServices\": [\n" +
                 "            \"PICKUP_ROOF_LOAD\",\n" +
