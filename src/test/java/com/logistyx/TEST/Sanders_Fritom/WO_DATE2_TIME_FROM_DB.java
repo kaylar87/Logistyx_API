@@ -1,7 +1,7 @@
 package com.logistyx.TEST.Sanders_Fritom;
 
 
-import com.logistyx.utilities.AbstractBaseClasses.Sanders_Fritom.SFBaseNotDG_WO_DATE2;
+import com.logistyx.utilities.AbstractBaseClasses.Sanders_Fritom.SFBaseNotDG_WO_DATE2_TIME_FROM_DB;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,10 +10,10 @@ import static org.hamcrest.Matchers.*;
 
 
 @DisplayName("DANIEL.1")
-public class WO_DATE2 extends SFBaseNotDG_WO_DATE2 {
+public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     static {
-        SFBaseNotDG_WO_DATE2.shipmentsLabel();
+        SFBaseNotDG_WO_DATE2_TIME_FROM_DB.shipmentsLabel();
     }
 
 
@@ -782,7 +782,6 @@ public class WO_DATE2 extends SFBaseNotDG_WO_DATE2 {
     @DisplayName("EDI - loading Correct pick up end date")
     @Test
     public void test64() {
-
         if (sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime() != null) {
             if (sandersFritomPojoShipments.getRequestedPickupDateTime().equals(sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime())) {
                 assertThat(jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("DATE2"), is(equalTo("")));
@@ -985,7 +984,6 @@ public class WO_DATE2 extends SFBaseNotDG_WO_DATE2 {
     @DisplayName("EDI - unloading Correct pick up end date")
     @Test
     public void test77() {
-
         if (sandersFritomPojoShipments.getRequestedDeliveryWindowEndDateTime() != null) {
             if (sandersFritomPojoShipments.getRequestedDeliveryDateTime().equals(sandersFritomPojoShipments.getRequestedDeliveryWindowEndDateTime())) {
                 assertThat(jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getString("DATE2"), is(equalTo("")));
