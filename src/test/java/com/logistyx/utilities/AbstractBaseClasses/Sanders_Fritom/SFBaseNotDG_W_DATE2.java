@@ -64,6 +64,15 @@ public abstract class SFBaseNotDG_W_DATE2 {
     public static String minute;
     public static String second;
 
+    public static String currentDateTimeUTC;
+    public static String monthUTC;
+    public static String dayUTC;
+    public static int yearUTC;
+    public static int centuryUTC;
+    public static int hourUTC;
+    public static String minuteUTC;
+    public static String secondUTC;
+
     public static org.json.JSONObject jsonDataEDI;
     public static String puCountryFromCountryCodeFromJson;
     public static String dyCountryFromCountryCodeFromJson;
@@ -74,6 +83,7 @@ public abstract class SFBaseNotDG_W_DATE2 {
     public static String date1;
     public static String currentDateTime;
     public static OffsetDateTime dateTimeUTC;
+    public static List decodeArrList;
 
 
     @BeforeAll
@@ -230,6 +240,7 @@ public abstract class SFBaseNotDG_W_DATE2 {
 //
         switch (sandersFritomPojoShipments.getShippingUnits().get(0).getGrossWeightUnitOfMeasure()) {
             case "KG":
+            case "KG ":
             case "KGM":
             case "KGS":
                 weightInKilos = sandersFritomPojoShipments.getShippingUnits().get(0).getGrossWeight();
@@ -241,7 +252,6 @@ public abstract class SFBaseNotDG_W_DATE2 {
             case "GM ":
             case "GR ":
             case "GRM":
-            case "KG ": // Can't help, DOCS or the component thinks this is grams, no conversion
                 weightInKilos = Precision.round(sandersFritomPojoShipments.getShippingUnits().get(0).getGrossWeight() * 0.001, 1);
                 break;
             case "LB":
@@ -334,6 +344,18 @@ public abstract class SFBaseNotDG_W_DATE2 {
         hour = Integer.parseInt(date1.substring(11, 13)) + 5;
         minute = date1.substring(14, 16);
         second = date1.substring(17, 19);
+
+        dateTimeUTC = OffsetDateTime.now(ZoneOffset.UTC);
+        //    System.out.println(dateTimeUTC);
+        monthUTC = date1.substring(0, 2);
+        dayUTC = date1.substring(3, 5);
+        yearUTC = Integer.parseInt(date1.substring(6, 10));
+        centuryUTC = (yearUTC / 100) + 1;
+        hourUTC = Integer.parseInt(date1.substring(11, 13)) + 5;
+        minuteUTC = date1.substring(14, 16);
+        secondUTC = date1.substring(17, 19);
+
+        currentDateTimeUTC = yearUTC + "-" + monthUTC + "-" + dayUTC + "T" + hourUTC + ":" + minuteUTC + ":" + secondUTC + "Z";
 
         currentDateTime = year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":" + second + "Z";
 
@@ -474,8 +496,16 @@ public abstract class SFBaseNotDG_W_DATE2 {
         }
 
 
-        dateTimeUTC = OffsetDateTime.now(ZoneOffset.UTC);
-        //    System.out.println(dateTimeUTC);
+
+        int barcode2DFromLabelStart = decodedStringShipments.indexOf("UNA:");
+        //    System.out.println("barcode2DFromLabelStart = " + barcode2DFromLabelStart);
+        int barcode2DFromLabelEnd = decodedStringShipments.indexOf("UNZ") + 13;
+        //    System.out.println("barcode2DFromLabelEnd = " + barcode2DFromLabelEnd);
+        String barcode2DFromLabel = decodedStringShipments.substring(barcode2DFromLabelStart, barcode2DFromLabelEnd);
+        //     System.out.println("barcode2DFromLabel = " + barcode2DFromLabel);
+        String[] decodeArr = barcode2DFromLabel.split("\'");
+        decodeArrList = Arrays.asList(decodeArr);
+        //    System.out.println("decodeArrList = " + decodeArrList);
 
     }
 }

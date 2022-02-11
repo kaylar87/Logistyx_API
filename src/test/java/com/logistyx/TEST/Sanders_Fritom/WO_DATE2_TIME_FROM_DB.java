@@ -2,6 +2,7 @@ package com.logistyx.TEST.Sanders_Fritom;
 
 
 import com.logistyx.utilities.AbstractBaseClasses.Sanders_Fritom.SFBaseNotDG_WO_DATE2_TIME_FROM_DB;
+import org.apache.commons.math3.util.Precision;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +10,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 
-@DisplayName("DANIEL.1")
 public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     static {
@@ -27,7 +27,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 //        validateResponseShipments.extract().response().prettyPrint();
 //        System.out.println("decodedStringShipments = " + decodedStringShipments);
 //        validateResponseConveyances.extract().response().prettyPrint();
-//       System.out.println("decodedStringConveyances = " + decodedStringConveyances);
+//        System.out.println("decodedStringConveyances = " + decodedStringConveyances);
 //        System.out.println("jsonDataEDI = " + jsonDataEDI);
 
 
@@ -344,7 +344,6 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
     @Test
     public void test26() {
 
-
         assertThat(decodedStringShipments, containsString("^FT25,630^A0N,23,24^FH^FDINCO:^FS"));
 
     }
@@ -377,7 +376,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
     }
 
 
-    @DisplayName("ZPL - Serial Number: 100000350")
+    @DisplayName("ZPL - Serial Number (Barcode): 100000350")
     @Test
     public void test29() {
 
@@ -390,9 +389,22 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
     }
 
 
-    @DisplayName("ZPL - SSCC: 00112345671000003577")
+    @DisplayName("ZPL - SSCC (Barcode): 00112345671000003577")
     @Test
     public void test30() {
+
+        String sSCCFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getAdditionalValues().get(0).getValue();
+        //    System.out.println("sSCCFromJson = " + sSCCFromJson);
+        int sSCCFromLabelStart = decodedStringShipments.indexOf("^FT30,1134^BCN,185,N,N^FD>:") + 27;
+        String sSCCFromLabel = decodedStringShipments.substring(sSCCFromLabelStart, sSCCFromLabelStart + sSCCFromJson.length()).replace("(", "").replace(")", "");
+        //    System.out.println("sSCCFromLabel = " + sSCCFromLabel);
+        assertThat(sSCCFromJson, is(equalTo(sSCCFromLabel)));
+    }
+
+
+    @DisplayName("ZPL - SSCC: 00112345671000003577")
+    @Test
+    public void test31() {
 
         String sSCCFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getAdditionalValues().get(0).getValue();
         //    System.out.println("sSCCFromJson = " + sSCCFromJson);
@@ -405,7 +417,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("ZPL - PostCode: CH/0001001")
     @Test
-    public void test31() {
+    public void test32() {
 
         String postCodeFromJson = sandersFritomPojoShipments.getDeliveryAddress().getCountryCode() + "/" + sandersFritomPojoShipments.getDeliveryAddress().getPostalCode();
         //    System.out.println("postCodeFromJson = " + postCodeFromJson);
@@ -416,9 +428,265 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
     }
 
 
+    @DisplayName("ZPL - 2D Barcode - UNA:+.? ")
+    @Test
+    public void test33() {
+
+        //    System.out.println("decodeArrList.get(0) = " + decodeArrList.get(0));
+        assertThat(decodeArrList.get(0), is(equalTo("UNA:+.? ")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - UNB+UNOC:3+VDL-NL:30+SFT+220210:2006+334819++Logistyx TME")
+    @Test
+    public void test34() {
+
+        //    vSystem.out.println("decodeArrList.get(1) = " + decodeArrList.get(1));
+        assertThat(decodeArrList.get(1), is(equalTo("UNB+UNOC:3+" + sandersFritomPojoShipments.getShipperCode() + ":30+" + sandersFritomPojoShipments.getForwarderDivisionCode() + "+" + String.valueOf(yearUTC).substring(2) + monthUTC + dayUTC + ":" + hourUTC + minuteUTC + "+" + sandersFritomPojoShipments.getShipmentId() + "++Logistyx TME")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - UNH+1+IFTMIN:DP:01B:UN:EAN004")
+    @Test
+    public void test35() {
+
+        //    System.out.println("decodeArrList.get(2) = " + decodeArrList.get(2));
+        assertThat(decodeArrList.get(2), is(equalTo("UNH+1+IFTMIN:DP:01B:UN:EAN004")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - BGM+340+100000611+9")
+    @Test
+    public void test36() {
+
+        //    System.out.println("decodeArrList.get(3) = " + decodeArrList.get(3));
+        assertThat(decodeArrList.get(3), is(equalTo("BGM+340+" + sandersFritomPojoShipments.getForwarderRef() + "+9")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - DTM+10:20220127:102")
+    @Test
+    public void test37() {
+
+        //    System.out.println("decodeArrList.get(4) = " + decodeArrList.get(4));
+        assertThat(decodeArrList.get(4), is(equalTo("DTM+10:" + sandersFritomPojoShipments.getRequestedPickupDateTime().replace("-", "").substring(0, 8) + ":102")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - DTM+63:202201292116:203")
+    @Test
+    public void test38() {
+
+        //    System.out.println("decodeArrList.get(5) = " + decodeArrList.get(5));
+        assertThat(decodeArrList.get(5), is(equalTo("DTM+63:" + sandersFritomPojoShipments.getRequestedDeliveryDateTime().replace("-", "").replace("T", "").replace(":", "").substring(0, 12) + ":203")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - TSR+++00:STA")
+    @Test
+    public void test39() {
+
+        //    System.out.println("decodeArrList.get(6) = " + decodeArrList.get(6));
+        assertThat(decodeArrList.get(6), is(equalTo("TSR+++00:" + sandersFritomPojoShipments.getForwarderServiceCode().substring(0, 3))));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - TSR+++00:STA")
+    @Test
+    public void test40() {
+
+        //    System.out.println("decodeArrList.get(6) = " + decodeArrList.get(6));
+        assertThat(decodeArrList.get(6), is(equalTo("TSR+++00:" + sandersFritomPojoShipments.getForwarderServiceCode().substring(0, 3))));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - TOD+6+PP+CPT")
+    @Test
+    public void test41() {
+
+        //    System.out.println("decodeArrList.get(7) = " + decodeArrList.get(7));
+        assertThat(decodeArrList.get(7), is(equalTo("TOD+6+PP+" + sandersFritomPojoShipments.getIncotermCode())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - RFF+AWB:100000611")
+    @Test
+    public void test42() {
+
+        //    System.out.println("decodeArrList.get(8) = " + decodeArrList.get(8));
+        assertThat(decodeArrList.get(8), is(equalTo("RFF+AWB:" + sandersFritomPojoShipments.getForwarderRef())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - RFF+CU:4706850")
+    @Test
+    public void test43() {
+
+        //    System.out.println("decodeArrList.get(9) = " + decodeArrList.get(9));
+        assertThat(decodeArrList.get(9), is(equalTo("RFF+CU:" + sandersFritomPojoShipments.getShipperRef())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - RFF+AAO:RR123456")
+    @Test
+    public void test44() {
+
+        //    System.out.println("decodeArrList.get(10) = " + decodeArrList.get(10));
+        assertThat(decodeArrList.get(10), is(equalTo("RFF+AAO:" + sandersFritomPojoShipments.getReceiverRef())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - NAD+CZ+968888021:ZZZ++PUREF0001+De Grens 27 TEST+Heijen+++5921CC+ES")
+    @Test
+    public void test45() {
+
+        //    System.out.println("decodeArrList.get(11) = " + decodeArrList.get(11));
+        assertThat(decodeArrList.get(11), is(equalTo("NAD+CZ+" + sandersFritomPojoShipments.getPickupForwarderDivisionAccountCode() + ":ZZZ++" + sandersFritomPojoShipments.getAddresses().get(1).getReference() + "+" + sandersFritomPojoShipments.getAddresses().get(1).getAddressLines().get(0).getValue() + "+" + sandersFritomPojoShipments.getAddresses().get(1).getLocalityName() + "+++" + sandersFritomPojoShipments.getAddresses().get(1).getPostalCode() + "+" + sandersFritomPojoShipments.getAddresses().get(1).getCountryCode())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - CTA+IC+Pickup Name One")
+    @Test
+    public void test46() {
+
+        //    System.out.println("decodeArrList.get(12) = " + decodeArrList.get(12));
+        assertThat(decodeArrList.get(12), is(equalTo("CTA+IC+" + sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getName())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - COM+31497532323:TE")
+    @Test
+    public void test47() {
+
+        //    System.out.println("decodeArrList.get(13) = " + decodeArrList.get(13));
+        assertThat(decodeArrList.get(13), is(equalTo("COM+" + sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getPhoneNumber() + ":TE")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - COM+vaiser@hotmail?.com:EM")
+    @Test
+    public void test48() {
+
+        //    System.out.println("decodeArrList.get(14) = " + decodeArrList.get(14));
+        assertThat(decodeArrList.get(14), is(equalTo("COM+" + sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getEmailAddress().replace(".", "?.") + ":EM")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - NAD+CN+++FLE >><<01105+Weena 10017 TEST:Delivery address two+VITORIA+++0001001+CH'")
+    @Test
+    public void test49() {
+
+        //    System.out.println("decodeArrList.get(15) = " + decodeArrList.get(15));
+        assertThat(decodeArrList.get(15), is(equalTo("NAD+CN+++" + sandersFritomPojoShipments.getAddresses().get(0).getReference() + "+" + sandersFritomPojoShipments.getAddresses().get(0).getAddressLines().get(0).getValue() + ":" + sandersFritomPojoShipments.getAddresses().get(0).getAddressLines().get(1).getValue() + "+" + sandersFritomPojoShipments.getAddresses().get(0).getLocalityName() + "+++" + sandersFritomPojoShipments.getAddresses().get(0).getPostalCode() + "+" + sandersFritomPojoShipments.getAddresses().get(0).getCountryCode())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - CTA+IC+Delivery Co<<ntact Name 1")
+    @Test
+    public void test50() {
+
+        //    System.out.println("decodeArrList.get(16) = " + decodeArrList.get(16));
+        assertThat(decodeArrList.get(16), is(equalTo("CTA+IC+" + sandersFritomPojoShipments.getDeliveryAddress().getContacts().get(0).getName())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - COM+(31)497-532-323:TE")
+    @Test
+    public void test51() {
+
+        //    System.out.println("decodeArrList.get(17) = " + decodeArrList.get(17));
+        assertThat(decodeArrList.get(17), is(equalTo("COM+" + sandersFritomPojoShipments.getDeliveryAddress().getContacts().get(0).getPhoneNumber() + ":TE")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - COM+vaiser@hotmail?.com:EM")
+    @Test
+    public void test52() {
+
+        //    System.out.println("decodeArrList.get(18) = " + decodeArrList.get(18));
+        assertThat(decodeArrList.get(18), is(equalTo("COM+" + sandersFritomPojoShipments.getDeliveryAddress().getContacts().get(0).getEmailAddress().replace(".", "?.") + ":EM")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - GID+1+1:PC")
+    @Test
+    public void test53() {
+
+        //    System.out.println("decodeArrList.get(19) = " + decodeArrList.get(19));
+        assertThat(decodeArrList.get(19), is(equalTo("GID+" + sandersFritomPojoShipments.getShippingUnits().get(0).getIndex() + "+1:" + sandersFritomPojoShipments.getShippingUnits().get(0).getPackageType())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - MEA+AAI+AAW+KGM:12.1")
+    @Test
+    public void test54() {
+
+        //    System.out.println("decodeArrList.get(20) = " + decodeArrList.get(20));
+        assertThat(decodeArrList.get(20), is(equalTo("MEA+AAI+AAW+" + sandersFritomPojoShipments.getShippingUnits().get(0).getGrossWeightUnitOfMeasure().replace(" ", "M") + ":" + Precision.round(weightInKilos, 1))));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - DIM+2+MTR:37.00:26.50:4.00")
+    @Test
+    public void test55() {
+
+
+        //    System.out.println("decodeArrList.get(21) = " + decodeArrList.get(21));
+        assertThat(decodeArrList.get(21), is(equalTo("DIM+2+MTR:" + String.format("%.2f", sandersFritomPojoShipments.getShippingUnits().get(0).getLength()) + ":" + String.format("%.2f", sandersFritomPojoShipments.getShippingUnits().get(0).getWidth()) + ":" + String.format("%.2f", sandersFritomPojoShipments.getShippingUnits().get(0).getHeight()))));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - RFF+CU:4706850")
+    @Test
+    public void test56() {
+
+
+        //    System.out.println("decodeArrList.get(22) = " + decodeArrList.get(22));
+        assertThat(decodeArrList.get(22), is(equalTo("RFF+CU:" + sandersFritomPojoShipments.getShipperRef())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - RFF+AAO:3058986")
+    @Test
+    public void test57() {
+
+
+        //    System.out.println("decodeArrList.get(23) = " + decodeArrList.get(23));
+        assertThat(decodeArrList.get(23), is(equalTo("RFF+AAO:" + sandersFritomPojoShipments.getShippingUnits().get(0).getReceiverRef())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - PCI+18+100000768")
+    @Test
+    public void test58() {
+
+        //    System.out.println("decodeArrList.get(24) = " + decodeArrList.get(24));
+        assertThat(decodeArrList.get(24), is(equalTo("PCI+18+" + sandersFritomPojoShipments.getShippingUnits().get(0).getForwarderRef())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - UNT+24+1")
+    @Test
+    public void test59() {
+
+
+        //    System.out.println("decodeArrList.get(25) = " + decodeArrList.get(25));
+        assertThat(decodeArrList.get(25), is(equalTo("UNT+" + (decodeArrList.indexOf(decodeArrList.get(25).toString()) - 1) + "+" + sandersFritomPojoShipments.getShippingUnits().get(0).getIndex())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - UNZ+1+337075")
+    @Test
+    public void test60() {
+
+        //    System.out.println("decodeArrList.get(26) = " + decodeArrList.get(26));
+        assertThat(decodeArrList.get(26), is(equalTo("UNZ+" + sandersFritomPojoShipments.getNumberOfShippingUnits() + "+" + sandersFritomPojoShipments.getShipmentId())));
+    }
+
+
     @DisplayName("EDI - contains - version Data : <?xml version=\"1.0\" encoding=\"UTF-8\" ?>")
     @Test
-    public void test32() {
+    public void test61() {
 
         assertThat(decodedStringConveyances, containsString("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"));
     }
@@ -426,7 +694,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - contains <FRITOM_SHIPMENT_XML>")
     @Test
-    public void test33() {
+    public void test62() {
 
 
         assertThat(decodedStringConveyances, containsString("<FRITOM_SHIPMENT_XML>"));
@@ -435,7 +703,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - FritomCompany = SandersFritom")
     @Test
-    public void test34() {
+    public void test63() {
 
         String fritomCompanyEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getString("FRITOMCOMPANY");
         //    System.out.println("fritomCompanyEDI = " + fritomCompanyEDI);
@@ -446,7 +714,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - TIMESTAMP: <TIMESTAMP>2022-02-04T16:04:34</TIMESTAMP>")
     @Test
-    public void test35() {
+    public void test64() {
 
         String timestampEDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getString("TIMESTAMP");
         //    System.out.println("timestampEDI = " + timestampEDI);
@@ -457,7 +725,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - Version = <VERSION>1.5</VERSION>")
     @Test
-    public void test36() {
+    public void test65() {
 
         String versionEDI = String.valueOf(jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getDouble("VERSION"));
         //    System.out.println("versionEDI = " + versionEDI);
@@ -467,7 +735,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - trackingID = (set to s.ShipperRef) 4706850")
     @Test
-    public void test37() {
+    public void test66() {
 
         String trackingIdFromJson = sandersFritomPojoShipments.getShipperRef();
         //    System.out.println("trackingIdFromJson = " + trackingIdFromJson);
@@ -479,7 +747,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - REFERENCE = (set to s.ShipperRef) 4706850")
     @Test
-    public void test38() {
+    public void test67() {
 
         String referenceFromJson = sandersFritomPojoShipments.getShipperRef();
         //    System.out.println("referenceFromJson = " + referenceFromJson);
@@ -491,7 +759,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - COD_AMOUNT present <COD_AMOUNT/>")
     @Test
-    public void test39() {
+    public void test68() {
 
         assertThat(decodedStringConveyances, containsString("<COD_AMOUNT/>"));
     }
@@ -499,7 +767,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - COD_VAL present <COD_VAL/>")
     @Test
-    public void test40() {
+    public void test69() {
 
         assertThat(decodedStringConveyances, containsString("<COD_VAL/>"));
     }
@@ -507,7 +775,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - IncotermCode = <INCOTERMS>CPT</INCOTERMS>")
     @Test
-    public void test41() {
+    public void test70() {
 
         String incotermCodeFromJson = sandersFritomPojoShipments.getIncotermCode();
         //    System.out.println("incotermCodeFromJson = " + incotermCodeFromJson);
@@ -519,7 +787,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - customer CODE : <CODE>968888021</CODE>")
     @Test
-    public void test42() {
+    public void test71() {
 
         String customerCodeFromJson = sandersFritomPojoShipments.getPickupForwarderDivisionAccountCode();
         //    System.out.println("customerCodeFromJson = " + customerCodeFromJson);
@@ -531,7 +799,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - customer Name : <NAME><![CDATA[PUREF0001]]></NAME>")
     @Test
-    public void test43() {
+    public void test72() {
 
         String customerNameFromJson = sandersFritomPojoShipments.getAddresses().get(1).getReference();
         //    System.out.println("customerNameFromJson = " + customerNameFromJson);
@@ -543,7 +811,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - customer Name2 : <NAME2><![CDATA[Pickup Name One]]></NAME2>")
     @Test
-    public void test44() {
+    public void test73() {
 
         String customerName2FromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getName();
         //    System.out.println("customerName2FromJson = " + customerName2FromJson);
@@ -555,7 +823,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - customer Address : <ADDRESS><![CDATA[De Grens 27 TEST]]></ADDRESS>")
     @Test
-    public void test45() {
+    public void test74() {
 
         String customerAddressFromJson = sandersFritomPojoShipments.getPickupAddress().getAddressLines().get(0).getValue();
         //    System.out.println("customerAddressFromJson = " + customerAddressFromJson);
@@ -567,7 +835,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - customer postalCode : <POSTALCODE>5921CC</POSTALCODE>")
     @Test
-    public void test46() {
+    public void test75() {
 
         String customerPostalCodeFromJson = sandersFritomPojoShipments.getPickupAddress().getPostalCode();
         //    System.out.println("customerPostalCodeFromJson = " + customerPostalCodeFromJson);
@@ -579,7 +847,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - customer City : <CITY><![CDATA[Heijen]]></CITY>")
     @Test
-    public void test47() {
+    public void test76() {
 
         String customerCityFromJson = sandersFritomPojoShipments.getPickupAddress().getLocalityName();
         //    System.out.println("customerCityFromJson = " + customerCityFromJson);
@@ -591,7 +859,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - customer countryCode : <COUNTRYCODE>ES</COUNTRYCODE>")
     @Test
-    public void test48() {
+    public void test77() {
 
         String customerCountryCodeFromJson = sandersFritomPojoShipments.getPickupAddress().getCountryCode();
         //    System.out.println("customerCountryCodeFromJson = " + customerCountryCodeFromJson);
@@ -603,7 +871,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - customer phoneNumber : <PHONE>31497532323</PHONE>")
     @Test
-    public void test49() {
+    public void test78() {
 
         String customerPhoneNumberFromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getPhoneNumber();
         //    System.out.println("customerPhoneNumberFromJson = " + customerPhoneNumberFromJson);
@@ -615,7 +883,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - customer Email : <EMAIL>vaiser@hotmail.com</EMAIL>")
     @Test
-    public void test50() {
+    public void test79() {
 
         String customerEmailFromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getEmailAddress();
         //    System.out.println("customerEmailFromJson = " + customerEmailFromJson);
@@ -627,7 +895,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - invoice CODE : <CODE>968888021</CODE>")
     @Test
-    public void test51() {
+    public void test80() {
 
         String invoiceCodeFromJson = sandersFritomPojoShipments.getPickupForwarderDivisionAccountCode();
         //    System.out.println("invoiceCodeFromJson = " + invoiceCodeFromJson);
@@ -639,7 +907,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - invoice Name : <NAME><![CDATA[PUREF0001]]></NAME>")
     @Test
-    public void test52() {
+    public void test81() {
 
         String invoiceNameFromJson = sandersFritomPojoShipments.getAddresses().get(1).getReference();
         //    System.out.println("invoiceNameFromJson = " + invoiceNameFromJson);
@@ -651,7 +919,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - invoice Name2 : <NAME2><![CDATA[Pickup Name One]]></NAME2>  ")
     @Test
-    public void test53() {
+    public void test82() {
 
         String invoiceName2FromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getName();
         //    System.out.println("invoiceName2FromJson = " + invoiceName2FromJson);
@@ -663,7 +931,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - invoice Address : <ADDRESS><![CDATA[De Grens 27 TEST]]></ADDRESS>")
     @Test
-    public void test54() {
+    public void test83() {
 
         String invoiceAddressFromJson = sandersFritomPojoShipments.getPickupAddress().getAddressLines().get(0).getValue();
         //    System.out.println("invoiceAddressFromJson = " + invoiceAddressFromJson);
@@ -675,7 +943,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - invoice postalCode : <POSTALCODE>5921CC</POSTALCODE>")
     @Test
-    public void test55() {
+    public void test84() {
 
         String invoicePostalCodeFromJson = sandersFritomPojoShipments.getPickupAddress().getPostalCode();
         //    System.out.println("invoicePostalCodeFromJson = " + invoicePostalCodeFromJson);
@@ -687,7 +955,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - invoice City : <CITY><![CDATA[Heijen]]></CITY>")
     @Test
-    public void test56() {
+    public void test85() {
 
         String invoiceCityFromJson = sandersFritomPojoShipments.getPickupAddress().getLocalityName();
         //    System.out.println("invoiceCityFromJson = " + invoiceCityFromJson);
@@ -699,7 +967,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - invoice countryCode : <COUNTRYCODE>ES</COUNTRYCODE>")
     @Test
-    public void test57() {
+    public void test86() {
 
         String invoiceCountryCodeFromJson = sandersFritomPojoShipments.getPickupAddress().getCountryCode();
         //    System.out.println("invoiceCountryCodeFromJson = " + invoiceCountryCodeFromJson);
@@ -711,7 +979,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - invoice phoneNumber : <PHONE>31497532323</PHONE>")
     @Test
-    public void test58() {
+    public void test87() {
 
         String invoicePhoneNumberFromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getPhoneNumber();
         //    System.out.println("invoicePhoneNumberFromJson = " + invoicePhoneNumberFromJson);
@@ -723,7 +991,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - invoice Email : <EMAIL>vaiser@hotmail.com</EMAIL>")
     @Test
-    public void test59() {
+    public void test88() {
 
         String invoiceEmailFromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getEmailAddress();
         //    System.out.println("invoiceEmailFromJson = " + invoiceEmailFromJson);
@@ -735,7 +1003,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - loading Restriction = PICKUP_ROOF_LOAD -> <RESTRICTION>Dak</RESTRICTION>")
     @Test
-    public void test60() {
+    public void test89() {
 
         //    System.out.println("restrictionValueFromJsonMap.get(\"PICKUP_ROOF_LOAD\") = " + restrictionValueFromJsonMap.get("PICKUP_ROOF_LOAD"));
         String loadingRestrictionEDI = (String) jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getJSONObject("RESTRICTIONS").getJSONArray("RESTRICTION").get(0);
@@ -746,7 +1014,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - loading Restriction = PICKUP_HIAB -> <RESTRICTION>Kraan</RESTRICTION>")
     @Test
-    public void test61() {
+    public void test90() {
 
         //    System.out.println("restrictionValueFromJsonMap.get(\"PICKUP_HIAB\") = " + restrictionValueFromJsonMap.get("PICKUP_HIAB"));
         String loadingRestrictionEDI = (String) jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getJSONObject("RESTRICTIONS").getJSONArray("RESTRICTION").get(1);
@@ -757,7 +1025,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - loading Restriction = PICKUP_SIDE_LOAD -> <RESTRICTION>Zijkant</RESTRICTION>")
     @Test
-    public void test62() {
+    public void test91() {
 
         //    System.out.println("restrictionValueFromJsonMap.get(\"PICKUP_SIDE_LOAD\") = " + restrictionValueFromJsonMap.get("PICKUP_SIDE_LOAD"));
         String loadingRestrictionEDI = (String) jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getJSONObject("RESTRICTIONS").getJSONArray("RESTRICTION").get(2);
@@ -769,7 +1037,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - loading Correct pick up start date")
     @Test
-    public void test63() {
+    public void test92() {
 
         String loadingDate1FromJson = sandersFritomPojoShipments.getRequestedPickupDateTime().substring(0, 10);
         //    System.out.println("loadingDate1FromJson = " + loadingDate1FromJson);
@@ -781,20 +1049,21 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - loading Correct pick up end date")
     @Test
-    public void test64() {
+    public void test93() {
+
         if (sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime() != null) {
             if (sandersFritomPojoShipments.getRequestedPickupDateTime().equals(sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime())) {
                 assertThat(jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("DATE2"), is(equalTo("")));
             } else {
                 String loadingDate2FromJson = sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime().substring(0, 10);
-            //    System.out.println("loadingDate2FromJson = " + loadingDate2FromJson);
+                //    System.out.println("loadingDate2FromJson = " + loadingDate2FromJson);
                 String loadingDate2EDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("DATE2");
-            //    System.out.println("loadingDate2EDI = " + loadingDate2EDI);
+                //    System.out.println("loadingDate2EDI = " + loadingDate2EDI);
                 assertThat(loadingDate2FromJson, is(equalTo(loadingDate2EDI)));
             }
         } else {
             String loadingDate2EDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("DATE2");
-        //    System.out.println("loadingDate2EDI = " + loadingDate2EDI);
+            //    System.out.println("loadingDate2EDI = " + loadingDate2EDI);
             assertThat(loadingDate2EDI, is(equalTo("")));
         }
     }
@@ -802,7 +1071,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - loading Correct pick up start time")
     @Test
-    public void test65() {
+    public void test94() {
 
         if (requestJsonBodyShipments.contains("RequestedPickupWindowBeginDateTime") && requestJsonBodyShipments.contains("RequestedPickupWindowEndDateTime")) {
             if (sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime() != null) {
@@ -832,7 +1101,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - loading Correct pick up end time")
     @Test
-    public void test66() {
+    public void test95() {
 
         if (requestJsonBodyShipments.contains("RequestedPickupWindowEndDateTime")) {
             if (sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime() != null) {
@@ -863,7 +1132,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - loading Name : <NAME><![CDATA[PUREF0001]]></NAME>")
     @Test
-    public void test67() {
+    public void test96() {
 
         String loadingNameFromJson = sandersFritomPojoShipments.getAddresses().get(1).getReference();
         //    System.out.println("loadingNameFromJson = " + loadingNameFromJson);
@@ -875,7 +1144,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - loading Name2 : <NAME2><![CDATA[Pickup Name One]]></NAME2>")
     @Test
-    public void test68() {
+    public void test97() {
 
         String loadingName2FromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getName();
         //    System.out.println("loadingName2FromJson = " + loadingName2FromJson);
@@ -887,7 +1156,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - loading Address : <ADDRESS><![CDATA[De Grens 27 TEST]]></ADDRESS>")
     @Test
-    public void test69() {
+    public void test98() {
 
         String loadingAddressFromJson = sandersFritomPojoShipments.getPickupAddress().getAddressLines().get(0).getValue();
         //    System.out.println("loadingAddressFromJson = " + loadingAddressFromJson);
@@ -899,7 +1168,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - loading postalCode : <POSTALCODE>5921CC</POSTALCODE>")
     @Test
-    public void test70() {
+    public void test99() {
 
         String loadingPostalCodeFromJson = sandersFritomPojoShipments.getPickupAddress().getPostalCode();
         //    System.out.println("loadingPostalCodeFromJson = " + loadingPostalCodeFromJson);
@@ -911,7 +1180,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - loading City : <CITY><![CDATA[Heijen]]></CITY>")
     @Test
-    public void test71() {
+    public void test100() {
 
         String loadingCityFromJson = sandersFritomPojoShipments.getPickupAddress().getLocalityName();
         //    System.out.println("loadingCityFromJson = " + loadingCityFromJson);
@@ -923,7 +1192,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - loading countryCode : <COUNTRYCODE>ES</COUNTRYCODE>")
     @Test
-    public void test72() {
+    public void test101() {
 
         String loadingCountryCodeFromJson = sandersFritomPojoShipments.getPickupAddress().getCountryCode();
         //    System.out.println("loadingCountryCodeFromJson = " + loadingCountryCodeFromJson);
@@ -935,7 +1204,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - loading phoneNumber : <PHONE>31497532323</PHONE>")
     @Test
-    public void test73() {
+    public void test102() {
 
         String loadingPhoneNumberFromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getPhoneNumber();
         //    System.out.println("loadingPhoneNumberFromJson = " + loadingPhoneNumberFromJson);
@@ -947,7 +1216,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - loading Email : <EMAIL>vaiser@hotmail.com</EMAIL>")
     @Test
-    public void test74() {
+    public void test103() {
 
         String loadingEmailFromJson = sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getEmailAddress();
         //    System.out.println("loadingEmailFromJson = " + loadingEmailFromJson);
@@ -959,7 +1228,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - unloading Restriction = DELIVERY_ROOF_LOAD -> <RESTRICTION>Dak</RESTRICTION>")
     @Test
-    public void test75() {
+    public void test104() {
 
         //    System.out.println("restrictionValueFromJsonMap.get(\"DELIVERY_ROOF_LOAD\") = " + restrictionValueFromJsonMap.get("DELIVERY_ROOF_LOAD"));
         String unloadingRestrictionEDI = (String) jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getJSONObject("RESTRICTIONS").getJSONArray("RESTRICTION").get(0);
@@ -971,7 +1240,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - unloading Correct delivery date")
     @Test
-    public void test76() {
+    public void test105() {
 
         String unloadingDate1FromJson = sandersFritomPojoShipments.getRequestedDeliveryDateTime().substring(0, 10);
         //    System.out.println("unloadingDate1FromJson = " + unloadingDate1FromJson);
@@ -983,7 +1252,8 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - unloading Correct pick up end date")
     @Test
-    public void test77() {
+    public void test106() {
+
         if (sandersFritomPojoShipments.getRequestedDeliveryWindowEndDateTime() != null) {
             if (sandersFritomPojoShipments.getRequestedDeliveryDateTime().equals(sandersFritomPojoShipments.getRequestedDeliveryWindowEndDateTime())) {
                 assertThat(jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getString("DATE2"), is(equalTo("")));
@@ -994,7 +1264,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
                 //   System.out.println("unloadingDate2EDI = " + unloadingDate2EDI);
                 assertThat(unloadingDate2FromJson, is(equalTo(unloadingDate2EDI)));
             }
-        }else{
+        } else {
             String unloadingDate2EDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getString("DATE2");
             //   System.out.println("unloadingDate2EDI = " + unloadingDate2EDI);
             assertThat(unloadingDate2EDI, is(equalTo("")));
@@ -1004,7 +1274,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - unloading Correct delivery start time")
     @Test
-    public void test78() {
+    public void test107() {
 
         if (requestJsonBodyShipments.contains("RequestedDeliveryWindowBeginDateTime") && requestJsonBodyShipments.contains("RequestedDeliveryWindowEndDateTime")) {
             if (sandersFritomPojoShipments.getRequestedDeliveryWindowEndDateTime() != null) {
@@ -1035,7 +1305,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - unloading Correct delivery end time - <TIME2>17:00:00</TIME2> - hardcoded in composer settings")
     @Test
-    public void test79() {
+    public void test108() {
 
         if (requestJsonBodyShipments.contains("RequestedDeliveryWindowEndDateTime")) {
             if (sandersFritomPojoShipments.getRequestedDeliveryWindowEndDateTime() != null) {
@@ -1066,7 +1336,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - unloading Name : <NAME><![CDATA[FLE >><<01105]]></NAME>")
     @Test
-    public void test80() {
+    public void test109() {
 
         String unloadingNameFromJson = sandersFritomPojoShipments.getAddresses().get(0).getReference();
         //    System.out.println("unloadingNameFromJson = " + unloadingNameFromJson);
@@ -1078,7 +1348,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - unloading Name2 : <NAME2><![CDATA[Delivery Co<<ntact Name 1]]></NAME2>")
     @Test
-    public void test81() {
+    public void test110() {
 
         String unloadingName2FromJson = sandersFritomPojoShipments.getAddresses().get(0).getContacts().get(0).getName();
         //    System.out.println("unloadingName2FromJson = " + unloadingName2FromJson);
@@ -1090,7 +1360,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - unloading address : <ADDRESS><![CDATA[Weena 10017 TEST]]></ADDRESS>")
     @Test
-    public void test82() {
+    public void test111() {
 
         String unloadingAddressFromJson = sandersFritomPojoShipments.getDeliveryAddress().getAddressLines().get(0).getValue();
         //    System.out.println("unloadingAddressFromJson = " + unloadingAddressFromJson);
@@ -1102,7 +1372,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - unloading address 2 : <ADDRESS2><![CDATA[Delivery address two]]></ADDRESS2>")
     @Test
-    public void test83() {
+    public void test112() {
 
         String unloadingAddress2FromJson = sandersFritomPojoShipments.getDeliveryAddress().getAddressLines().get(1).getValue();
         //    System.out.println("unloadingAddress2FromJson = " + unloadingAddress2FromJson);
@@ -1114,7 +1384,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - unloading postalCode : <POSTALCODE>0001001</POSTALCODE>")
     @Test
-    public void test84() {
+    public void test113() {
 
         String unloadingPostalCodeFromJson = sandersFritomPojoShipments.getDeliveryAddress().getPostalCode();
         //    System.out.println("unloadingPostalCodeFromJson = " + unloadingPostalCodeFromJson);
@@ -1126,7 +1396,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - unloading City : <CITY><![CDATA[VITORIA]]></CITY>")
     @Test
-    public void test85() {
+    public void test114() {
 
         String unloadingCityFromJson = sandersFritomPojoShipments.getDeliveryAddress().getLocalityName();
         //    System.out.println("unloadingCityFromJson = " + unloadingCityFromJson);
@@ -1138,7 +1408,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - unloading countryCode : <COUNTRYCODE>CH</COUNTRYCODE>")
     @Test
-    public void test86() {
+    public void test115() {
 
         String unloadingCountryCodeFromJson = sandersFritomPojoShipments.getDeliveryAddress().getCountryCode();
         //    System.out.println("unloadingCountryCodeFromJson = " + unloadingCountryCodeFromJson);
@@ -1150,7 +1420,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - unloading phoneNumber : <PHONE>(31)497-532-323</PHONE>")
     @Test
-    public void test87() {
+    public void test116() {
 
         String unloadingPhoneNumberFromJson = sandersFritomPojoShipments.getDeliveryAddress().getContacts().get(0).getPhoneNumber();
         //    System.out.println("unloadingPhoneNumberFromJson = " + unloadingPhoneNumberFromJson);
@@ -1162,7 +1432,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - unloading Email : <EMAIL>vaiser@hotmail.com</EMAIL>")
     @Test
-    public void test88() {
+    public void test117() {
 
         String unloadingEmailFromJson = sandersFritomPojoShipments.getDeliveryAddress().getContacts().get(0).getEmailAddress();
         //    System.out.println("unloadingEmailFromJson = " + unloadingEmailFromJson);
@@ -1174,7 +1444,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - orderline Description : This is the description of the sUnit content value")
     @Test
-    public void test89() {
+    public void test118() {
 
         String orderlineDescriptionFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getContent();
         //    System.out.println("orderlineDescriptionFromJson = " + orderlineDescriptionFromJson);
@@ -1187,7 +1457,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - orderline UnitCode : <UNITCODE>PAK</UNITCODE>")
     @Test
-    public void test90() {
+    public void test119() {
 
         String orderLineUnitCodeFromJsonConverted = unitcodeValueFromJsonMap.get(unitcodeFromJson);
         //    System.out.println("orderLineUnitCodeFromJsonConverted = " + orderLineUnitCodeFromJsonConverted);
@@ -1200,7 +1470,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - orderline Quantity : 1")
     @Test
-    public void test91() {
+    public void test120() {
 
         int orderlineQuantityFromJson = sandersFritomPojoShipments.getNumberOfShippingUnits();
         //    System.out.println("orderlineQuantityFromJson = " + orderlineQuantityFromJson);
@@ -1212,7 +1482,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - orderline GrossWeight : <GROSS_WEIGHT>12.13</GROSS_WEIGHT>")
     @Test
-    public void test92() {
+    public void test121() {
 
         double orderlineGrossWeightFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getGrossWeight();
         //    System.out.println("orderlineGrossWeightFromJson = " + orderlineGrossWeightFromJson);
@@ -1224,7 +1494,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - orderline NetWeight : <NET_WEIGHT>12.13</NET_WEIGHT>")
     @Test
-    public void test93() {
+    public void test122() {
 
         double orderlineNetWeightFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getNetWeight();
         //    System.out.println("orderlineNetWeightFromJson = " + orderlineNetWeightFromJson);
@@ -1236,7 +1506,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - orderline Length : <LENGTH>37.00</LENGTH>")
     @Test
-    public void test94() {
+    public void test123() {
 
         double orderlineLengthFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getLength();
         //    System.out.println("orderlineLengthFromJson = " + orderlineLengthFromJson);
@@ -1248,7 +1518,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - orderline Width : <WIDTH>26.50</WIDTH>")
     @Test
-    public void test95() {
+    public void test124() {
 
         double orderlineWidthFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getWidth();
         //    System.out.println("orderlineWidthFromJson = " + orderlineWidthFromJson);
@@ -1260,7 +1530,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - orderline Height : <HEIGHT>4.00</HEIGHT>")
     @Test
-    public void test96() {
+    public void test125() {
 
         double orderlineHeightFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getWidth();
         //    System.out.println("orderlineHeightFromJson = " + orderlineHeightFromJson);
@@ -1272,7 +1542,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - orderline Volume : <VOLUME>0.14</VOLUME>")
     @Test
-    public void test97() {
+    public void test126() {
 
         double orderlineVolumeFromJson = volumeInCubicMetre;
         //    System.out.println("orderlineVolumeFromJson = " + orderlineVolumeFromJson);
@@ -1284,7 +1554,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - orderline Loadingmeter : <LOADINGMETER>408.54</LOADINGMETER>")
     @Test
-    public void test98() {
+    public void test127() {
 
         double orderlineLengthFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getLength();
         double orderlineWidthFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getWidth();
@@ -1298,7 +1568,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("EDI - orderline 0 reference : 4706850")
     @Test
-    public void test99() {
+    public void test128() {
 
         String orderlineReferenceFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getShipperRef();
         //    System.out.println("orderlineReferenceFromJson = " + orderlineReferenceFromJson);
@@ -1310,7 +1580,7 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
 
     @DisplayName("Verify the CHECK DIGIT for 00112345671000002587 is correct. We expect: 7 for 11234567100000258")
     @Test
-    public void test100() {
+    public void test129() {
 
         //    System.out.println("sandersFritomPojoShipments.getShippingUnits().get(0).getAdditionalValues().get(0).getValue().substring(2, 19) = " + sandersFritomPojoShipments.getShippingUnits().get(0).getAdditionalValues().get(0).getValue().substring(2, 19));
         //    System.out.println("sandersFritomPojoShipments.getShippingUnits().get(0).getAdditionalValues().get(0).getValue() = " + sandersFritomPojoShipments.getShippingUnits().get(0).getAdditionalValues().get(0).getValue());

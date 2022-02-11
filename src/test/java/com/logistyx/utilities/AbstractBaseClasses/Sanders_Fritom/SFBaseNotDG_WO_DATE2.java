@@ -66,6 +66,15 @@ public abstract class SFBaseNotDG_WO_DATE2 {
     public static String minute;
     public static String second;
 
+    public static String currentDateTimeUTC;
+    public static String monthUTC;
+    public static String dayUTC;
+    public static int yearUTC;
+    public static int centuryUTC;
+    public static int hourUTC;
+    public static String minuteUTC;
+    public static String secondUTC;
+
     public static org.json.JSONObject jsonDataEDI;
     public static String puCountryFromCountryCodeFromJson;
     public static String dyCountryFromCountryCodeFromJson;
@@ -338,6 +347,18 @@ public abstract class SFBaseNotDG_WO_DATE2 {
         minute = date1.substring(14, 16);
         second = date1.substring(17, 19);
 
+        dateTimeUTC = OffsetDateTime.now(ZoneOffset.UTC);
+        //    System.out.println(dateTimeUTC);
+        monthUTC = date1.substring(0, 2);
+        dayUTC = date1.substring(3, 5);
+        yearUTC = Integer.parseInt(date1.substring(6, 10));
+        centuryUTC = (yearUTC / 100) + 1;
+        hourUTC = Integer.parseInt(date1.substring(11, 13)) + 5;
+        minuteUTC = date1.substring(14, 16);
+        secondUTC = date1.substring(17, 19);
+
+        currentDateTimeUTC = yearUTC + "-" + monthUTC + "-" + dayUTC + "T" + hourUTC + ":" + minuteUTC + ":" + secondUTC + "Z";
+
         currentDateTime = year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":" + second + "Z";
 
         try {
@@ -476,9 +497,6 @@ public abstract class SFBaseNotDG_WO_DATE2 {
                 break;
         }
 
-
-        dateTimeUTC = OffsetDateTime.now(ZoneOffset.UTC);
-        //    System.out.println(dateTimeUTC);
 
 
         int barcode2DFromLabelStart = decodedStringShipments.indexOf("UNA:");

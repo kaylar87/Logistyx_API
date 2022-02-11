@@ -711,7 +711,7 @@ public class _1b_NL_NO_weight_2_KG extends BNPBaseNotDG1 {
 
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //    System.out.println("decodeArrList.get(27) = " + decodeArrList.get(27));
+            System.out.println("decodeArrList.get(27) = " + decodeArrList.get(27));
         assertThat(decodeArrList.get(27).toString(), is(equalTo("UNT" + "+" + (decodeArrList.indexOf(decodeArrList.get(27).toString()) - 1) + "+" + bringParcelPojoShipments.getShipmentId())));
     }
 
