@@ -2,8 +2,12 @@ package com.logistyx.TEST.Sanders_Fritom;
 
 
 import com.logistyx.utilities.AbstractBaseClasses.Sanders_Fritom.SFBaseNotDG_WO_DATE2;
+import org.apache.commons.math3.util.Precision;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -27,7 +31,7 @@ public class WO_DATE2 extends SFBaseNotDG_WO_DATE2 {
 //        validateResponseShipments.extract().response().prettyPrint();
 //        System.out.println("decodedStringShipments = " + decodedStringShipments);
 //        validateResponseConveyances.extract().response().prettyPrint();
-//       System.out.println("decodedStringConveyances = " + decodedStringConveyances);
+//        System.out.println("decodedStringConveyances = " + decodedStringConveyances);
 //        System.out.println("jsonDataEDI = " + jsonDataEDI);
 
 
@@ -377,7 +381,7 @@ public class WO_DATE2 extends SFBaseNotDG_WO_DATE2 {
     }
 
 
-    @DisplayName("ZPL - Serial Number: 100000350")
+    @DisplayName("ZPL - Serial Number (Barcode): 100000350")
     @Test
     public void test29() {
 
@@ -390,9 +394,22 @@ public class WO_DATE2 extends SFBaseNotDG_WO_DATE2 {
     }
 
 
-    @DisplayName("ZPL - SSCC: 00112345671000003577")
+    @DisplayName("ZPL - SSCC (Barcode): 00112345671000003577")
     @Test
     public void test30() {
+
+        String sSCCFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getAdditionalValues().get(0).getValue();
+        //    System.out.println("sSCCFromJson = " + sSCCFromJson);
+        int sSCCFromLabelStart = decodedStringShipments.indexOf("^FT30,1134^BCN,185,N,N^FD>:") + 27;
+        String sSCCFromLabel = decodedStringShipments.substring(sSCCFromLabelStart, sSCCFromLabelStart + sSCCFromJson.length()).replace("(", "").replace(")", "");
+        //    System.out.println("sSCCFromLabel = " + sSCCFromLabel);
+        assertThat(sSCCFromJson, is(equalTo(sSCCFromLabel)));
+    }
+
+
+    @DisplayName("ZPL - SSCC: 00112345671000003577")
+    @Test
+    public void test301() {
 
         String sSCCFromJson = sandersFritomPojoShipments.getShippingUnits().get(0).getAdditionalValues().get(0).getValue();
         //    System.out.println("sSCCFromJson = " + sSCCFromJson);
@@ -413,6 +430,205 @@ public class WO_DATE2 extends SFBaseNotDG_WO_DATE2 {
         String postCodeFromLabel = decodedStringShipments.substring(postCodeFromLabelStart, postCodeFromLabelStart + postCodeFromJson.length());
         //    System.out.println("postCodeFromLabel = " + postCodeFromLabel);
         assertThat(postCodeFromJson, is(equalTo(postCodeFromLabel)));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - UNA:+.? ")
+    @Test
+    public void test3100() {
+
+        //    System.out.println("decodeArrList.get(0) = " + decodeArrList.get(0));
+        assertThat(decodeArrList.get(0), is(equalTo("UNA:+.? ")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - UNB+UNOC:3+VDL-NL:30+SFT+220210:2006+334819++Logistyx TME")
+    @Test
+    public void test3109() {
+
+        String year1 = String.valueOf(year).substring(2);
+        //    System.out.println("decodeArrList.get(1) = " + decodeArrList.get(1));
+        assertThat(decodeArrList.get(1), is(equalTo("UNB+UNOC:3+" + sandersFritomPojoShipments.getShipperCode() + ":30+" + sandersFritomPojoShipments.getForwarderDivisionCode() + "+" + year1 + month + day + ":" + hour + minute + "+" + sandersFritomPojoShipments.getShipmentId() + "++Logistyx TME")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - UNH+1+IFTMIN:DP:01B:UN:EAN004")
+    @Test
+    public void test3108() {
+
+        //    System.out.println("decodeArrList.get(2) = " + decodeArrList.get(2));
+        assertThat(decodeArrList.get(2), is(equalTo("UNH+1+IFTMIN:DP:01B:UN:EAN004")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - BGM+340+100000611+9")
+    @Test
+    public void test3107() {
+
+        //    System.out.println("decodeArrList.get(3) = " + decodeArrList.get(3));
+        assertThat(decodeArrList.get(3), is(equalTo("BGM+340+" + sandersFritomPojoShipments.getForwarderRef() + "+9")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - DTM+10:20220127:102")
+    @Test
+    public void test3106() {
+
+        //    System.out.println("decodeArrList.get(4) = " + decodeArrList.get(4));
+        assertThat(decodeArrList.get(4), is(equalTo("DTM+10:" + sandersFritomPojoShipments.getRequestedPickupDateTime().replace("-", "").substring(0, 8) + ":102")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - DTM+63:202201292116:203")
+    @Test
+    public void test3105() {
+
+        //    System.out.println("decodeArrList.get(5) = " + decodeArrList.get(5));
+        assertThat(decodeArrList.get(5), is(equalTo("DTM+63:" + sandersFritomPojoShipments.getRequestedDeliveryWindowEndDateTime().toString().replace("-", "").replace("T", "").replace(":", "").substring(0, 12) + ":203")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - TSR+++00:STA")
+    @Test
+    public void test3104() {
+
+        //    System.out.println("decodeArrList.get(6) = " + decodeArrList.get(6));
+        assertThat(decodeArrList.get(6), is(equalTo("TSR+++00:" + sandersFritomPojoShipments.getForwarderServiceCode().substring(0, 3))));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - TSR+++00:STA")
+    @Test
+    public void test3103() {
+
+        //    System.out.println("decodeArrList.get(6) = " + decodeArrList.get(6));
+        assertThat(decodeArrList.get(6), is(equalTo("TSR+++00:" + sandersFritomPojoShipments.getForwarderServiceCode().substring(0, 3))));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - TOD+6+PP+CPT")
+    @Test
+    public void test3102() {
+
+        //    System.out.println("decodeArrList.get(7) = " + decodeArrList.get(7));
+        assertThat(decodeArrList.get(7), is(equalTo("TOD+6+PP+" + sandersFritomPojoShipments.getIncotermCode())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - RFF+AWB:100000611")
+    @Test
+    public void test3101() {
+
+        //    System.out.println("decodeArrList.get(8) = " + decodeArrList.get(8));
+        assertThat(decodeArrList.get(8), is(equalTo("RFF+AWB:" + sandersFritomPojoShipments.getForwarderRef())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - RFF+CU:4706850")
+    @Test
+    public void test3110() {
+
+        //    System.out.println("decodeArrList.get(9) = " + decodeArrList.get(9));
+        assertThat(decodeArrList.get(9), is(equalTo("RFF+CU:" + sandersFritomPojoShipments.getShipperRef())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - RFF+AAO:RR123456")
+    @Test
+    public void test3111() {
+
+        //    System.out.println("decodeArrList.get(10) = " + decodeArrList.get(10));
+        assertThat(decodeArrList.get(10), is(equalTo("RFF+AAO:" + sandersFritomPojoShipments.getReceiverRef())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - NAD+CZ+968888021:ZZZ++PUREF0001+De Grens 27 TEST+Heijen+++5921CC+ES")
+    @Test
+    public void test3112() {
+
+        //    System.out.println("decodeArrList.get(11) = " + decodeArrList.get(11));
+        assertThat(decodeArrList.get(11), is(equalTo("NAD+CZ+" + sandersFritomPojoShipments.getPickupForwarderDivisionAccountCode() + ":ZZZ++" + sandersFritomPojoShipments.getAddresses().get(1).getReference() + "+" + sandersFritomPojoShipments.getAddresses().get(1).getAddressLines().get(0).getValue() + "+" + sandersFritomPojoShipments.getAddresses().get(1).getLocalityName() + "+++" + sandersFritomPojoShipments.getAddresses().get(1).getPostalCode() + "+" + sandersFritomPojoShipments.getAddresses().get(1).getCountryCode())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - CTA+IC+Pickup Name One")
+    @Test
+    public void test3113() {
+
+        //    System.out.println("decodeArrList.get(12) = " + decodeArrList.get(12));
+        assertThat(decodeArrList.get(12), is(equalTo("CTA+IC+" + sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getName())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - COM+31497532323:TE")
+    @Test
+    public void test3114() {
+
+        //    System.out.println("decodeArrList.get(13) = " + decodeArrList.get(13));
+        assertThat(decodeArrList.get(13), is(equalTo("COM+" + sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getPhoneNumber() + ":TE")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - COM+vaiser@hotmail?.com:EM")
+    @Test
+    public void test3115() {
+
+        //    System.out.println("decodeArrList.get(14) = " + decodeArrList.get(14));
+        assertThat(decodeArrList.get(14), is(equalTo("COM+" + sandersFritomPojoShipments.getPickupAddress().getContacts().get(0).getEmailAddress().replace(".", "?.") + ":EM")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - NAD+CN+++FLE >><<01105+Weena 10017 TEST:Delivery address two+VITORIA+++0001001+CH'")
+    @Test
+    public void test3116() {
+
+        //    System.out.println("decodeArrList.get(15) = " + decodeArrList.get(15));
+        assertThat(decodeArrList.get(15), is(equalTo("NAD+CN+++" + sandersFritomPojoShipments.getAddresses().get(0).getReference() + "+" + sandersFritomPojoShipments.getAddresses().get(0).getAddressLines().get(0).getValue() + ":" + sandersFritomPojoShipments.getAddresses().get(0).getAddressLines().get(1).getValue() + "+" + sandersFritomPojoShipments.getAddresses().get(0).getLocalityName() + "+++" + sandersFritomPojoShipments.getAddresses().get(0).getPostalCode() + "+" + sandersFritomPojoShipments.getAddresses().get(0).getCountryCode())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - CTA+IC+Delivery Co<<ntact Name 1")
+    @Test
+    public void test3117() {
+
+        //    System.out.println("decodeArrList.get(16) = " + decodeArrList.get(16));
+        assertThat(decodeArrList.get(16), is(equalTo("CTA+IC+" + sandersFritomPojoShipments.getDeliveryAddress().getContacts().get(0).getName())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - COM+(31)497-532-323:TE")
+    @Test
+    public void test3118() {
+
+        //    System.out.println("decodeArrList.get(17) = " + decodeArrList.get(17));
+        assertThat(decodeArrList.get(17), is(equalTo("COM+" + sandersFritomPojoShipments.getDeliveryAddress().getContacts().get(0).getPhoneNumber() + ":TE")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - COM+vaiser@hotmail?.com:EM")
+    @Test
+    public void test3119() {
+
+        System.out.println("decodeArrList.get(18) = " + decodeArrList.get(18));
+        assertThat(decodeArrList.get(18), is(equalTo("COM+" + sandersFritomPojoShipments.getDeliveryAddress().getContacts().get(0).getEmailAddress().replace(".", "?.") + ":EM")));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - GID+1+1:PC")
+    @Test
+    public void test3120() {
+
+        //    System.out.println("decodeArrList.get(19) = " + decodeArrList.get(19));
+        assertThat(decodeArrList.get(19), is(equalTo("GID+" + sandersFritomPojoShipments.getShippingUnits().get(0).getIndex() + "+1:" + sandersFritomPojoShipments.getShippingUnits().get(0).getPackageType())));
+    }
+
+
+    @DisplayName("ZPL - 2D Barcode - MEA+AAI+AAW+KGM:12.1")
+    @Test
+    public void test3121() {
+
+    //    System.out.println("decodeArrList.get(20) = " + decodeArrList.get(20));
+        assertThat(decodeArrList.get(20), is(equalTo("MEA+AAI+AAW+" + sandersFritomPojoShipments.getShippingUnits().get(0).getGrossWeightUnitOfMeasure().replace(" ", "M") + ":" + Precision.round(weightInKilos, 1))));
     }
 
 
@@ -788,14 +1004,14 @@ public class WO_DATE2 extends SFBaseNotDG_WO_DATE2 {
                 assertThat(jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("DATE2"), is(equalTo("")));
             } else {
                 String loadingDate2FromJson = sandersFritomPojoShipments.getRequestedPickupWindowEndDateTime().substring(0, 10);
-            //    System.out.println("loadingDate2FromJson = " + loadingDate2FromJson);
+                //    System.out.println("loadingDate2FromJson = " + loadingDate2FromJson);
                 String loadingDate2EDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("DATE2");
-            //    System.out.println("loadingDate2EDI = " + loadingDate2EDI);
+                //    System.out.println("loadingDate2EDI = " + loadingDate2EDI);
                 assertThat(loadingDate2FromJson, is(equalTo(loadingDate2EDI)));
             }
         } else {
             String loadingDate2EDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("LOADING").getString("DATE2");
-        //    System.out.println("loadingDate2EDI = " + loadingDate2EDI);
+            //    System.out.println("loadingDate2EDI = " + loadingDate2EDI);
             assertThat(loadingDate2EDI, is(equalTo("")));
         }
     }
@@ -996,7 +1212,7 @@ public class WO_DATE2 extends SFBaseNotDG_WO_DATE2 {
                 //   System.out.println("unloadingDate2EDI = " + unloadingDate2EDI);
                 assertThat(unloadingDate2FromJson, is(equalTo(unloadingDate2EDI)));
             }
-        }else{
+        } else {
             String unloadingDate2EDI = jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getJSONObject("SHIPMENTS").getJSONObject("SHIPMENT").getJSONObject("UNLOADING").getString("DATE2");
             //   System.out.println("unloadingDate2EDI = " + unloadingDate2EDI);
             assertThat(unloadingDate2EDI, is(equalTo("")));

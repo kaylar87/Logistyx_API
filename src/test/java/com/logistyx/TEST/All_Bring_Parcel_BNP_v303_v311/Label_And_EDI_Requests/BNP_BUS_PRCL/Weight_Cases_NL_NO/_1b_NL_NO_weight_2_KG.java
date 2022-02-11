@@ -387,10 +387,10 @@ public class _1b_NL_NO_weight_2_KG extends BNPBaseNotDG1 {
     public void test20() {
 
 
-        //System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
+    //    System.out.println("shipmentIdFromShipmentsRequest = " + shipmentIdFromShipmentsRequest);
         String[] decodeArr = decodedStringConveyances.split("\'\r\n");
         List decodeArrList = Arrays.asList(decodeArr);
-        //System.out.println("decodeArrList.get(2) = " + decodeArrList.get(2));
+        System.out.println("decodeArrList.get(2) = " + decodeArrList.get(2));
         assertThat(decodeArrList.get(2), is(equalTo("UNH+" + bringParcelPojoShipments.getShipmentId() + "+IFTMIN:D:04A:UN:BIG14")));
 
     }
