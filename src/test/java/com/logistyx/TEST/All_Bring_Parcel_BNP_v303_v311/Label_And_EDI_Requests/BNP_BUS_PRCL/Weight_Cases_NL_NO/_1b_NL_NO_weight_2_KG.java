@@ -31,6 +31,7 @@ public class _1b_NL_NO_weight_2_KG extends BNPBaseNotDG1 {
 //        validateResponseShipments.extract().response().prettyPrint();
 //        System.out.println("decodedStringShipments = " + decodedStringShipments);
 //        validateResponseConveyances.extract().response().prettyPrint();
+        System.out.println("decodedStringConveyances = " + decodedStringConveyances);
 
     }
 

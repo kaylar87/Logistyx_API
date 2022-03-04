@@ -3,6 +3,7 @@ package com.logistyx.TEST.Sanders_Fritom;
 
 import com.logistyx.utilities.AbstractBaseClasses.Sanders_Fritom.SFBaseNotDG_WO_DATE2_TIME_FROM_DB;
 import org.apache.commons.math3.util.Precision;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -723,16 +724,17 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
     }
 
 
-    @DisplayName("EDI - Version = <VERSION>1.5</VERSION>")
+    @DisplayName("EDI - Version = <VERSION>1.6</VERSION>")
     @Test
     public void test65() {
 
         String versionEDI = String.valueOf(jsonDataEDI.getJSONObject("FRITOM_SHIPMENT_XML").getDouble("VERSION"));
         //    System.out.println("versionEDI = " + versionEDI);
-        assertThat(versionEDI, is(equalTo("1.5")));
+        assertThat(versionEDI, is(equalTo("1.6")));
     }
 
 
+    @Disabled
     @DisplayName("EDI - trackingID = (set to s.ShipperRef) 4706850")
     @Test
     public void test66() {
@@ -1587,6 +1589,20 @@ public class WO_DATE2_TIME_FROM_DB extends SFBaseNotDG_WO_DATE2_TIME_FROM_DB {
         //    System.out.println("checkDigit = " + checkDigit);
         assertThat(sandersFritomPojoShipments.getShippingUnits().get(0).getAdditionalValues().get(0).getValue().substring(19, 20), is(equalTo(String.valueOf(checkDigit))));
 
+    }
+
+
+    @DisplayName("JSON Body Request")
+    @Test
+    public void test130() {
+        System.out.println("requestJsonBodyShipments = " + requestJsonBodyShipments);
+    }
+
+
+    @DisplayName("JSON Body Response")
+    @Test
+    public void test131() {
+        validateResponseShipments.extract().response().prettyPrint();
     }
 
 

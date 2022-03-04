@@ -297,8 +297,13 @@ public abstract class SFBaseNotDG_W_DATE2 {
                     oddSum += Integer.parseInt(String.valueOf(checkString.charAt(i)));
                 }
             }
-            checkDigit = 10 - ((evenSum + (oddSum * 3)) % 10);
+            if ((10 - ((evenSum + (oddSum * 3)) % 10)) == 10) {
+                checkDigit = 0;
+            } else {
+                checkDigit = 10 - ((evenSum + (oddSum * 3)) % 10);
+            }
         }
+//if checkdigit is 10 use 0, otherwise use checkdigit dynamic value
 
 
         JsonPath jsonPath = validateResponseShipments.extract().jsonPath();
