@@ -46,191 +46,9 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     }
 
 
-    @DisplayName("ZPL Carrier service L - 'P'")
-    @Test
-    public void test4() {
-
-        String carrierServiceLFromJsonConverted = carrierServiceLValueFromJsonMap.get(carrierServiceFromJson);
-        //    System.out.println("carrierServiceLFromJsonConverted = " + carrierServiceLFromJsonConverted);
-        int carrierServiceLFromLabelStart = decodedStringShipments.indexOf("^FT64,167^A0N,174,209^FD") + 24;
-        String carrierServiceLFromLabel = decodedStringShipments.substring(carrierServiceLFromLabelStart, carrierServiceLFromLabelStart + carrierServiceLFromJsonConverted.length());
-        //    System.out.println("carrierServiceLFromLabel = " + carrierServiceLFromLabel);
-        assertThat(carrierServiceLFromJsonConverted, is(equalTo(carrierServiceLFromLabel)));
-
-    }
-
-
-    @DisplayName("ZPL Carrier service E1 - 'PRIORITY MAIL'")
-    @Test
-    public void test5() {
-
-        String carrierServiceE1FromJsonConverted = carrierServiceE1ValueFromJsonMap.get(carrierServiceFromJson);
-        //    System.out.println("carrierServiceE1FromJsonConverted = " + carrierServiceE1FromJsonConverted);
-        int carrierServiceE1FromLabelStart = decodedStringShipments.indexOf("^FT437,65^A0N,27,27^FD") + 22;
-        String carrierServiceE1FromLabel = decodedStringShipments.substring(carrierServiceE1FromLabelStart, carrierServiceE1FromLabelStart + carrierServiceE1FromJsonConverted.length());
-        //    System.out.println("carrierServiceE1FromLabel = " + carrierServiceE1FromLabel);
-        assertThat(carrierServiceE1FromJsonConverted, is(equalTo(carrierServiceE1FromLabel)));
-
-    }
-
-
-    @DisplayName("ZPL Carrier service E2 - 'U.S POSTAGE PAID'")
-    @Test
-    public void test6() {
-
-        String carrierServiceE2FromJsonConverted = carrierServiceE2ValueFromJsonMap.get(carrierServiceFromJson);
-        //    System.out.println("carrierServiceE2FromJsonConverted = " + carrierServiceE2FromJsonConverted);
-        int carrierServiceE2FromLabelStart = decodedStringShipments.indexOf("^FT437,97^A0N,27,27^FD") + 22;
-        String carrierServiceE2FromLabel = decodedStringShipments.substring(carrierServiceE2FromLabelStart, carrierServiceE2FromLabelStart + carrierServiceE2FromJsonConverted.length());
-        //    System.out.println("carrierServiceE2FromLabel = " + carrierServiceE2FromLabel);
-        assertThat(carrierServiceE2FromJsonConverted, is(equalTo(carrierServiceE2FromLabel)));
-
-    }
-
-
-    @DisplayName("ZPL Carrier service E3 - 'OSM'")
-    @Test
-    public void test7() {
-
-        String carrierServiceE3Hardcoded = "OSM";
-        //    System.out.println("carrierServiceE3Hardcoded = " + carrierServiceE3Hardcoded);
-        int carrierServiceE3FromLabelStart = decodedStringShipments.indexOf("^FT437,130^A0N,27,27^FD") + 23;
-        String carrierServiceE3FromLabel = decodedStringShipments.substring(carrierServiceE3FromLabelStart, carrierServiceE3FromLabelStart + carrierServiceE3Hardcoded.length());
-        //    System.out.println("carrierServiceE3FromLabel = " + carrierServiceE3FromLabel);
-        assertThat(carrierServiceE3Hardcoded, is(equalTo(carrierServiceE3FromLabel)));
-
-    }
-
-
-    @DisplayName("ZPL Carrier service E4 - 'E-VS'")
-    @Test
-    public void test8() {
-
-        String carrierServiceE4Hardcoded = "E-VS";
-        //    System.out.println("carrierServiceE4Hardcoded = " + carrierServiceE4Hardcoded);
-        int carrierServiceE4FromLabelStart = decodedStringShipments.indexOf("^FT437,163^A0N,27,27^FD") + 23;
-        String carrierServiceE4FromLabel = decodedStringShipments.substring(carrierServiceE4FromLabelStart, carrierServiceE4FromLabelStart + carrierServiceE4Hardcoded.length());
-        //    System.out.println("carrierServiceE4FromLabel = " + carrierServiceE4FromLabel);
-        assertThat(carrierServiceE4Hardcoded, is(equalTo(carrierServiceE4FromLabel)));
-
-    }
-
-
-    @DisplayName("ZPL Carrier service M - 'USPS PRIORITY MAIL'")
-    @Test
-    public void test9() {
-
-        String carrierServiceMFromJsonConverted = "USPS " + carrierServiceE1ValueFromJsonMap.get(carrierServiceFromJson);
-        //    System.out.println("carrierServiceMFromJsonConverted = " + carrierServiceMFromJsonConverted);
-        int carrierServiceMFromLabelStart = decodedStringShipments.indexOf("^FT131,276^A0N,54,65^FD") + 23;
-        String carrierServiceMFromLabel = decodedStringShipments.substring(carrierServiceMFromLabelStart, carrierServiceMFromLabelStart + carrierServiceMFromJsonConverted.length());
-        //    System.out.println("carrierServiceMFromLabel = " + carrierServiceMFromLabel);
-        assertThat(carrierServiceMFromJsonConverted, is(equalTo(carrierServiceMFromLabel)));
-
-    }
-
-
-    @DisplayName("ZPL Carrier service F1 - 'GEN_BERLIN'")
-    @Test
-    public void test10() {
-
-        String carrierServiceF1FromJson = osmPojoShipments.getPickupAddress().getReference();
-        //    System.out.println("carrierServiceF1FromJson = " + carrierServiceF1FromJson);
-        int carrierServiceF1FromLabelStart = decodedStringShipments.indexOf("^FT35,337^A0N,27,27^FH^FD") + 25;
-        String carrierServiceF1FromLabel = (decodedStringShipments.substring(carrierServiceF1FromLabelStart, carrierServiceF1FromLabelStart + carrierServiceF1FromJson.length() + 2)).replace("5F", "");
-        //    System.out.println("carrierServiceF1FromLabel = " + carrierServiceF1FromLabel);
-        assertThat(carrierServiceF1FromJson, is(equalTo(carrierServiceF1FromLabel)));
-
-    }
-
-
-    @DisplayName("ZPL Carrier service F2 - '745 E KNOPF RD'")
-    @Test
-    public void test11() {
-
-        String carrierServiceF2FromJson = ((String) osmPojoShipments.getPickupAddress().getAddressLines().get(0).getValue()).toUpperCase();
-        //    System.out.println("carrierServiceF2FromJson = " + carrierServiceF2FromJson);
-        int carrierServiceF2FromLabelStart = decodedStringShipments.indexOf("^FT35,369^A0N,27,27^FD") + 22;
-        String carrierServiceF2FromLabel = decodedStringShipments.substring(carrierServiceF2FromLabelStart, carrierServiceF2FromLabelStart + carrierServiceF2FromJson.length());
-        //    System.out.println("carrierServiceF2FromLabel = " + carrierServiceF2FromLabel);
-        assertThat(carrierServiceF2FromJson, is(equalTo(carrierServiceF2FromLabel)));
-
-    }
-
-
-    @DisplayName("ZPL Carrier service F3 - 'BERLIN, 54923 WI'")
-    @Test
-    public void test12() {
-
-        String carrierServiceF3FromJson = (osmPojoShipments.getPickupAddress().getLocalityName()).toUpperCase() + ", " + osmPojoShipments.getPickupAddress().getPostalCode() + " " + osmPojoShipments.getPickupAddress().getSubdivisionCode();
-        //    System.out.println("carrierServiceF3FromJson = " + carrierServiceF3FromJson);
-        int carrierServiceF3FromLabelStart = decodedStringShipments.indexOf("^FT35,402^A0N,27,27^FD") + 22;
-        String carrierServiceF3FromLabel = decodedStringShipments.substring(carrierServiceF3FromLabelStart, carrierServiceF3FromLabelStart + carrierServiceF3FromJson.length());
-        //    System.out.println("carrierServiceF3FromLabel = " + carrierServiceF3FromLabel);
-        assertThat(carrierServiceF3FromJson, is(equalTo(carrierServiceF3FromLabel)));
-
-    }
-
-
-    @DisplayName("ZPL Carrier service G1 - 'LOWE'S COMPANIES, INC.'")
-    @Test
-    public void test13() {
-
-        String carrierServiceG1FromJson = osmPojoShipments.getDeliveryAddress().getReference();
-        //    System.out.println("carrierServiceG1FromJson = " + carrierServiceG1FromJson);
-        int carrierServiceG1FromLabelStart = decodedStringShipments.indexOf("^FT81,536^A0N,35,35^FD") + 22;
-        String carrierServiceG1FromLabel = decodedStringShipments.substring(carrierServiceG1FromLabelStart, carrierServiceG1FromLabelStart + carrierServiceG1FromJson.length());
-        //   System.out.println("carrierServiceG1FromLabel = " + carrierServiceG1FromLabel);
-        assertThat(carrierServiceG1FromJson, is(equalTo(carrierServiceG1FromLabel)));
-
-    }
-
-
-    @DisplayName("ZPL Carrier service G2 - 'LOWE'S COMPANIES, INC.'")
-    @Test
-    public void test14() {
-
-        String carrierServiceG2FromJson = osmPojoShipments.getDeliveryAddress().getContacts().get(0).getName();
-        //    System.out.println("carrierServiceG2FromJson = " + carrierServiceG2FromJson);
-        int carrierServiceG2FromLabelStart = decodedStringShipments.indexOf("^FT81,579^A0N,35,35^FD") + 22;
-        String carrierServiceG2FromLabel = decodedStringShipments.substring(carrierServiceG2FromLabelStart, carrierServiceG2FromLabelStart + carrierServiceG2FromJson.length());
-        //    System.out.println("carrierServiceG2FromLabel = " + carrierServiceG2FromLabel);
-        assertThat(carrierServiceG2FromJson, is(equalTo(carrierServiceG2FromLabel)));
-
-    }
-
-
-    @DisplayName("ZPL Carrier service G3 - '15 MAIN ST'")
-    @Test
-    public void test15() {
-
-        String carrierServiceG3FromJson = (osmPojoShipments.getDeliveryAddress().getAddressLines().get(0).getValue()).toUpperCase();
-        //    System.out.println("carrierServiceG3FromJson = " + carrierServiceG3FromJson);
-        int carrierServiceG3FromLabelStart = decodedStringShipments.indexOf("^FT81,621^A0N,35,35^FD") + 22;
-        String carrierServiceG3FromLabel = decodedStringShipments.substring(carrierServiceG3FromLabelStart, carrierServiceG3FromLabelStart + carrierServiceG3FromJson.length());
-        //    System.out.println("carrierServiceG3FromLabel = " + carrierServiceG3FromLabel);
-        assertThat(carrierServiceG3FromJson, is(equalTo(carrierServiceG3FromLabel)));
-
-    }
-
-
-    @DisplayName("ZPL Carrier service G4 - 'EDGERTON, 53534 WI'")
-    @Test
-    public void test16() {
-
-        String carrierServiceG4FromJson = (osmPojoShipments.getDeliveryAddress().getLocalityName()).toUpperCase() + ", " + osmPojoShipments.getDeliveryAddress().getPostalCode() + " " + osmPojoShipments.getDeliveryAddress().getSubdivisionCode();
-        //    System.out.println("carrierServiceG4FromJson = " + carrierServiceG4FromJson);
-        int carrierServiceG4FromLabelStart = decodedStringShipments.indexOf("^FT81,663^A0N,35,35^FD") + 22;
-        String carrierServiceG4FromLabel = decodedStringShipments.substring(carrierServiceG4FromLabelStart, carrierServiceG4FromLabelStart + carrierServiceG4FromJson.length());
-        //   System.out.println("carrierServiceG4FromLabel = " + carrierServiceG4FromLabel);
-        assertThat(carrierServiceG4FromJson, is(equalTo(carrierServiceG4FromLabel)));
-
-    }
-
-
     @DisplayName("ZPL Carrier service A - 'CI'")
     @Test
-    public void test17() {
+    public void test4() {
 
         //    System.out.println("sortCode1 = " + sortCode1);
         int carrierServiceAFromLabelStart = decodedStringShipments.indexOf("^FT516,353^A0N,43,74^FD") + 23;
@@ -243,7 +61,7 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
 
     @DisplayName("ZPL Carrier service B - '20'")
     @Test
-    public void test18() {
+    public void test5() {
 
         //    System.out.println("sortCode2 = " + sortCode2);
         int sc2 = (int) Double.parseDouble(sortCode2);
@@ -258,7 +76,7 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
 
     @DisplayName("ZPL Carrier service C - 'PM'")
     @Test
-    public void test19() {
+    public void test6() {
 
         String carrierServiceCFromJsonConverted = carrierServiceMCValueFromJsonMap.get(carrierServiceFromJson);
         //    System.out.println("carrierServiceCFromJsonConverted = " + carrierServiceCFromJsonConverted);
@@ -272,7 +90,7 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
 
     @DisplayName("ZPL Carrier service D - 'V23'")
     @Test
-    public void test20() {
+    public void test7() {
 
         //    System.out.println("sortCode4 = " + sortCode4);
         int carrierServiceDFromLabelStart = decodedStringShipments.indexOf("^FT634,392^A0N,33,59^FD") + 23;
@@ -283,9 +101,163 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     }
 
 
+    @DisplayName("ZPL Carrier service E1 - 'PRIORITY MAIL'")
+    @Test
+    public void test8() {
+
+        String carrierServiceE1FromJsonConverted = carrierServiceE1ValueFromJsonMap.get(carrierServiceFromJson);
+        //    System.out.println("carrierServiceE1FromJsonConverted = " + carrierServiceE1FromJsonConverted);
+        int carrierServiceE1FromLabelStart = decodedStringShipments.indexOf("^FT437,65^A0N,27,27^FD") + 22;
+        String carrierServiceE1FromLabel = decodedStringShipments.substring(carrierServiceE1FromLabelStart, carrierServiceE1FromLabelStart + carrierServiceE1FromJsonConverted.length());
+        //    System.out.println("carrierServiceE1FromLabel = " + carrierServiceE1FromLabel);
+        assertThat(carrierServiceE1FromJsonConverted, is(equalTo(carrierServiceE1FromLabel)));
+
+    }
+
+
+    @DisplayName("ZPL Carrier service E2 - 'U.S POSTAGE PAID'")
+    @Test
+    public void test9() {
+
+        String carrierServiceE2FromJsonConverted = carrierServiceE2ValueFromJsonMap.get(carrierServiceFromJson);
+        //    System.out.println("carrierServiceE2FromJsonConverted = " + carrierServiceE2FromJsonConverted);
+        int carrierServiceE2FromLabelStart = decodedStringShipments.indexOf("^FT437,97^A0N,27,27^FD") + 22;
+        String carrierServiceE2FromLabel = decodedStringShipments.substring(carrierServiceE2FromLabelStart, carrierServiceE2FromLabelStart + carrierServiceE2FromJsonConverted.length());
+        //    System.out.println("carrierServiceE2FromLabel = " + carrierServiceE2FromLabel);
+        assertThat(carrierServiceE2FromJsonConverted, is(equalTo(carrierServiceE2FromLabel)));
+
+    }
+
+
+    @DisplayName("ZPL Carrier service E3 - 'OSM'")
+    @Test
+    public void test10() {
+
+        String carrierServiceE3Hardcoded = "OSM";
+        //    System.out.println("carrierServiceE3Hardcoded = " + carrierServiceE3Hardcoded);
+        int carrierServiceE3FromLabelStart = decodedStringShipments.indexOf("^FT437,130^A0N,27,27^FD") + 23;
+        String carrierServiceE3FromLabel = decodedStringShipments.substring(carrierServiceE3FromLabelStart, carrierServiceE3FromLabelStart + carrierServiceE3Hardcoded.length());
+        //    System.out.println("carrierServiceE3FromLabel = " + carrierServiceE3FromLabel);
+        assertThat(carrierServiceE3Hardcoded, is(equalTo(carrierServiceE3FromLabel)));
+
+    }
+
+
+    @DisplayName("ZPL Carrier service E4 - 'E-VS'")
+    @Test
+    public void test11() {
+
+        String carrierServiceE4Hardcoded = "E-VS";
+        //    System.out.println("carrierServiceE4Hardcoded = " + carrierServiceE4Hardcoded);
+        int carrierServiceE4FromLabelStart = decodedStringShipments.indexOf("^FT437,163^A0N,27,27^FD") + 23;
+        String carrierServiceE4FromLabel = decodedStringShipments.substring(carrierServiceE4FromLabelStart, carrierServiceE4FromLabelStart + carrierServiceE4Hardcoded.length());
+        //    System.out.println("carrierServiceE4FromLabel = " + carrierServiceE4FromLabel);
+        assertThat(carrierServiceE4Hardcoded, is(equalTo(carrierServiceE4FromLabel)));
+
+    }
+
+
+    @DisplayName("ZPL Carrier service F1 - 'GEN_BERLIN'")
+    @Test
+    public void test12() {
+
+        String carrierServiceF1FromJson = osmPojoShipments.getPickupAddress().getReference();
+        //    System.out.println("carrierServiceF1FromJson = " + carrierServiceF1FromJson);
+        int carrierServiceF1FromLabelStart = decodedStringShipments.indexOf("^FT35,337^A0N,27,27^FH^FD") + 25;
+        String carrierServiceF1FromLabel = (decodedStringShipments.substring(carrierServiceF1FromLabelStart, carrierServiceF1FromLabelStart + carrierServiceF1FromJson.length() + 2)).replace("5F", "");
+        //    System.out.println("carrierServiceF1FromLabel = " + carrierServiceF1FromLabel);
+        assertThat(carrierServiceF1FromJson, is(equalTo(carrierServiceF1FromLabel)));
+
+    }
+
+
+    @DisplayName("ZPL Carrier service F2 - '745 E KNOPF RD'")
+    @Test
+    public void test13() {
+
+        String carrierServiceF2FromJson = ((String) osmPojoShipments.getPickupAddress().getAddressLines().get(0).getValue()).toUpperCase();
+        //    System.out.println("carrierServiceF2FromJson = " + carrierServiceF2FromJson);
+        int carrierServiceF2FromLabelStart = decodedStringShipments.indexOf("^FT35,369^A0N,27,27^FD") + 22;
+        String carrierServiceF2FromLabel = decodedStringShipments.substring(carrierServiceF2FromLabelStart, carrierServiceF2FromLabelStart + carrierServiceF2FromJson.length());
+        //    System.out.println("carrierServiceF2FromLabel = " + carrierServiceF2FromLabel);
+        assertThat(carrierServiceF2FromJson, is(equalTo(carrierServiceF2FromLabel)));
+
+    }
+
+
+    @DisplayName("ZPL Carrier service F3 - 'BERLIN, 54923 WI'")
+    @Test
+    public void test14() {
+
+        String carrierServiceF3FromJson = (osmPojoShipments.getPickupAddress().getLocalityName()).toUpperCase() + ", " + osmPojoShipments.getPickupAddress().getPostalCode() + " " + osmPojoShipments.getPickupAddress().getSubdivisionCode();
+        //    System.out.println("carrierServiceF3FromJson = " + carrierServiceF3FromJson);
+        int carrierServiceF3FromLabelStart = decodedStringShipments.indexOf("^FT35,402^A0N,27,27^FD") + 22;
+        String carrierServiceF3FromLabel = decodedStringShipments.substring(carrierServiceF3FromLabelStart, carrierServiceF3FromLabelStart + carrierServiceF3FromJson.length());
+        //    System.out.println("carrierServiceF3FromLabel = " + carrierServiceF3FromLabel);
+        assertThat(carrierServiceF3FromJson, is(equalTo(carrierServiceF3FromLabel)));
+
+    }
+
+
+    @DisplayName("ZPL Carrier service G1 - 'LOWE'S COMPANIES, INC.'")
+    @Test
+    public void test15() {
+
+        String carrierServiceG1FromJson = osmPojoShipments.getDeliveryAddress().getReference();
+        //    System.out.println("carrierServiceG1FromJson = " + carrierServiceG1FromJson);
+        int carrierServiceG1FromLabelStart = decodedStringShipments.indexOf("^FT81,536^A0N,35,35^FD") + 22;
+        String carrierServiceG1FromLabel = decodedStringShipments.substring(carrierServiceG1FromLabelStart, carrierServiceG1FromLabelStart + carrierServiceG1FromJson.length());
+        //   System.out.println("carrierServiceG1FromLabel = " + carrierServiceG1FromLabel);
+        assertThat(carrierServiceG1FromJson, is(equalTo(carrierServiceG1FromLabel)));
+
+    }
+
+
+    @DisplayName("ZPL Carrier service G2 - 'LOWE'S COMPANIES, INC.'")
+    @Test
+    public void test16() {
+
+        String carrierServiceG2FromJson = osmPojoShipments.getDeliveryAddress().getContacts().get(0).getName();
+        //    System.out.println("carrierServiceG2FromJson = " + carrierServiceG2FromJson);
+        int carrierServiceG2FromLabelStart = decodedStringShipments.indexOf("^FT81,579^A0N,35,35^FD") + 22;
+        String carrierServiceG2FromLabel = decodedStringShipments.substring(carrierServiceG2FromLabelStart, carrierServiceG2FromLabelStart + carrierServiceG2FromJson.length());
+        //    System.out.println("carrierServiceG2FromLabel = " + carrierServiceG2FromLabel);
+        assertThat(carrierServiceG2FromJson, is(equalTo(carrierServiceG2FromLabel)));
+
+    }
+
+
+    @DisplayName("ZPL Carrier service G3 - '15 MAIN ST'")
+    @Test
+    public void test17() {
+
+        String carrierServiceG3FromJson = (osmPojoShipments.getDeliveryAddress().getAddressLines().get(0).getValue()).toUpperCase();
+        //    System.out.println("carrierServiceG3FromJson = " + carrierServiceG3FromJson);
+        int carrierServiceG3FromLabelStart = decodedStringShipments.indexOf("^FT81,621^A0N,35,35^FD") + 22;
+        String carrierServiceG3FromLabel = decodedStringShipments.substring(carrierServiceG3FromLabelStart, carrierServiceG3FromLabelStart + carrierServiceG3FromJson.length());
+        //    System.out.println("carrierServiceG3FromLabel = " + carrierServiceG3FromLabel);
+        assertThat(carrierServiceG3FromJson, is(equalTo(carrierServiceG3FromLabel)));
+
+    }
+
+
+    @DisplayName("ZPL Carrier service G4 - 'EDGERTON, 53534 WI'")
+    @Test
+    public void test18() {
+
+        String carrierServiceG4FromJson = (osmPojoShipments.getDeliveryAddress().getLocalityName()).toUpperCase() + ", " + osmPojoShipments.getDeliveryAddress().getPostalCode() + " " + osmPojoShipments.getDeliveryAddress().getSubdivisionCode();
+        //    System.out.println("carrierServiceG4FromJson = " + carrierServiceG4FromJson);
+        int carrierServiceG4FromLabelStart = decodedStringShipments.indexOf("^FT81,663^A0N,35,35^FD") + 22;
+        String carrierServiceG4FromLabel = decodedStringShipments.substring(carrierServiceG4FromLabelStart, carrierServiceG4FromLabelStart + carrierServiceG4FromJson.length());
+        //   System.out.println("carrierServiceG4FromLabel = " + carrierServiceG4FromLabel);
+        assertThat(carrierServiceG4FromJson, is(equalTo(carrierServiceG4FromLabel)));
+
+    }
+
+
     @DisplayName("ZPL Carrier service H1 - 'Shipper Reference'")
     @Test
-    public void test21() {
+    public void test19() {
 
         String carrierServiceH1FromJson = osmPojoShipments.getShipperRef();
         //    System.out.println("carrierServiceH1FromJson = " + carrierServiceH1FromJson);
@@ -299,7 +271,7 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
 
     @DisplayName("ZPL Carrier service H2 - 'Receiver Reference'")
     @Test
-    public void test22() {
+    public void test20() {
 
         String carrierServiceH2FromJson = (String) osmPojoShipments.getReceiverRef();
         //    System.out.println("carrierServiceH2FromJson = " + carrierServiceH2FromJson);
@@ -313,7 +285,7 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
 
     @DisplayName("ZPL Carrier service I - 'USPS TRACKING #'")
     @Test
-    public void test23() {
+    public void test21() {
 
         String carrierServiceIHardcoded = "USPS TRACKING #";
         //    System.out.println("carrierServiceIHardcoded = " + carrierServiceIHardcoded);
@@ -327,7 +299,7 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
 
     @DisplayName("ZPL Carrier service J - '420535349205520220307000005826'")
     @Test
-    public void test24() {
+    public void test22() {
 
         //TODO after checkdigit calculation will be fixed
         // String carrierServiceJFromJson = "420"+osmPojoShipments.getDeliveryAddress().getPostalCode()+"92"+ carrierServiceSTCValueFromJsonMap.get(carrierServiceFromJson)+osmPojoShipments.getPickupForwarderDivisionAccountCode()+osmPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(22, 29)+checkDigit;
@@ -344,7 +316,7 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
 
     @DisplayName("ZPL Carrier service K - '9205 5202 2030 7000 0058 26'")
     @Test
-    public void test25() {
+    public void test23() {
 
         //TODO after checkdigit calculation will be fixed
         // String carrierServiceJFromJson = "92"+ carrierServiceSTCValueFromJsonMap.get(carrierServiceFromJson)+osmPojoShipments.getPickupForwarderDivisionAccountCode()+osmPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(8, 29)+checkDigit;
@@ -355,6 +327,34 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
         String carrierServiceKFromLabel = decodedStringShipments.substring(carrierServiceKFromLabelStart, carrierServiceKFromLabelStart + carrierServiceKFromJson.length() + 5);
         //    System.out.println("carrierServiceKFromLabel = " + carrierServiceKFromLabel);
         assertThat(carrierServiceKFromJson, is(equalTo(carrierServiceKFromLabel.replace(" ", ""))));
+
+    }
+
+
+    @DisplayName("ZPL Carrier service L - 'P'")
+    @Test
+    public void test24() {
+
+        String carrierServiceLFromJsonConverted = carrierServiceLValueFromJsonMap.get(carrierServiceFromJson);
+        //    System.out.println("carrierServiceLFromJsonConverted = " + carrierServiceLFromJsonConverted);
+        int carrierServiceLFromLabelStart = decodedStringShipments.indexOf("^FT64,167^A0N,174,209^FD") + 24;
+        String carrierServiceLFromLabel = decodedStringShipments.substring(carrierServiceLFromLabelStart, carrierServiceLFromLabelStart + carrierServiceLFromJsonConverted.length());
+        //    System.out.println("carrierServiceLFromLabel = " + carrierServiceLFromLabel);
+        assertThat(carrierServiceLFromJsonConverted, is(equalTo(carrierServiceLFromLabel)));
+
+    }
+
+
+    @DisplayName("ZPL Carrier service M - 'USPS PRIORITY MAIL'")
+    @Test
+    public void test25() {
+
+        String carrierServiceMFromJsonConverted = "USPS " + carrierServiceE1ValueFromJsonMap.get(carrierServiceFromJson);
+        //    System.out.println("carrierServiceMFromJsonConverted = " + carrierServiceMFromJsonConverted);
+        int carrierServiceMFromLabelStart = decodedStringShipments.indexOf("^FT131,276^A0N,54,65^FD") + 23;
+        String carrierServiceMFromLabel = decodedStringShipments.substring(carrierServiceMFromLabelStart, carrierServiceMFromLabelStart + carrierServiceMFromJsonConverted.length());
+        //    System.out.println("carrierServiceMFromLabel = " + carrierServiceMFromLabel);
+        assertThat(carrierServiceMFromJsonConverted, is(equalTo(carrierServiceMFromLabel)));
 
     }
 
