@@ -35,10 +35,6 @@ public abstract class OSMBasePriorityMailNotDG {
     public static String checkString;
     public static int checkDigit;
 
-    public static int totalGrossWeight;
-    public static List<Float> grossWeight;
-    public static int detectedNumberOfPackages;
-
     public static RequestSpecification requestSpecConveyances;
     public static ResponseSpecification responseSpecConveyances;
     public static ValidatableResponse validateResponseConveyances;
@@ -64,7 +60,7 @@ public abstract class OSMBasePriorityMailNotDG {
     public static String minuteUTC;
     public static String secondUTC;
 
-        public static String carrierServiceFromJson;
+    public static String carrierServiceFromJson;
     public static Map<String, String> carrierServiceLValueFromJsonMap;
     public static Map<String, String> carrierServiceE1ValueFromJsonMap;
     public static Map<String, String> carrierServiceE2ValueFromJsonMap;
@@ -423,7 +419,7 @@ public abstract class OSMBasePriorityMailNotDG {
             }
         }
 
-        String[] decodeArrDomestic = decodedStringConveyances.split("<newline />");
+        String[] decodeArrDomestic = decodedStringConveyances.split("\r\n");
         decodeArrListDomestic = Arrays.asList(decodeArrDomestic);
 
         Object a = decodeArrListDomestic.get(0);

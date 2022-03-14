@@ -185,11 +185,11 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     }
 
 
-    @DisplayName("ZPL Carrier service F3 - 'BERLIN, 54923 WI'")
+    @DisplayName("ZPL Carrier service F3 - 'BERLIN, WI 54923'")
     @Test
     public void test14() {
 
-        String carrierServiceF3FromJson = (osmPojoShipments.getPickupAddress().getLocalityName()).toUpperCase() + ", " + osmPojoShipments.getPickupAddress().getPostalCode() + " " + osmPojoShipments.getPickupAddress().getSubdivisionCode();
+        String carrierServiceF3FromJson = (osmPojoShipments.getPickupAddress().getLocalityName()).toUpperCase() + ", " + osmPojoShipments.getPickupAddress().getSubdivisionCode() + " " + osmPojoShipments.getPickupAddress().getPostalCode();
         //    System.out.println("carrierServiceF3FromJson = " + carrierServiceF3FromJson);
         int carrierServiceF3FromLabelStart = decodedStringShipments.indexOf("^FT35,402^A0N,27,27^FD") + 22;
         String carrierServiceF3FromLabel = decodedStringShipments.substring(carrierServiceF3FromLabelStart, carrierServiceF3FromLabelStart + carrierServiceF3FromJson.length());
@@ -241,11 +241,11 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     }
 
 
-    @DisplayName("ZPL Carrier service G4 - 'EDGERTON, 53534 WI'")
+    @DisplayName("ZPL Carrier service G4 - 'EDGERTON, WI 53534'")
     @Test
     public void test18() {
 
-        String carrierServiceG4FromJson = (osmPojoShipments.getDeliveryAddress().getLocalityName()).toUpperCase() + ", " + osmPojoShipments.getDeliveryAddress().getPostalCode() + " " + osmPojoShipments.getDeliveryAddress().getSubdivisionCode();
+        String carrierServiceG4FromJson = (osmPojoShipments.getDeliveryAddress().getLocalityName()).toUpperCase() + ", " + osmPojoShipments.getDeliveryAddress().getSubdivisionCode() + " " + osmPojoShipments.getDeliveryAddress().getPostalCode();
         //    System.out.println("carrierServiceG4FromJson = " + carrierServiceG4FromJson);
         int carrierServiceG4FromLabelStart = decodedStringShipments.indexOf("^FT81,663^A0N,35,35^FD") + 22;
         String carrierServiceG4FromLabel = decodedStringShipments.substring(carrierServiceG4FromLabelStart, carrierServiceG4FromLabelStart + carrierServiceG4FromJson.length());
@@ -301,10 +301,7 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     @Test
     public void test22() {
 
-        //TODO after checkdigit calculation will be fixed
-        // String carrierServiceJFromJson = "420"+osmPojoShipments.getDeliveryAddress().getPostalCode()+"92"+ carrierServiceSTCValueFromJsonMap.get(carrierServiceFromJson)+osmPojoShipments.getPickupForwarderDivisionAccountCode()+osmPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(22, 29)+checkDigit;
-
-        String carrierServiceJFromJson = osmPojoShipments.getShippingUnits().get(0).getForwarderRef();
+        String carrierServiceJFromJson = "420" + osmPojoShipments.getDeliveryAddress().getPostalCode() + "92" + carrierServiceSTCValueFromJsonMap.get(carrierServiceFromJson) + osmPojoShipments.getPickupForwarderDivisionAccountCode() + osmPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(22, 29) + checkDigit;
         //    System.out.println("carrierServiceJFromJson = " + carrierServiceJFromJson);
         int carrierServiceJFromLabelStart = decodedStringShipments.indexOf("^FO106,935^BCN,142,N^FD>;") + 25;
         String carrierServiceJFromLabel = decodedStringShipments.substring(carrierServiceJFromLabelStart, carrierServiceJFromLabelStart + carrierServiceJFromJson.length());
@@ -318,10 +315,7 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     @Test
     public void test23() {
 
-        //TODO after checkdigit calculation will be fixed
-        // String carrierServiceJFromJson = "92"+ carrierServiceSTCValueFromJsonMap.get(carrierServiceFromJson)+osmPojoShipments.getPickupForwarderDivisionAccountCode()+osmPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(8, 29)+checkDigit;
-
-        String carrierServiceKFromJson = osmPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(8);
+        String carrierServiceKFromJson = "92" + carrierServiceSTCValueFromJsonMap.get(carrierServiceFromJson) + osmPojoShipments.getPickupForwarderDivisionAccountCode() + osmPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(22, 29) + checkDigit;
         //    System.out.println("carrierServiceKFromJson = " + carrierServiceKFromJson);
         int carrierServiceKFromLabelStart = decodedStringShipments.indexOf("^FT218,1143^A0N,33,33^FD") + 24;
         String carrierServiceKFromLabel = decodedStringShipments.substring(carrierServiceKFromLabelStart, carrierServiceKFromLabelStart + carrierServiceKFromJson.length() + 5);
@@ -377,9 +371,9 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     public void test27() {
 
         String companyFromJson = osmPojoShipments.getDeliveryAddress().getReference();
-    //    System.out.println("companyFromJson = " + companyFromJson);
+        //    System.out.println("companyFromJson = " + companyFromJson);
         String companyFromEDI = decodedValuesDomestic.get(1);
-    //    System.out.println("companyFromEDI = " + companyFromEDI);
+        //    System.out.println("companyFromEDI = " + companyFromEDI);
         assertThat(companyFromEDI, is(equalTo(companyFromJson)));
 
     }
@@ -390,9 +384,9 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     public void test28() {
 
         String fullNameFromJson = osmPojoShipments.getDeliveryAddress().getContacts().get(0).getName();
-    //    System.out.println("fullNameFromJson = " + fullNameFromJson);
+        //    System.out.println("fullNameFromJson = " + fullNameFromJson);
         String fullNameFromEDI = decodedValuesDomestic.get(2);
-    //    System.out.println("fullNameFromEDI = " + fullNameFromEDI);
+        //    System.out.println("fullNameFromEDI = " + fullNameFromEDI);
         assertThat(fullNameFromEDI, is(equalTo(fullNameFromJson)));
 
     }
@@ -403,9 +397,9 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     public void test29() {
 
         String address1FromJson = osmPojoShipments.getDeliveryAddress().getAddressLines().get(0).getValue();
-    //    System.out.println("address1FromJson = " + address1FromJson);
+        //    System.out.println("address1FromJson = " + address1FromJson);
         String address1FromEDI = decodedValuesDomestic.get(3);
-    //    System.out.println("address1FromEDI = " + address1FromEDI);
+        //    System.out.println("address1FromEDI = " + address1FromEDI);
         assertThat(address1FromEDI, is(equalTo(address1FromJson)));
 
     }
@@ -415,7 +409,7 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     @Test
     public void test30() {
 
-        if (osmPojoShipments.getDeliveryAddress().getAddressLines().size() == 2){
+        if (osmPojoShipments.getDeliveryAddress().getAddressLines().size() == 2) {
             String address2FromJson = osmPojoShipments.getDeliveryAddress().getAddressLines().get(1).getValue();
             //    System.out.println("address2FromJson = " + address2FromJson);
             String address2FromEDI = decodedValuesDomestic.get(4);
@@ -431,9 +425,9 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     public void test31() {
 
         String cityFromJson = osmPojoShipments.getDeliveryAddress().getLocalityName();
-    //    System.out.println("cityFromJson = " + cityFromJson);
+        //    System.out.println("cityFromJson = " + cityFromJson);
         String cityFromEDI = decodedValuesDomestic.get(5);
-    //    System.out.println("cityFromEDI = " + cityFromEDI);
+        //    System.out.println("cityFromEDI = " + cityFromEDI);
         assertThat(cityFromEDI, is(equalTo(cityFromJson)));
 
     }
@@ -444,9 +438,9 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     public void test32() {
 
         String stateFromJson = osmPojoShipments.getDeliveryAddress().getSubdivisionCode();
-    //    System.out.println("stateFromJson = " + stateFromJson);
+        //    System.out.println("stateFromJson = " + stateFromJson);
         String stateFromEDI = decodedValuesDomestic.get(6);
-    //    System.out.println("stateFromEDI = " + stateFromEDI);
+        //    System.out.println("stateFromEDI = " + stateFromEDI);
         assertThat(stateFromEDI, is(equalTo(stateFromJson)));
 
     }
@@ -457,9 +451,9 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     public void test33() {
 
         String zipFromJson = osmPojoShipments.getDeliveryAddress().getPostalCode();
-    //    System.out.println("zipFromJson = " + zipFromJson);
+        //    System.out.println("zipFromJson = " + zipFromJson);
         String zipFromEDI = decodedValuesDomestic.get(7);
-    //    System.out.println("zipFromEDI = " + zipFromEDI);
+        //    System.out.println("zipFromEDI = " + zipFromEDI);
         assertThat(zipFromEDI, is(equalTo(zipFromJson)));
 
     }
@@ -470,9 +464,9 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     public void test34() {
 
         String countryFromJson = osmPojoShipments.getDeliveryAddress().getCountryCode();
-    //    System.out.println("countryFromJson = " + countryFromJson);
+        //    System.out.println("countryFromJson = " + countryFromJson);
         String countryFromEDI = decodedValuesDomestic.get(8);
-    //    System.out.println("countryFromEDI = " + countryFromEDI);
+        //    System.out.println("countryFromEDI = " + countryFromEDI);
         assertThat(countryFromEDI, is(equalTo(countryFromJson)));
 
     }
@@ -483,7 +477,7 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     public void test35() {
 
         String costCenterIdFromEDI = decodedValuesDomestic.get(9);
-    //    System.out.println("costCenterIdFromEDI = " + costCenterIdFromEDI);
+        //    System.out.println("costCenterIdFromEDI = " + costCenterIdFromEDI);
         assertThat(costCenterIdFromEDI, is(equalTo("")));
 
     }
@@ -494,9 +488,9 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     public void test36() {
 
         String reference1FromJson = osmPojoShipments.getShipperRef();
-    //    System.out.println("reference1FromJson = " + reference1FromJson);
+        //    System.out.println("reference1FromJson = " + reference1FromJson);
         String reference1FromEDI = decodedValuesDomestic.get(10);
-    //    System.out.println("reference1FromEDI = " + reference1FromEDI);
+        //    System.out.println("reference1FromEDI = " + reference1FromEDI);
         assertThat(reference1FromEDI, is(equalTo(reference1FromJson)));
 
     }
@@ -507,9 +501,9 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     public void test37() {
 
         String reference2FromJson = (String) osmPojoShipments.getReceiverRef();
-    //   System.out.println("reference2FromJson = " + reference2FromJson);
+        //   System.out.println("reference2FromJson = " + reference2FromJson);
         String reference2FromEDI = decodedValuesDomestic.get(11);
-    //    System.out.println("reference2FromEDI = " + reference2FromEDI);
+        //    System.out.println("reference2FromEDI = " + reference2FromEDI);
         assertThat(reference2FromEDI, is(equalTo(reference2FromJson)));
 
     }
@@ -520,7 +514,7 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     public void test38() {
 
         String reference3FromEDI = decodedValuesDomestic.get(12);
-    //    System.out.println("reference3FromEDI = " + reference3FromEDI);
+        //    System.out.println("reference3FromEDI = " + reference3FromEDI);
         assertThat(reference3FromEDI, is(equalTo("")));
 
     }
@@ -531,7 +525,7 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     public void test39() {
 
         String reference4FromEDI = decodedValuesDomestic.get(13);
-    //    System.out.println("reference4FromEDI = " + reference4FromEDI);
+        //    System.out.println("reference4FromEDI = " + reference4FromEDI);
         assertThat(reference4FromEDI, is(equalTo("")));
 
     }
@@ -542,9 +536,9 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     public void test40() {
 
         String weightFromJson = String.valueOf(osmPojoShipments.getShippingUnits().get(0).getGrossWeight());
-    //    System.out.println("weightFromJson = " + weightFromJson);
+        //    System.out.println("weightFromJson = " + weightFromJson);
         String weightFromEDI = decodedValuesDomestic.get(14);
-    //    System.out.println("weightFromEDI = " + weightFromEDI);
+        //    System.out.println("weightFromEDI = " + weightFromEDI);
         assertThat(weightFromEDI, is(equalTo(weightFromJson)));
 
     }
@@ -555,9 +549,9 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     public void test41() {
 
         String mailClassFromJson = carrierServiceMCValueFromJsonMap.get(carrierServiceFromJson);
-    //    System.out.println("mailClassFromJson = " + mailClassFromJson);
+        //    System.out.println("mailClassFromJson = " + mailClassFromJson);
         String mailClassFromEDI = decodedValuesDomestic.get(15);
-    //    System.out.println("mailClassFromEDI = " + mailClassFromEDI);
+        //    System.out.println("mailClassFromEDI = " + mailClassFromEDI);
         assertThat(mailClassFromEDI, is(equalTo(mailClassFromJson)));
 
     }
@@ -567,14 +561,14 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     @Test
     public void test42() {
         String hazardousFromJson;
-        if (osmPojoShipments.getShippingUnits().get(0).getDangerousGoods().size() == 0){
+        if (osmPojoShipments.getShippingUnits().get(0).getDangerousGoods().size() == 0 || osmPojoShipments.getShippingUnits().get(0).getShippingUnitItems().get(0).getDangerousGoods().size() == 0) {
             hazardousFromJson = "0";
-        }else{
+        } else {
             hazardousFromJson = "1";
         }
-    //    System.out.println("hazardousFromJson = " + hazardousFromJson);
+        //    System.out.println("hazardousFromJson = " + hazardousFromJson);
         String hazardousFromEDI = decodedValuesDomestic.get(16);
-    //    System.out.println("hazardousFromEDI = " + hazardousFromEDI);
+        //    System.out.println("hazardousFromEDI = " + hazardousFromEDI);
         assertThat(hazardousFromEDI, is(equalTo(hazardousFromJson)));
 
     }
@@ -585,7 +579,7 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     public void test43() {
 
         String softPackFromEDI = decodedValuesDomestic.get(17);
-    //    System.out.println("softPackFromEDI = " + softPackFromEDI);
+        //    System.out.println("softPackFromEDI = " + softPackFromEDI);
         assertThat(softPackFromEDI, is(equalTo("")));
 
     }
@@ -596,7 +590,7 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     public void test44() {
 
         String osmBolFromEDI = decodedValuesDomestic.get(18);
-    //    System.out.println("osmBolFromEDI = " + osmBolFromEDI);
+        //    System.out.println("osmBolFromEDI = " + osmBolFromEDI);
         assertThat(osmBolFromEDI.replace("\"", ""), is(equalTo("")));
 
     }
