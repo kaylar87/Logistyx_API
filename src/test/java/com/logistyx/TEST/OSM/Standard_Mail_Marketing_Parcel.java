@@ -507,7 +507,7 @@ public class Standard_Mail_Marketing_Parcel extends OSMBaseStandardMailMarketing
     @Test
     public void test38() {
         String hazardousFromJson;
-        if (osmPojoShipments.getShippingUnits().get(0).getDangerousGoods().size() == 0) {
+        if (osmPojoShipments.getShippingUnits().get(0).getDangerousGoods().size() == 0 || osmPojoShipments.getShippingUnits().get(0).getShippingUnitItems().get(0).getDangerousGoods().size() == 0) {
             hazardousFromJson = "0";
         } else {
             hazardousFromJson = "1";
