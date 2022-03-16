@@ -1,4 +1,4 @@
-package com.logistyx.utilities.AbstractBaseClasses.OSM;
+package com.logistyx.utilities.AbstractBaseClasses.OSM.TrackAndTrace.Positive;
 
 
 import com.logistyx.pojo.osm.OSMPojo;
@@ -20,7 +20,7 @@ import java.util.*;
 
 import static io.restassured.RestAssured.*;
 
-public abstract class OSMBaseBoundPrintedMatterNotDG {
+public abstract class OSMBaseMediaMailTrackFalseNotDG {
 
     public static String requestJsonBodyShipments;
     public static RequestSpecification requestSpecShipments;
@@ -78,6 +78,8 @@ public abstract class OSMBaseBoundPrintedMatterNotDG {
     public static List<String> decodedValuesDomestic;
     public static List<String> decodedHeadersDomestic;
 
+    public static String trackAndTrace;
+
 
     @BeforeAll
     public static void init() {
@@ -90,9 +92,13 @@ public abstract class OSMBaseBoundPrintedMatterNotDG {
         requestJsonBodyShipments = "{\n" +
                 "    \"ProjectCode\": \"LX_CHICAGO\",\n" +
                 "    \"ForwarderDivisionCode\": \"OSM\",\n" +
-                "    \"ForwarderServiceCode\": \"OSM-BP-MATTER\",\n" +
+                "    \"ForwarderServiceCode\": \"OSM-MEDIA-MAIL\",\n" +
                 "    \"ShipperRef\": \"Shipper Reference\",\n" +
                 "    \"ReceiverRef\": \"Receiver Reference\",\n" +
+                "    \"ForwarderServiceIndicators\": \n" +
+                "    \t{\n" +
+                "        \"TrackAndTrace\": false\n" +
+                "        },\n" +
                 "    \"Addresses\": [\n" +
                 "        {\n" +
                 "            \"Reference\": \"LOWE'S COMPANIES, INC.\",\n" +
@@ -314,29 +320,68 @@ public abstract class OSMBaseBoundPrintedMatterNotDG {
 
         carrierServiceE2ValueFromJsonMap = new LinkedHashMap<>();
         carrierServiceFromJson = osmPojoShipments.getForwarderServiceCode();
-        switch (carrierServiceFromJson) {
-            case "OSM-FIRST-CLASS-MAIL":
-                carrierServiceE2ValueFromJsonMap.put("OSM-FIRST-CLASS-MAIL", "U.S POSTAGE PAID");
-                break;
-            case "OSM-PRIORITY-MAIL":
-                carrierServiceE2ValueFromJsonMap.put("OSM-PRIORITY-MAIL", "U.S POSTAGE PAID");
-                break;
-            case "OSM-BP-MATTER":
-                carrierServiceE2ValueFromJsonMap.put("OSM-BP-MATTER", "U.S POSTAGE AND FEES PAID");
-                break;
-            case "OSM-MEDIA-MAIL":
-                carrierServiceE2ValueFromJsonMap.put("OSM-MEDIA-MAIL", "U.S POSTAGE PAID");
-                break;
-            case "OSM-PARCEL-SELECT":
-                carrierServiceE2ValueFromJsonMap.put("OSM-PARCEL-SELECT", "U.S POSTAGE AND FEES PAID");
-                break;
-            case "OSM-STD-MAIL-MP":
-                carrierServiceE2ValueFromJsonMap.put("OSM-STD-MAIL-MP", "U.S POSTAGE PAID");
-                break;
-            case "OSM-PARCEL-SELECT-LW":
-                carrierServiceE2ValueFromJsonMap.put("OSM-PARCEL-SELECT-LW", "U.S POSTAGE AND FEES PAID");
-                break;
+        if (requestJsonBodyShipments.contains("TrackAndTrace")) {
+            trackAndTrace = String.valueOf(osmPojoShipments.getForwarderServiceIndicators().getTrackAndTrace());
+            if (trackAndTrace == "true") {
+                switch (carrierServiceFromJson) {
+                    case "OSM-BP-MATTER":
+                        carrierServiceE2ValueFromJsonMap.put("OSM-BP-MATTER", "U.S POSTAGE AND FEES PAID");
+                        break;
+                    case "OSM-MEDIA-MAIL":
+                        carrierServiceE2ValueFromJsonMap.put("OSM-MEDIA-MAIL", "U.S POSTAGE AND FEES PAID");
+                        break;
+                    case "OSM-PARCEL-SELECT":
+                        carrierServiceE2ValueFromJsonMap.put("OSM-PARCEL-SELECT", "U.S POSTAGE AND FEES PAID");
+                        break;
+                    case "OSM-STD-MAIL-MP":
+                        carrierServiceE2ValueFromJsonMap.put("OSM-STD-MAIL-MP", "U.S POSTAGE AND FEES PAID");
+                        break;
+                    case "OSM-PARCEL-SELECT-LW":
+                        carrierServiceE2ValueFromJsonMap.put("OSM-PARCEL-SELECT-LW", "U.S POSTAGE AND FEES PAID");
+                        break;
+                }
+            } else if (trackAndTrace == "false") {
+                switch (carrierServiceFromJson) {
+                    case "OSM-FIRST-CLASS-MAIL":
+                        carrierServiceE2ValueFromJsonMap.put("OSM-FIRST-CLASS-MAIL", "U.S POSTAGE PAID");
+                        break;
+                    case "OSM-PRIORITY-MAIL":
+                        carrierServiceE2ValueFromJsonMap.put("OSM-PRIORITY-MAIL", "U.S POSTAGE PAID");
+                        break;
+                    case "OSM-MEDIA-MAIL":
+                        carrierServiceE2ValueFromJsonMap.put("OSM-MEDIA-MAIL", "U.S POSTAGE PAID");
+                        break;
+                    case "OSM-STD-MAIL-MP":
+                        carrierServiceE2ValueFromJsonMap.put("OSM-STD-MAIL-MP", "U.S POSTAGE PAID");
+                        break;
+                }
+            }
+        } else {
+            switch (carrierServiceFromJson) {
+                case "OSM-FIRST-CLASS-MAIL":
+                    carrierServiceE2ValueFromJsonMap.put("OSM-FIRST-CLASS-MAIL", "U.S POSTAGE PAID");
+                    break;
+                case "OSM-PRIORITY-MAIL":
+                    carrierServiceE2ValueFromJsonMap.put("OSM-PRIORITY-MAIL", "U.S POSTAGE PAID");
+                    break;
+                case "OSM-BP-MATTER":
+                    carrierServiceE2ValueFromJsonMap.put("OSM-BP-MATTER", "U.S POSTAGE AND FEES PAID");
+                    break;
+                case "OSM-MEDIA-MAIL":
+                    carrierServiceE2ValueFromJsonMap.put("OSM-MEDIA-MAIL", "U.S POSTAGE PAID");
+                    break;
+                case "OSM-PARCEL-SELECT":
+                    carrierServiceE2ValueFromJsonMap.put("OSM-PARCEL-SELECT", "U.S POSTAGE AND FEES PAID");
+                    break;
+                case "OSM-STD-MAIL-MP":
+                    carrierServiceE2ValueFromJsonMap.put("OSM-STD-MAIL-MP", "U.S POSTAGE PAID");
+                    break;
+                case "OSM-PARCEL-SELECT-LW":
+                    carrierServiceE2ValueFromJsonMap.put("OSM-PARCEL-SELECT-LW", "U.S POSTAGE AND FEES PAID");
+                    break;
+            }
         }
+
 
         carrierServiceMCValueFromJsonMap = new LinkedHashMap<>();
         carrierServiceFromJson = osmPojoShipments.getForwarderServiceCode();
@@ -366,40 +411,90 @@ public abstract class OSMBaseBoundPrintedMatterNotDG {
 
         carrierServiceSTCValueFromJsonMap = new LinkedHashMap<>();
         carrierServiceFromJson = osmPojoShipments.getForwarderServiceCode();
-        switch (carrierServiceFromJson) {
-            case "OSM-FIRST-CLASS-MAIL":
-                carrierServiceSTCValueFromJsonMap.put("OSM-FIRST-CLASS-MAIL", "001");
-                break;
-            case "OSM-PRIORITY-MAIL":
-                carrierServiceSTCValueFromJsonMap.put("OSM-PRIORITY-MAIL", "055");
-                break;
-            case "OSM-BP-MATTER":
-                carrierServiceSTCValueFromJsonMap.put("OSM-BP-MATTER", "419");
-                break;
-            case "OSM-MEDIA-MAIL":
-                carrierServiceSTCValueFromJsonMap.put("OSM-MEDIA-MAIL", "521");
-                break;
-            case "OSM-PARCEL-SELECT":
-                carrierServiceSTCValueFromJsonMap.put("OSM-PARCEL-SELECT", "612");
-                break;
-            case "OSM-STD-MAIL-MP":
-                carrierServiceSTCValueFromJsonMap.put("OSM-STD-MAIL-MP", "703");
-                break;
-            case "OSM-PARCEL-SELECT-LW":
-                carrierServiceSTCValueFromJsonMap.put("OSM-PARCEL-SELECT-LW", "748");
-                break;
-            case "OSM-GLOBAL-STANDARD":
-                carrierServiceSTCValueFromJsonMap.put("OSM-GLOBAL-STANDARD", "001");
-                break;
-            case "OSM-GLOBAL-PRIO":
-                carrierServiceSTCValueFromJsonMap.put("OSM-GLOBAL-PRIO", "002");
-                break;
-            case "OSM-GLOBAL-PRIO-EPKT":
-                carrierServiceSTCValueFromJsonMap.put("OSM-GLOBAL-PRIO-EPKT", "003");
-                break;
-            case "OSM-GLOBAL-PRIO-PRCL":
-                carrierServiceSTCValueFromJsonMap.put("OSM-GLOBAL-PRIO-PRCL", "004");
-                break;
+        if (requestJsonBodyShipments.contains("TrackAndTrace")) {
+            trackAndTrace = String.valueOf(osmPojoShipments.getForwarderServiceIndicators().getTrackAndTrace());
+            if (trackAndTrace == "true") {
+                switch (carrierServiceFromJson) {
+                    case "OSM-BP-MATTER":
+                        carrierServiceSTCValueFromJsonMap.put("OSM-BP-MATTER", "419");
+                        break;
+                    case "OSM-MEDIA-MAIL":
+                        carrierServiceSTCValueFromJsonMap.put("OSM-MEDIA-MAIL", "490");
+                        break;
+                    case "OSM-PARCEL-SELECT":
+                        carrierServiceSTCValueFromJsonMap.put("OSM-PARCEL-SELECT", "612");
+                        break;
+                    case "OSM-STD-MAIL-MP":
+                        carrierServiceSTCValueFromJsonMap.put("OSM-STD-MAIL-MP", "704");
+                        break;
+                    case "OSM-PARCEL-SELECT-LW":
+                        carrierServiceSTCValueFromJsonMap.put("OSM-PARCEL-SELECT-LW", "748");
+                        break;
+                    case "OSM-GLOBAL-PRIO":
+                        carrierServiceSTCValueFromJsonMap.put("OSM-GLOBAL-PRIO", "002");
+                        break;
+                    case "OSM-GLOBAL-PRIO-EPKT":
+                        carrierServiceSTCValueFromJsonMap.put("OSM-GLOBAL-PRIO-EPKT", "003");
+                        break;
+                    case "OSM-GLOBAL-PRIO-PRCL":
+                        carrierServiceSTCValueFromJsonMap.put("OSM-GLOBAL-PRIO-PRCL", "004");
+                        break;
+                }
+            } else if (trackAndTrace == "false") {
+                switch (carrierServiceFromJson) {
+                    case "OSM-FIRST-CLASS-MAIL":
+                        carrierServiceSTCValueFromJsonMap.put("OSM-FIRST-CLASS-MAIL", "001");
+                        break;
+                    case "OSM-PRIORITY-MAIL":
+                        carrierServiceSTCValueFromJsonMap.put("OSM-PRIORITY-MAIL", "055");
+                        break;
+                    case "OSM-MEDIA-MAIL":
+                        carrierServiceSTCValueFromJsonMap.put("OSM-MEDIA-MAIL", "521");
+                        break;
+                    case "OSM-STD-MAIL-MP":
+                        carrierServiceSTCValueFromJsonMap.put("OSM-STD-MAIL-MP", "703");
+                        break;
+                    case "OSM-GLOBAL-STANDARD":
+                        carrierServiceSTCValueFromJsonMap.put("OSM-GLOBAL-STANDARD", "001");
+                        break;
+                }
+            }
+        } else {
+            switch (carrierServiceFromJson) {
+                case "OSM-FIRST-CLASS-MAIL":
+                    carrierServiceSTCValueFromJsonMap.put("OSM-FIRST-CLASS-MAIL", "001");
+                    break;
+                case "OSM-PRIORITY-MAIL":
+                    carrierServiceSTCValueFromJsonMap.put("OSM-PRIORITY-MAIL", "055");
+                    break;
+                case "OSM-BP-MATTER":
+                    carrierServiceSTCValueFromJsonMap.put("OSM-BP-MATTER", "419");
+                    break;
+                case "OSM-MEDIA-MAIL":
+                    carrierServiceSTCValueFromJsonMap.put("OSM-MEDIA-MAIL", "521");
+                    break;
+                case "OSM-PARCEL-SELECT":
+                    carrierServiceSTCValueFromJsonMap.put("OSM-PARCEL-SELECT", "612");
+                    break;
+                case "OSM-STD-MAIL-MP":
+                    carrierServiceSTCValueFromJsonMap.put("OSM-STD-MAIL-MP", "703");
+                    break;
+                case "OSM-PARCEL-SELECT-LW":
+                    carrierServiceSTCValueFromJsonMap.put("OSM-PARCEL-SELECT-LW", "748");
+                    break;
+                case "OSM-GLOBAL-STANDARD":
+                    carrierServiceSTCValueFromJsonMap.put("OSM-GLOBAL-STANDARD", "001");
+                    break;
+                case "OSM-GLOBAL-PRIO":
+                    carrierServiceSTCValueFromJsonMap.put("OSM-GLOBAL-PRIO", "002");
+                    break;
+                case "OSM-GLOBAL-PRIO-EPKT":
+                    carrierServiceSTCValueFromJsonMap.put("OSM-GLOBAL-PRIO-EPKT", "003");
+                    break;
+                case "OSM-GLOBAL-PRIO-PRCL":
+                    carrierServiceSTCValueFromJsonMap.put("OSM-GLOBAL-PRIO-PRCL", "004");
+                    break;
+            }
         }
 
         ExcelUtil SortCodesFile = new ExcelUtil("src/test/resources/OSM_SortCodes.xlsx", "OSM_SortCodes");
@@ -435,6 +530,16 @@ public abstract class OSMBaseBoundPrintedMatterNotDG {
             decodedValuesDomestic.add(s);
         }
 
+//        if (requestJsonBodyShipments.contains("TrackAndTrace")) {
+//            trackAndTrace = String.valueOf(osmPojoShipments.getForwarderServiceIndicators().getTrackAndTrace());
+//            if (trackAndTrace == "true") {
+//                System.out.println(1);
+//            } else if (trackAndTrace == "false") {
+//                System.out.println("2 = " + 2);
+//            }
+//        } else {
+//            System.out.println("3 = " + 3);
+//        }
 
 //        carrierServiceE1ValueFromJsonMap = new LinkedHashMap<>();
 //        carrierServiceFromJson = osmPojoShipments.getForwarderServiceCode();

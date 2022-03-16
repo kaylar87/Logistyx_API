@@ -1,7 +1,7 @@
-package com.logistyx.TEST.OSM;
+package com.logistyx.TEST.OSM.Services;
 
 
-import com.logistyx.utilities.AbstractBaseClasses.OSM.OSMBaseParcelSelectLightWeightNotDG;
+import com.logistyx.utilities.AbstractBaseClasses.OSM.Services.OSMBaseBoundPrintedMatterNotDG;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,11 +9,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 
-public class Parcel_Select_Light_Weight extends OSMBaseParcelSelectLightWeightNotDG {
+public class Bound_Printed_Matter extends OSMBaseBoundPrintedMatterNotDG {
 
     static {
 
-        OSMBaseParcelSelectLightWeightNotDG.shipmentsLabel();
+        OSMBaseBoundPrintedMatterNotDG.shipmentsLabel();
 
     }
 
@@ -76,13 +76,13 @@ public class Parcel_Select_Light_Weight extends OSMBaseParcelSelectLightWeightNo
     }
 
 
-    @DisplayName("ZPL Carrier service C - 'LW'")
+    @DisplayName("ZPL Carrier service C - 'BP'")
     @Test
     public void test6() {
 
         String carrierServiceCFromJsonConverted = carrierServiceMCValueFromJsonMap.get(carrierServiceFromJson);
         //    System.out.println("carrierServiceCFromJsonConverted = " + carrierServiceCFromJsonConverted);
-        int carrierServiceCFromLabelStart = decodedStringShipments.indexOf("^FT76,115^A0N,33,59^FD") + 22;
+        int carrierServiceCFromLabelStart = decodedStringShipments.indexOf("^FT79,115^A0N,33,59^FD") + 22;
         String carrierServiceCFromLabel = decodedStringShipments.substring(carrierServiceCFromLabelStart, carrierServiceCFromLabelStart + carrierServiceCFromJsonConverted.length());
         //    System.out.println("carrierServiceCFromLabel = " + carrierServiceCFromLabel);
         assertThat(carrierServiceCFromJsonConverted, is(equalTo(carrierServiceCFromLabel)));
@@ -103,7 +103,7 @@ public class Parcel_Select_Light_Weight extends OSMBaseParcelSelectLightWeightNo
     }
 
 
-    @DisplayName("ZPL Carrier service E1 - 'PS LIGHTWEIGHT'")
+    @DisplayName("ZPL Carrier service E1 - 'PRSRT BPM'")
     @Test
     public void test8() {
 
@@ -505,7 +505,7 @@ public class Parcel_Select_Light_Weight extends OSMBaseParcelSelectLightWeightNo
     }
 
 
-    @DisplayName("EDI - Weight - '0.86'")
+    @DisplayName("EDI - Weight - '5.86'")
     @Test
     public void test38() {
 
@@ -518,7 +518,7 @@ public class Parcel_Select_Light_Weight extends OSMBaseParcelSelectLightWeightNo
     }
 
 
-    @DisplayName("EDI - Mail Class - 'LW'")
+    @DisplayName("EDI - Mail Class - 'BP'")
     @Test
     public void test39() {
 

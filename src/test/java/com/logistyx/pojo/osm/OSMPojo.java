@@ -112,7 +112,7 @@ public class OSMPojo {
     @JsonProperty("ForwarderRef")
     public Object forwarderRef;
     @JsonProperty("ReceiverRef")
-    public Object receiverRef;
+    public String receiverRef;
     @JsonProperty("AdditionalValues")
     public List<AdditionalValue> additionalValues = null;
     @JsonProperty("Addresses")
@@ -166,7 +166,7 @@ public class OSMPojo {
     @JsonProperty("Bonded")
     public Object bonded;
     @JsonProperty("IncotermCode")
-    public String incotermCode;
+    public Object incotermCode;
     @JsonProperty("IncotermLocalityCode")
     public Object incotermLocalityCode;
     @JsonProperty("IncotermLocalityName")
@@ -214,7 +214,7 @@ public class OSMPojo {
     @JsonProperty("EmergencyContactName")
     public Object emergencyContactName;
     @JsonProperty("ForwarderServiceIndicators")
-    public Object forwarderServiceIndicators;
+    public ForwarderServiceIndicators forwarderServiceIndicators;
     @JsonProperty("ExpectedDeliveryDateTime")
     public String expectedDeliveryDateTime;
     @JsonProperty("ConsolidationKey")
