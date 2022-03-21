@@ -604,7 +604,7 @@ public class Parcel_Select_DG_LQD extends OSMBaseParcelSelectDGLQD {
 
     @DisplayName("JSON Body Request")
     @Test
-    public void test403() {
+    public void test46() {
         System.out.println("requestJsonBodyShipments = " + requestJsonBodyShipments);
 
     }
@@ -612,7 +612,7 @@ public class Parcel_Select_DG_LQD extends OSMBaseParcelSelectDGLQD {
 
     @DisplayName("JSON Body Response")
     @Test
-    public void test404() {
+    public void test47() {
         validateResponseShipments.extract().response().prettyPrint();
 
     }

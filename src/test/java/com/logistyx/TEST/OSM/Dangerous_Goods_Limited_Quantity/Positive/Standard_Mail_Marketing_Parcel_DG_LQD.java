@@ -1,6 +1,7 @@
-package com.logistyx.TEST.OSM.Services;
+package com.logistyx.TEST.OSM.Dangerous_Goods_Limited_Quantity.Positive;
 
 
+import com.logistyx.utilities.AbstractBaseClasses.OSM.Dangerous_Goods_Limited_Quantity.Positive.OSMBaseStandardMailMarketingParcelDGLQD;
 import com.logistyx.utilities.AbstractBaseClasses.OSM.Services.OSMBaseStandardMailMarketingParcelNotDG;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,11 +10,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 
-public class Standard_Mail_Marketing_Parcel extends OSMBaseStandardMailMarketingParcelNotDG {
+public class Standard_Mail_Marketing_Parcel_DG_LQD extends OSMBaseStandardMailMarketingParcelDGLQD {
 
     static {
 
-        OSMBaseStandardMailMarketingParcelNotDG.shipmentsLabel();
+        OSMBaseStandardMailMarketingParcelDGLQD.shipmentsLabel();
 
     }
 
@@ -24,9 +25,9 @@ public class Standard_Mail_Marketing_Parcel extends OSMBaseStandardMailMarketing
 
 
         assertThat(osmPojoShipments.getShipmentId(), is(notNullValue()));
-        //    validateResponseShipments.extract().response().prettyPrint();
-        //    System.out.println("decodedStringShipments = " + decodedStringShipments);
-        //    System.out.println("decodedStringConveyances = " + decodedStringConveyances);
+            validateResponseShipments.extract().response().prettyPrint();
+            System.out.println("decodedStringShipments = " + decodedStringShipments);
+            System.out.println("decodedStringConveyances = " + decodedStringConveyances);
 
     }
 
@@ -53,7 +54,7 @@ public class Standard_Mail_Marketing_Parcel extends OSMBaseStandardMailMarketing
     public void test4() {
 
         //    System.out.println("sortCode1 = " + sortCode1);
-        int carrierServiceAFromLabelStart = decodedStringShipments.indexOf("^FT573,203^A0N,33,55^FD") + 23;
+        int carrierServiceAFromLabelStart = decodedStringShipments.indexOf("^FT304,49^A0N,30,51^FD") + 22;
         String carrierServiceAFromLabel = decodedStringShipments.substring(carrierServiceAFromLabelStart, carrierServiceAFromLabelStart + sortCode1.length());
         //    System.out.println("carrierServiceAFromLabel = " + carrierServiceAFromLabel);
         assertThat(sortCode1, is(equalTo(carrierServiceAFromLabel)));
@@ -68,7 +69,7 @@ public class Standard_Mail_Marketing_Parcel extends OSMBaseStandardMailMarketing
         //    System.out.println("sortCode2 = " + sortCode2);
         int sc2 = (int) Double.parseDouble(sortCode2);
         //    System.out.println("sc2 = " + sc2);
-        int carrierServiceBFromLabelStart = decodedStringShipments.indexOf("^FT670,203^A0N,33,55^FD") + 23;
+        int carrierServiceBFromLabelStart = decodedStringShipments.indexOf("^FT383,49^A0N,30,51^FD") + 22;
         String carrierServiceBFromLabel = decodedStringShipments.substring(carrierServiceBFromLabelStart, carrierServiceBFromLabelStart + String.valueOf(sc2).length());
         //    System.out.println("carrierServiceBFromLabel = " + carrierServiceBFromLabel);
         assertThat(String.valueOf(sc2), is(equalTo(carrierServiceBFromLabel)));
@@ -82,7 +83,7 @@ public class Standard_Mail_Marketing_Parcel extends OSMBaseStandardMailMarketing
 
         String carrierServiceCFromJsonConverted = carrierServiceMCValueFromJsonMap.get(carrierServiceFromJson);
         //    System.out.println("carrierServiceCFromJsonConverted = " + carrierServiceCFromJsonConverted);
-        int carrierServiceCFromLabelStart = decodedStringShipments.indexOf("^FT564,239^A0N,27,49^FD") + 23;
+        int carrierServiceCFromLabelStart = decodedStringShipments.indexOf("^FT297,85^A0N,24,44^FD") + 22;
         String carrierServiceCFromLabel = decodedStringShipments.substring(carrierServiceCFromLabelStart, carrierServiceCFromLabelStart + carrierServiceCFromJsonConverted.length());
         //    System.out.println("carrierServiceCFromLabel = " + carrierServiceCFromLabel);
         assertThat(carrierServiceCFromJsonConverted, is(equalTo(carrierServiceCFromLabel)));
@@ -95,7 +96,7 @@ public class Standard_Mail_Marketing_Parcel extends OSMBaseStandardMailMarketing
     public void test7() {
 
         //    System.out.println("sortCode4 = " + sortCode4);
-        int carrierServiceDFromLabelStart = decodedStringShipments.indexOf("^FT662,239^A0N,27,49^FD") + 23;
+        int carrierServiceDFromLabelStart = decodedStringShipments.indexOf("^FT376,85^A0N,24,44^FD") + 22;
         String carrierServiceDFromLabel = decodedStringShipments.substring(carrierServiceDFromLabelStart, carrierServiceDFromLabelStart + sortCode4.length());
         //    System.out.println("carrierServiceDFromLabel = " + carrierServiceDFromLabel);
         assertThat(sortCode4, is(equalTo(carrierServiceDFromLabel)));
@@ -542,9 +543,32 @@ public class Standard_Mail_Marketing_Parcel extends OSMBaseStandardMailMarketing
     }
 
 
-    @DisplayName("JSON Body Request")
+    @DisplayName("ZPL LQD Carrier service K - 'SP-21015'")
     @Test
     public void test41() {
+
+        String carrierServiceKHardcoded = "SP-21015";
+        int carrierServiceKFromLabelStart = decodedStringShipments.indexOf("^FT494,224^A0N,30,30^FD") + 23;
+        String carrierServiceKFromLabel = decodedStringShipments.substring(carrierServiceKFromLabelStart, carrierServiceKFromLabelStart + carrierServiceKHardcoded.length());
+        //    System.out.println(carrierServiceKFromLabel);
+        assertThat(carrierServiceKHardcoded, is(equalTo(carrierServiceKFromLabel)));
+
+    }
+
+
+    @DisplayName("ZPL LQD Carrier service L - 'LQD LOGO'")
+    @Test
+    public void test42() {
+
+        String carrierServiceLHardcoded = "^FO640,148^GFA,618,2244,17,:Z64:eJx1lkGSgyAQRaGokiysYusuOYI3IEfxCHODeDSOkiPMchZTw4jQ0P9bcWHkgc0LYrfm0/Fk8Ka2/Sbgfgj4XwLhj8A9E4h5R/DKCUHOKGJzxnkdA58zioScUeSeM4rEA4DI6wAgcrRBxBagV8QVoEV8AVokFKBFigaIxBOoeV8MzrYSsRUMEVfBEPEVjHkDg6qhRGIDO2ooEbl4iIYMXUVDRi7tdzJ0MTOQkcZSrB5964YJNWRs1xDQNYy5oYYIzANMqCEiqwI7ajSDpMCGGvV2pVFFJg1m1Ki9iwYl4MpAa5yvbwKwoUYJABpFZEIwo0YRWRA41CgiqHGIPAhsFMMkmsXu5OHYdOp7opvSv114PdaxOZsGrWkJcFlkEHGGnlzpBZG5xdEaKLL209DAec/bb6gBIk6dzehTIrOKNDSur4cS2WDgGNtFZPN0ERG4vMh9m/XHKvP26E/UGBnmLeDOGSZwDvKcpS6JreVClXI5F7ZEptJ2pHx6TcEBNWTe0a4pV+d1y5nfcG04RaCeRqov54okDQLXKJ+pijmuc5Yr4aV4HiJU1iPV20MkIQhcsz1Xdcd13/KXgeFvB/PF4GE+Hf8Csy0q:1FA5^FS";
+        assertThat(decodedStringShipments, containsString(carrierServiceLHardcoded));
+
+    }
+
+
+    @DisplayName("JSON Body Request")
+    @Test
+    public void test43() {
         System.out.println("requestJsonBodyShipments = " + requestJsonBodyShipments);
 
     }
@@ -552,7 +576,7 @@ public class Standard_Mail_Marketing_Parcel extends OSMBaseStandardMailMarketing
 
     @DisplayName("JSON Body Response")
     @Test
-    public void test42() {
+    public void test44() {
         validateResponseShipments.extract().response().prettyPrint();
 
     }

@@ -76,7 +76,7 @@ public class Standard_Mail_Marketing_Parcel_Track_False extends OSMBaseStandardM
     }
 
 
-    @DisplayName("ZPL Carrier service C - 'BP'")
+    @DisplayName("ZPL Carrier service C - 'MP'")
     @Test
     public void test6() {
 
