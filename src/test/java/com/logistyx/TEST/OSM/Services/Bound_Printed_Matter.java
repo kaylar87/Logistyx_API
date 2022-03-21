@@ -535,7 +535,7 @@ public class Bound_Printed_Matter extends OSMBaseBoundPrintedMatterNotDG {
     @Test
     public void test40() {
         String hazardousFromJson;
-        if (osmPojoShipments.getShippingUnits().get(0).getDangerousGoods().size() == 0 || osmPojoShipments.getShippingUnits().get(0).getShippingUnitItems().get(0).getDangerousGoods().size() == 0) {
+        if (osmPojoShipments.getShippingUnits().get(0).getDangerousGoods().size() == 0 & osmPojoShipments.getShippingUnits().get(0).getShippingUnitItems().get(0).getDangerousGoods().size() == 0) {
             hazardousFromJson = "0";
         } else {
             hazardousFromJson = "1";

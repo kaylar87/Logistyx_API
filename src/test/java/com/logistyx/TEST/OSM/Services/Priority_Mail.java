@@ -561,7 +561,7 @@ public class Priority_Mail extends OSMBasePriorityMailNotDG {
     @Test
     public void test42() {
         String hazardousFromJson;
-        if (osmPojoShipments.getShippingUnits().get(0).getDangerousGoods().size() == 0 || osmPojoShipments.getShippingUnits().get(0).getShippingUnitItems().get(0).getDangerousGoods().size() == 0) {
+        if (osmPojoShipments.getShippingUnits().get(0).getDangerousGoods().size() == 0 & osmPojoShipments.getShippingUnits().get(0).getShippingUnitItems().get(0).getDangerousGoods().size() == 0) {
             hazardousFromJson = "0";
         } else {
             hazardousFromJson = "1";

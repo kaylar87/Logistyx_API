@@ -13,21 +13,21 @@ import lombok.ToString;
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "ShippingId",
-        "ShippingUnitId",
         "ShipperCode",
+        "ShippingUnitId",
+        "ShippingUnitItemId",
         "AdditionalValueKey",
         "Value"
 })
 
 public class AdditionalValue__1 {
 
-    @JsonProperty("ShippingId")
-    public Integer shippingId;
-    @JsonProperty("ShippingUnitId")
-    public Integer shippingUnitId;
     @JsonProperty("ShipperCode")
     public String shipperCode;
+    @JsonProperty("ShippingUnitId")
+    public Integer shippingUnitId;
+    @JsonProperty("ShippingUnitItemId")
+    public Integer shippingUnitItemId;
     @JsonProperty("AdditionalValueKey")
     public String additionalValueKey;
     @JsonProperty("Value")

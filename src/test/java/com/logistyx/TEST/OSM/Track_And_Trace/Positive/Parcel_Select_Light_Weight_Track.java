@@ -1,8 +1,7 @@
-package com.logistyx.TEST.OSM.TrackAndTrace.Positive;
+package com.logistyx.TEST.OSM.Track_And_Trace.Positive;
 
 
-import com.logistyx.utilities.AbstractBaseClasses.OSM.Services.OSMBaseMediaMailNotDG;
-import com.logistyx.utilities.AbstractBaseClasses.OSM.TrackAndTrace.Positive.OSMBaseMediaMailTrackFalseNotDG;
+import com.logistyx.utilities.AbstractBaseClasses.OSM.TrackAndTrace.Positive.OSMBaseParcelSelectLightWeightTrackNotDG;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,11 +9,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 
-public class Media_Mail_Track_False extends OSMBaseMediaMailTrackFalseNotDG {
+public class Parcel_Select_Light_Weight_Track extends OSMBaseParcelSelectLightWeightTrackNotDG {
 
     static {
 
-        OSMBaseMediaMailTrackFalseNotDG.shipmentsLabel();
+        OSMBaseParcelSelectLightWeightTrackNotDG.shipmentsLabel();
 
     }
 
@@ -77,13 +76,13 @@ public class Media_Mail_Track_False extends OSMBaseMediaMailTrackFalseNotDG {
     }
 
 
-    @DisplayName("ZPL Carrier service C - 'MM'")
+    @DisplayName("ZPL Carrier service C - 'LW'")
     @Test
     public void test6() {
 
         String carrierServiceCFromJsonConverted = carrierServiceMCValueFromJsonMap.get(carrierServiceFromJson);
         //    System.out.println("carrierServiceCFromJsonConverted = " + carrierServiceCFromJsonConverted);
-        int carrierServiceCFromLabelStart = decodedStringShipments.indexOf("^FT68,115^A0N,33,59^FD") + 22;
+        int carrierServiceCFromLabelStart = decodedStringShipments.indexOf("^FT76,115^A0N,33,59^FD") + 22;
         String carrierServiceCFromLabel = decodedStringShipments.substring(carrierServiceCFromLabelStart, carrierServiceCFromLabelStart + carrierServiceCFromJsonConverted.length());
         //    System.out.println("carrierServiceCFromLabel = " + carrierServiceCFromLabel);
         assertThat(carrierServiceCFromJsonConverted, is(equalTo(carrierServiceCFromLabel)));
@@ -104,7 +103,7 @@ public class Media_Mail_Track_False extends OSMBaseMediaMailTrackFalseNotDG {
     }
 
 
-    @DisplayName("ZPL Carrier service E1 - 'PRSRT MEDIA MAIL'")
+    @DisplayName("ZPL Carrier service E1 - 'PS LIGHTWEIGHT'")
     @Test
     public void test8() {
 
@@ -118,7 +117,7 @@ public class Media_Mail_Track_False extends OSMBaseMediaMailTrackFalseNotDG {
     }
 
 
-    @DisplayName("ZPL Carrier service E2 - 'U.S POSTAGE PAID'")
+    @DisplayName("ZPL Carrier service E2 - 'U.S POSTAGE AND FEES PAID'")
     @Test
     public void test9() {
 
@@ -328,11 +327,11 @@ public class Media_Mail_Track_False extends OSMBaseMediaMailTrackFalseNotDG {
     }
 
 
-    @DisplayName("EDI - Package Id - '420535349252120220307000010765'")
+    @DisplayName("EDI - Package Id - '9241920220307000007615'")
     @Test
     public void test24() {
 
-        String packageIdFromJson = osmPojoShipments.getShippingUnits().get(0).getForwarderRef();
+        String packageIdFromJson = osmPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(8);
         //    System.out.println("packageIdFromJson = " + packageIdFromJson);
         String packageIdFromEDI = decodedValuesDomestic.get(0).replace("\"", "");
         //    System.out.println("packageIdFromEDI = " + packageIdFromEDI);
@@ -506,7 +505,7 @@ public class Media_Mail_Track_False extends OSMBaseMediaMailTrackFalseNotDG {
     }
 
 
-    @DisplayName("EDI - Weight - '5.86'")
+    @DisplayName("EDI - Weight - '0.86'")
     @Test
     public void test38() {
 
@@ -519,12 +518,12 @@ public class Media_Mail_Track_False extends OSMBaseMediaMailTrackFalseNotDG {
     }
 
 
-    @DisplayName("EDI - Mail Class - 'MM'")
+    @DisplayName("EDI - Mail Class - 'LW'")
     @Test
     public void test39() {
 
         String mailClassFromJson = carrierServiceMCValueFromJsonMap.get(carrierServiceFromJson);
-        //   System.out.println("mailClassFromJson = " + mailClassFromJson);
+        //    System.out.println("mailClassFromJson = " + mailClassFromJson);
         String mailClassFromEDI = decodedValuesDomestic.get(15);
         //    System.out.println("mailClassFromEDI = " + mailClassFromEDI);
         assertThat(mailClassFromEDI, is(equalTo(mailClassFromJson)));
@@ -536,7 +535,7 @@ public class Media_Mail_Track_False extends OSMBaseMediaMailTrackFalseNotDG {
     @Test
     public void test40() {
         String hazardousFromJson;
-        if (osmPojoShipments.getShippingUnits().get(0).getDangerousGoods().size() == 0 || osmPojoShipments.getShippingUnits().get(0).getShippingUnitItems().get(0).getDangerousGoods().size() == 0) {
+        if (osmPojoShipments.getShippingUnits().get(0).getDangerousGoods().size() == 0 & osmPojoShipments.getShippingUnits().get(0).getShippingUnitItems().get(0).getDangerousGoods().size() == 0) {
             hazardousFromJson = "0";
         } else {
             hazardousFromJson = "1";

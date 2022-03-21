@@ -1,7 +1,7 @@
-package com.logistyx.TEST.OSM.TrackAndTrace.Positive;
+package com.logistyx.TEST.OSM.Track_And_Trace.Positive;
 
 
-import com.logistyx.utilities.AbstractBaseClasses.OSM.TrackAndTrace.Positive.OSMBaseBoundPrintedMatterTrackNotDG;
+import com.logistyx.utilities.AbstractBaseClasses.OSM.TrackAndTrace.Positive.OSMBaseMediaMailTrackFalseNotDG;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,11 +9,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 
-public class Bound_Printed_Matter_Track extends OSMBaseBoundPrintedMatterTrackNotDG {
+public class Media_Mail_Track_False extends OSMBaseMediaMailTrackFalseNotDG {
 
     static {
 
-        OSMBaseBoundPrintedMatterTrackNotDG.shipmentsLabel();
+        OSMBaseMediaMailTrackFalseNotDG.shipmentsLabel();
 
     }
 
@@ -27,8 +27,6 @@ public class Bound_Printed_Matter_Track extends OSMBaseBoundPrintedMatterTrackNo
         //    validateResponseShipments.extract().response().prettyPrint();
         //    System.out.println("decodedStringShipments = " + decodedStringShipments);
         //    System.out.println("decodedStringConveyances = " + decodedStringConveyances);
-
-
 
     }
 
@@ -78,13 +76,13 @@ public class Bound_Printed_Matter_Track extends OSMBaseBoundPrintedMatterTrackNo
     }
 
 
-    @DisplayName("ZPL Carrier service C - 'BP'")
+    @DisplayName("ZPL Carrier service C - 'MM'")
     @Test
     public void test6() {
 
         String carrierServiceCFromJsonConverted = carrierServiceMCValueFromJsonMap.get(carrierServiceFromJson);
         //    System.out.println("carrierServiceCFromJsonConverted = " + carrierServiceCFromJsonConverted);
-        int carrierServiceCFromLabelStart = decodedStringShipments.indexOf("^FT79,115^A0N,33,59^FD") + 22;
+        int carrierServiceCFromLabelStart = decodedStringShipments.indexOf("^FT68,115^A0N,33,59^FD") + 22;
         String carrierServiceCFromLabel = decodedStringShipments.substring(carrierServiceCFromLabelStart, carrierServiceCFromLabelStart + carrierServiceCFromJsonConverted.length());
         //    System.out.println("carrierServiceCFromLabel = " + carrierServiceCFromLabel);
         assertThat(carrierServiceCFromJsonConverted, is(equalTo(carrierServiceCFromLabel)));
@@ -105,7 +103,7 @@ public class Bound_Printed_Matter_Track extends OSMBaseBoundPrintedMatterTrackNo
     }
 
 
-    @DisplayName("ZPL Carrier service E1 - 'PRSRT BPM'")
+    @DisplayName("ZPL Carrier service E1 - 'PRSRT MEDIA MAIL'")
     @Test
     public void test8() {
 
@@ -119,7 +117,7 @@ public class Bound_Printed_Matter_Track extends OSMBaseBoundPrintedMatterTrackNo
     }
 
 
-    @DisplayName("ZPL Carrier service E2 - 'U.S POSTAGE AND FEES PAID'")
+    @DisplayName("ZPL Carrier service E2 - 'U.S POSTAGE PAID'")
     @Test
     public void test9() {
 
@@ -329,11 +327,11 @@ public class Bound_Printed_Matter_Track extends OSMBaseBoundPrintedMatterTrackNo
     }
 
 
-    @DisplayName("EDI - Package Id - '9241920220307000007615'")
+    @DisplayName("EDI - Package Id - '420535349252120220307000010765'")
     @Test
     public void test24() {
 
-        String packageIdFromJson = osmPojoShipments.getShippingUnits().get(0).getForwarderRef().substring(8);
+        String packageIdFromJson = osmPojoShipments.getShippingUnits().get(0).getForwarderRef();
         //    System.out.println("packageIdFromJson = " + packageIdFromJson);
         String packageIdFromEDI = decodedValuesDomestic.get(0).replace("\"", "");
         //    System.out.println("packageIdFromEDI = " + packageIdFromEDI);
@@ -520,12 +518,12 @@ public class Bound_Printed_Matter_Track extends OSMBaseBoundPrintedMatterTrackNo
     }
 
 
-    @DisplayName("EDI - Mail Class - 'BP'")
+    @DisplayName("EDI - Mail Class - 'MM'")
     @Test
     public void test39() {
 
         String mailClassFromJson = carrierServiceMCValueFromJsonMap.get(carrierServiceFromJson);
-        //    System.out.println("mailClassFromJson = " + mailClassFromJson);
+        //   System.out.println("mailClassFromJson = " + mailClassFromJson);
         String mailClassFromEDI = decodedValuesDomestic.get(15);
         //    System.out.println("mailClassFromEDI = " + mailClassFromEDI);
         assertThat(mailClassFromEDI, is(equalTo(mailClassFromJson)));
@@ -537,7 +535,7 @@ public class Bound_Printed_Matter_Track extends OSMBaseBoundPrintedMatterTrackNo
     @Test
     public void test40() {
         String hazardousFromJson;
-        if (osmPojoShipments.getShippingUnits().get(0).getDangerousGoods().size() == 0 || osmPojoShipments.getShippingUnits().get(0).getShippingUnitItems().get(0).getDangerousGoods().size() == 0) {
+        if (osmPojoShipments.getShippingUnits().get(0).getDangerousGoods().size() == 0 & osmPojoShipments.getShippingUnits().get(0).getShippingUnitItems().get(0).getDangerousGoods().size() == 0) {
             hazardousFromJson = "0";
         } else {
             hazardousFromJson = "1";
@@ -572,9 +570,21 @@ public class Bound_Printed_Matter_Track extends OSMBaseBoundPrintedMatterTrackNo
     }
 
 
-    @DisplayName("JSON Body Request")
+    //TODO forwarder ref code ZPL vs EDI
+    @DisplayName("Track And Trace - '521'")
     @Test
     public void test43() {
+
+        String STCharcoded = "521";
+        String STCFromTable = carrierServiceSTCValueFromJsonMap.get(carrierServiceFromJson);
+        assertThat(STCFromTable, is(equalTo(STCharcoded)));
+
+    }
+
+
+    @DisplayName("JSON Body Request")
+    @Test
+    public void test44() {
         System.out.println("requestJsonBodyShipments = " + requestJsonBodyShipments);
 
     }
@@ -582,7 +592,7 @@ public class Bound_Printed_Matter_Track extends OSMBaseBoundPrintedMatterTrackNo
 
     @DisplayName("JSON Body Response")
     @Test
-    public void test44() {
+    public void test45() {
         validateResponseShipments.extract().response().prettyPrint();
 
     }

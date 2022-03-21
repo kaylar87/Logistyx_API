@@ -330,10 +330,10 @@ public class First_Class_Mail extends OSMBaseFirstClassMailNotDG {
     public void test24() {
 
         String carrierServiceLFromJsonConverted = carrierServiceLValueFromJsonMap.get(carrierServiceFromJson);
-            System.out.println("carrierServiceLFromJsonConverted = " + carrierServiceLFromJsonConverted);
+        //    System.out.println("carrierServiceLFromJsonConverted = " + carrierServiceLFromJsonConverted);
         int carrierServiceLFromLabelStart = decodedStringShipments.indexOf("^FT70,167^A0N,174,209^FD") + 24;
         String carrierServiceLFromLabel = decodedStringShipments.substring(carrierServiceLFromLabelStart, carrierServiceLFromLabelStart + carrierServiceLFromJsonConverted.length());
-            System.out.println("carrierServiceLFromLabel = " + carrierServiceLFromLabel);
+        //    System.out.println("carrierServiceLFromLabel = " + carrierServiceLFromLabel);
         assertThat(carrierServiceLFromJsonConverted, is(equalTo(carrierServiceLFromLabel)));
 
     }
@@ -561,7 +561,7 @@ public class First_Class_Mail extends OSMBaseFirstClassMailNotDG {
     @Test
     public void test42() {
         String hazardousFromJson;
-        if (osmPojoShipments.getShippingUnits().get(0).getDangerousGoods().size() == 0 || osmPojoShipments.getShippingUnits().get(0).getShippingUnitItems().get(0).getDangerousGoods().size() == 0) {
+        if (osmPojoShipments.getShippingUnits().get(0).getDangerousGoods().size() == 0 & osmPojoShipments.getShippingUnits().get(0).getShippingUnitItems().get(0).getDangerousGoods().size() == 0) {
             hazardousFromJson = "0";
         } else {
             hazardousFromJson = "1";

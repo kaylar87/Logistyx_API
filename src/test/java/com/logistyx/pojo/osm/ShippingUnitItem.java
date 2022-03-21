@@ -157,6 +157,6 @@ public class ShippingUnitItem {
     @JsonProperty("DangerousGoods")
     public List<Object> dangerousGoods = null;
     @JsonProperty("AdditionalValues")
-    public List<Object> additionalValues = null;
+    public List<AdditionalValue__1> additionalValues = null;
 
 }
