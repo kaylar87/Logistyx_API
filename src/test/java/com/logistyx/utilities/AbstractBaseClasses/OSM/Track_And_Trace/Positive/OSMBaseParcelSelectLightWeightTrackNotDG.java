@@ -1,4 +1,4 @@
-package com.logistyx.utilities.AbstractBaseClasses.OSM.TrackAndTrace.Positive;
+package com.logistyx.utilities.AbstractBaseClasses.OSM.Track_And_Trace.Positive;
 
 
 import com.logistyx.pojo.osm.OSMPojo;
@@ -20,7 +20,7 @@ import java.util.*;
 
 import static io.restassured.RestAssured.*;
 
-public abstract class OSMBaseMediaMailTrackNotDG {
+public abstract class OSMBaseParcelSelectLightWeightTrackNotDG {
 
     public static String requestJsonBodyShipments;
     public static RequestSpecification requestSpecShipments;
@@ -92,7 +92,7 @@ public abstract class OSMBaseMediaMailTrackNotDG {
         requestJsonBodyShipments = "{\n" +
                 "    \"ProjectCode\": \"LX_CHICAGO\",\n" +
                 "    \"ForwarderDivisionCode\": \"OSM\",\n" +
-                "    \"ForwarderServiceCode\": \"OSM-MEDIA-MAIL\",\n" +
+                "    \"ForwarderServiceCode\": \"OSM-PARCEL-SELECT-LW\",\n" +
                 "    \"ShipperRef\": \"Shipper Reference\",\n" +
                 "    \"ReceiverRef\": \"Receiver Reference\",\n" +
                 "    \"ForwarderServiceIndicators\": \n" +
@@ -165,7 +165,7 @@ public abstract class OSMBaseMediaMailTrackNotDG {
                 "            \"DimensionsUnitOfMeasure\": \"IN\",\n" +
                 "            \"VolumeUnitOfMeasure\": \"IN3\",\n" +
                 "            \"PackageType\": \"ZZ\",\n" +
-                "            \"GrossWeight\": 5.86,\n" +
+                "            \"GrossWeight\": 0.86,\n" +
                 "            \"GrossWeightUnitOfMeasure\": \"LB\",\n" +
                 "            \"Content\": \"Widget. Widget\",\n" +
                 "            \"Remark\": \"Does not apply on materials regulated by the U.S. Department of Transportation as hazardous and required tobear a Hazard Class or Hazard Division label. For classes applicable to such hazardous materials, see provisionselsewhere inthis Classification.\",\n" +

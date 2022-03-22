@@ -1,4 +1,4 @@
-package com.logistyx.utilities.AbstractBaseClasses.OSM.TrackAndTrace.Positive;
+package com.logistyx.utilities.AbstractBaseClasses.OSM.Track_And_Trace.Positive;
 
 
 import com.logistyx.pojo.osm.OSMPojo;
@@ -20,7 +20,7 @@ import java.util.*;
 
 import static io.restassured.RestAssured.*;
 
-public abstract class OSMBasePriorityMailTrackFalseNotDG {
+public abstract class OSMBaseParcelSelectTrackNotDG {
 
     public static String requestJsonBodyShipments;
     public static RequestSpecification requestSpecShipments;
@@ -92,12 +92,12 @@ public abstract class OSMBasePriorityMailTrackFalseNotDG {
         requestJsonBodyShipments = "{\n" +
                 "    \"ProjectCode\": \"LX_CHICAGO\",\n" +
                 "    \"ForwarderDivisionCode\": \"OSM\",\n" +
-                "    \"ForwarderServiceCode\": \"OSM-PRIORITY-MAIL\",\n" +
+                "    \"ForwarderServiceCode\": \"OSM-PARCEL-SELECT\",\n" +
                 "    \"ShipperRef\": \"Shipper Reference\",\n" +
                 "    \"ReceiverRef\": \"Receiver Reference\",\n" +
                 "    \"ForwarderServiceIndicators\": \n" +
                 "    \t{\n" +
-                "        \"TrackAndTrace\": false\n" +
+                "        \"TrackAndTrace\": true\n" +
                 "        },\n" +
                 "    \"Addresses\": [\n" +
                 "        {\n" +

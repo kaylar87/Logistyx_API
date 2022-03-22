@@ -1,4 +1,4 @@
-package com.logistyx.utilities.AbstractBaseClasses.OSM.TrackAndTrace.Positive;
+package com.logistyx.utilities.AbstractBaseClasses.OSM.Track_And_Trace.Positive;
 
 
 import com.logistyx.pojo.osm.OSMPojo;
@@ -20,7 +20,7 @@ import java.util.*;
 
 import static io.restassured.RestAssured.*;
 
-public abstract class OSMBaseStandardMailMarketingParcelTrackNotDG {
+public abstract class OSMBaseStandardMailMarketingParcelTrackFalseNotDG {
 
     public static String requestJsonBodyShipments;
     public static RequestSpecification requestSpecShipments;
@@ -97,7 +97,7 @@ public abstract class OSMBaseStandardMailMarketingParcelTrackNotDG {
                 "    \"ReceiverRef\": \"Receiver Reference\",\n" +
                 "    \"ForwarderServiceIndicators\": \n" +
                 "    \t{\n" +
-                "        \"TrackAndTrace\": true\n" +
+                "        \"TrackAndTrace\": false\n" +
                 "        },\n" +
                 "    \"Addresses\": [\n" +
                 "        {\n" +

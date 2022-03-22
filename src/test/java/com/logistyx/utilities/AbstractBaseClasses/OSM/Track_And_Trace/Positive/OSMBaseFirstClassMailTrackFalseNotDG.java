@@ -1,4 +1,4 @@
-package com.logistyx.utilities.AbstractBaseClasses.OSM.TrackAndTrace.Positive;
+package com.logistyx.utilities.AbstractBaseClasses.OSM.Track_And_Trace.Positive;
 
 
 import com.logistyx.pojo.osm.OSMPojo;

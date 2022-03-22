@@ -1,7 +1,7 @@
 package com.logistyx.TEST.OSM.Track_And_Trace.Positive;
 
 
-import com.logistyx.utilities.AbstractBaseClasses.OSM.TrackAndTrace.Positive.OSMBaseBoundPrintedMatterTrackNotDG;
+import com.logistyx.utilities.AbstractBaseClasses.OSM.Track_And_Trace.Positive.OSMBaseBoundPrintedMatterTrackNotDG;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
