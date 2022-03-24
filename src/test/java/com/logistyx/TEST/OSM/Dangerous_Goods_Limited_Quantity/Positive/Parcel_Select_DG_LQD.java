@@ -572,7 +572,7 @@ public class Parcel_Select_DG_LQD extends OSMBaseParcelSelectDGLQD {
     @DisplayName("ZPL LQD - Second Horizontal Line - removed")
     @Test
     public void test43() {
-
+        System.out.println("decodedStringShipments = " + decodedStringShipments);
         String secondHorizontalLine = "^FO28,303^GB756,4,4,B^FS";
         assertThat(decodedStringShipments, not(containsString(secondHorizontalLine)));
 

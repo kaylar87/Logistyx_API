@@ -1,0 +1,117 @@
+CountryCode,CountryName,ReferenceName,Address1,PostalCode,LocalityName,State,Remark
+AX,Aland Islands,Hotel Pommern,Norragatan 8-10,22100,Mariehamn,,Aland Islands
+AL,Albania,Tirana International Hotel & Conference Centre,Scanderbeg Square,1001,Tirana,,Albania
+AL,Albania,City Hotel Tirana,Rruga Ismail Qemali 8/1,1001,Tirana,,Albania
+AD,Andorra,Andorra Park Hotel,Les Canals 24,AD500,Andorra la Vella,,Andorra
+AD,Andorra,Exe Prisma Hotel,C/ del Fener 14,AD700,Escaldes-Engordany,,Andorra
+AM,Armenia,Bellagio Hotel Complex Yerevan,2 Myasnikyan str,"0025",Yerevan,,Armenia
+AM,Armenia,Tufenkian Historic Yerevan Hotel,48 Hanrapetutyan Street,"0001",Yerevan,,Armenia
+AT,Austria,NH Wien Atterseehaus,Mariahilfer Strasse 78,1070,Vienna,,Austria
+AT,Austria,Hotel Pension Andreas,Schlösselgasse 11,2320,Vienna,,Austria
+BY,Belarus,Renaissance Minsk Hotel,Dzerzhinsky Avenue 1E,220036,Minsk,,Belarus
+BY,Belarus,Summer Amphitheatre,Frunze Ave 13,210026,Vitsyebsk,,Belarus
+BE,Belgium,Crowne Plaza Antwerp,Gerard Le Grellelaan 10,2000,Antwerp,,Belgium
+BE,Belgium,Lotus,Duinkerkelaan 83,8660,De Panne,,Belgium
+BA,Bosnia And Herzegovina,Ahar Hotel,Pijacna 82,71000,Sarajevo,,Bosnia And Herzegovina
+BG,Bulgaria,Hotel Tarnava,Todor Svetoslav Str. 15,5000,Veliko Tarnovo,,Bulgaria
+BG,Bulgaria,Hotel Riverside,Nikolai Petrini str. 24,8600,Yambol,,Bulgaria
+HR,Croatia,Maistra Resort Funtana,Valkanela 2,52452,Funtana,,Croatia
+CY,Cyprus,Amphora Hotel & Suites,Poseidonos Avenue,8042,Paphos,,Cyprus
+CZ,Czech Republic,LEDA spol. s r.o.,Plzenská 3217/16,150 00,Praha,,Czech Republic
+DK,Denmark,Jobcenter Silkeborg,Drewsensvej 60,8600,Silkeborg,,Denmark
+DK,Denmark,Bornholms Middelaldercenter,Stangevej 1,3760,Gudhjem,,Denmark
+EE,Estonia,Swissotel Tallinn,Tornimae 3,10123,Tallinn,,Estonia
+EE,Estonia,Kihelkonna vald,Tallinn,93431,Loona,,Estonia
+ES,Spain,Baleària,Est. marítima s/n,51001,Ceuta,,Spain Ceuta non EU
+ES,Spain,Casino Militar,Plaza de Espana 2,52001,Melilla,,Spain Melilla non EU
+ES,Spain,Restaurante Casa Roja,Avenida varadero,35510,Puerto del Carmen,,Spain Canaries non EU
+FO,Faroe Islands,Hotel Føroyar,Oyggjarvegur 45,FO100,Tórshavn,,Faroe Islands
+FI,Finland,Spa Hotel Rantasipi Laajavuori,Laajavuorentie 30,FI-40740,Jyvaskyla,,Finland
+FI,Finland,Villilumi,Tenontörmä 8,99990,Nuorgam,,Finland
+FI,Finland,Hotel Pommern,Norragatan 8-10,22100,mariehamn,,Aland Island as Finland
+FR,France,Hôtel Barrière Lille,Avenue Du General De Gaulle 605,"06210",Mandelieu-la-Napoule,,France
+FR,France,Santa Catarina,Route de l'Eglise,20128,Albitreccia,,France
+GE,Georgia,Radisson Blu Iveria Hotel,Rose Revolution Square 1,"0108",Tbilisi,,Georgia
+DE,Germany,Park Inn by Radisson Berlin Alexanderplatz,Alexanderplatz 7,10178,Berlin,,Germany
+DE,Germany,AmrumTouristik Nebel,Hööwjaat 1,25946,Nebel,,Germany
+DE,Germany,INNSIDE by Meliá Düsseldorf Derendorf,Derendorfer Allee 8,40476,Düsseldorf,,Germany with umlaut
+DE,Germany,Lebensmittel Keser-Daum,Junkerstraße 64,78266,Büsingen am Hochrhein,,DE Büsingen am Hochrhein non EU
+DE,Germany,James-Krüss-Schule,Schulweg 649,27498,Helgoland,,DE Helgoland non EU
+GB,UK,Hauteville House,Hauteville 38,GY1 1DG,Saint Peter,,Guernsey but as UK
+GB,UK,Philadelphie Church,La Grande Route de Saint-Pierre,JE3 7AA,St Peter,,Jersey but as UK
+GB,UK,The Sefton,Harris Promenade,IM1 2RW,Douglas,,Isle of Man but as UK
+GI,Gibraltar,Bruno's Bar Restaurant,The Boardwalk,GX11 1AA,Gibraltar,,Gibraltar
+GG,Guernsey,Hauteville House,Hauteville 38,GY1 1DG,Saint Peter,,Guernsey
+GL,Greenland,Hotel Icefiord,J. Sverdrupip Aqq. 10,3952,Ilulissat,,Greenland
+GR,Greece,Aquis Mare Nostrum Hotel Thalasso,Vravronos Avenue,19003,Markopoulo,,Greece
+GR,Greece,Skiti,Agio Oros,630 86,Mount Athos,,Greece Mount Athos non EU
+HU,Hungary,Kempinski Hotel Corvinus Budapest,Erzsébet Tér 7,1051,Budapest,,Hungary
+IE,Ireland,Rochestown Lodge Hotel & Spa,Rochestown Avenue,,Dublin,,Ireland
+IM,Isle of Man,The Sefton,Harris Promenade,IM1 2RW,Douglas,,Isle of Man
+IS,Iceland,Hotel Edda Akureyri,Thorunnarstraeti 600,600,Akureyri,,Iceland
+IT,Italy,B&B Sabbia e Mare,Via Ettore Sacchi 114,"07046",Porto Torres,,Italy
+IT,Italy,Trattoria Il Veliero,Corso Umberto 22,91010,Marettimo,,Italy
+IT,Italy,Hotel Concordia,Via Plan 114,23030,Livigno,,Italy Livigno non EU
+IT,Italy,Candida,Via Marco da Campione 4,22060,Campione D'italia,,Italy Campione D'italia non EU
+IT,Italy,Grand Hotel San Marino,Viale Antonio Onofri 31,47890,San Marino,,San Marino as Italy
+IT,Italy,St. Peter's Basilica,Piazza San Pietro,"00120",Vaticano,,Vatican City as Italy
+JE,Jersey,Philadelphie Church,La Grande Route de Saint-Pierre,JE3 7AA,St Peter,,Jersey
+KG,Kyrgyzstan,Golden Tulip Bishkek,37 Isanova StrBishkek,720017,Bishkek,,Kyrgyzstan
+KX,Kosovo,Nartel Hotel,Kalabria,10000,Pristina,,Kosovo
+LI,Liechtenstein,Parkhotel Sonnenhof,Mareestrasse 29,9490,Vaduz,,Liechtenstein
+LI,Liechtenstein,Linde,Feldkircherstrasse 1,9494,Schaan,,Liechtenstein
+LT,Lithuania,Congress Hotel,Vilniaus St. 2/15,LT-01102,Vilnius,,Litouwen
+LT,Lithuania,Villa Sraige,Sviesos Gatve 2/d,LT-00170,Palanga,,Litouwen
+LU,Luxembourg,Golden Tulip Central Molitor,28 Avenue de la Liberte,1930,Luxembourg City,,Luxembourg
+LU,Luxembourg,Auberge de la Gaichel,Maison 7 Route De Mersch,8469,Eischen,,Luxembourg
+LV,Latvia,Hanza Hotel,7 Elijas StreetRiga,LV-1050,Riga,,Latvia
+MK,Macedonia,Inex Gorica Ohrid,Naum Ohridski 5-7,6000,Ohrid,,Macedonia
+MK,Macedonia,Hotel Hamburg,Boulevard Krste Misirkov,1000,Skopje,,Macedonia
+MT,Malta,The British Hotel,40 Battery Street,VLT 1222,Valletta,,Malta
+MT,Malta,Carlton Hotel,261 Tower Road,SLM 1600,Sliema,,Malta
+MD,Moldova Republic Of,Edem Hotel,34-1 Odesa Street,2001,Chisinau,,Moldova Republic Of
+MD,Moldova Republic Of,Europa Hotel,Vasile Lupu Street,2008,Chisinau,,Moldova Republic Of
+MC,Monaco,Hotel Port Palace,7 Avenue J-f Kennedy,98000,Monaco,,Monaco
+MC,Monaco,Fairmont Monte Carlo,12 Avenue de Spélugues,98000,Monaco,,Monaco
+ME,Montenegro,Oaza,Slovenska Obala 27,85310,Budva,,Montenegro
+ME,Montenegro,Hotel Marija,Stari grad Kotor 449,85330,Kotor,,Montenegro
+NL,Netherlands,Grand Hotel Downtown,Eerste Constantijn Huygunstraat 10A,1054 BR,Amsterdam,,Netherlands
+NL,Netherlands,Grand Hotel Downtown,Eerste Constantijn Huygunstraat 10A,1054,Amsterdam,,Netherlands short pcode
+NL,Netherlands,Duinzicht,Badweg 17,9166 ND,Schiermonnikoog,,Nederland
+NO,Norway,HTL Grensen Oslo,Grensen 20,"0159",Oslo,,Norway
+NO,Norway,P-Hotels Trondheim,Nordregate 24,7010,Trondheim,,Norway
+NO,Norway,Scandic Hell,Sandfærhus 22,7517,Stjørdal,,Norway with ø æ
+PL,Poland,Apartementy pod Wawelem,pl. Na Groblach 14/6,31-101,Krakow,,Poland
+PL,Poland,Hotel Gromada Koszalin,Zwyciestwa 20-24,75-035,Koszalin,,Poland
+PT,Portugal,Calhau da Areia,Rua de Manuel Jacinto da Ponte,9625-344,Maia,,Portugal Azores non EU
+PT,Portugal,Corinthia Hotel Lisbon,Avenida Columbano Bordalo Pinheiro 105Lisbon,1099-031,Lisbon,,Portugal
+PT,Portugal,Corinthia Hotel Lisbon,Avenida Columbano Bordalo Pinheiro 105Lisbon,1099,Lisbon,,Portugal short pcode
+PT,Portugal,Hotel Eva,Avenida da Republica 1Faro,8000-078,Faro,,Portugal
+RO,Romania,Premier Palace Hotel & Spa,Boulevard Ghencea no. 134 Bucharest,"061699",Bucharest,,Romania
+RO,Romania,Alex & George Boutique Hotel,Calea Turzii nr. 86 Cluj-Napoca,400193,Cluj-Napoca,,Romania
+SM,San Marino,Hotel Joli,Viale Federico D'Urbino 36 B San Marino,47890,San Marino City,,San Marino
+SM,San Marino,Best Western Palace Hotel,Via 5 Febbraio Serravalle,47899,Serravalle,,San Marino
+RS,Serbia,Hotel Prag,Kraljice Natalije 27 Belgrade,11000,Belgrade,,Serbia
+RS,Serbia,Prenociste Stojic Novi Sad,Partizanska 47 Novi Sad,21000,Novi Sad,,Serbia
+SK,Slovakia (Slovak Republic),Resort Beatrice,Tatranská Lomnica Tatranska Lomnica,"059 60",Tatranska Lomnica,,Slovakia (Slovak Republic)
+SK,Slovakia (Slovak Republic),ARCADIA Hotel,Frantiskanska 3 Bratislava,811 01,Bratislava,,Slovakia (Slovak Republic)
+SI,Slovenia,Meksiko Hotel,Njegoševa cesta 6K Ljubljana,1000,Ljubljana,,Slovenia
+SI,Slovenia,Smart Selection Hotel Roža,Obala 77d Portoroz,6320,Portoroz,,Slovenia
+ES,Spain,Barcelona Airport Hotel in El Prat de Llobregat,Plaza de la Volateria 3 Poligono Mas Blau El Prat de Llobregat Barcelona,"08820",Barcelona,,Spain
+ES,Spain,TRYP Coruña Hotel,Ramon Y Cajal 53 La Coruna La Coruna,15006,La Coruna,,Spain
+SJ,Svalbard and Jan Mayen Islands,The University Centre in Svalbard,NA,9170,Longyearbyen,,Svalbard and Jan Mayen Islands
+SE,Sweden,HTL Kungsgatan,Kungsgatan 53 Stockholm,11122,Stockholm,,Sweden
+SE,Sweden,First Hotel River C,Tage Erlandergatan 10Karlstad,652 20,Karlstad,,Sweden
+SE,Sweden,Hotel & Ristorante Bellora,Kungsportsavenyn 6,411 36,Göteborg,,Sweden with umlaut
+SE,Sweden,First Hotel River C,Tage Erlandergatan 10Karlstad,SE-652 20,Karlstad,,Sweden
+CH,Switzerland,Hotel Allegro Bern,Kornhausstrasse 3 Bern,3000,Bern,,Switzerland
+CH,Switzerland,Hotel Schweizerhof Zürich,Bahnhofplatz 7 Zurich,8001,Zurich,,Switzerland
+TR,Turkey,Ankara Hilton,Tahran Cadessi No 12 Ankara Ankara,"06700",Ankara,,Turkey
+TR,Turkey,Murat Pasa Konagi,Gülpinar District No 90 Dalyan Ortaca Mugla,48840,Dalyan,,Turkey
+UA,Ukraine,11 Mirrors Design Hotel,34A B.Khmelnytskogo St.,"01030",Kiev,,Ukraine
+UA,Ukraine,Litera Hotel,Krasnaya St. 8 | entrance from Komsomolskaya St.,49000,Dnipropetrovsk,,Ukraine
+GB,United Kingdom,The Milestone Hotel,1 Kensington Court  Kensington,W8 5DL,London,,United Kingdom
+GB,United Kingdom,Squire Patton Boggs (UK) LLP,7 Devonshire Square,EC2M 4YH,London,,United Kingdom
+GB,United Kingdom,North Ocean Hotel,390 Promenade Blackpool,FY1 2LB,Blackpool,,United Kingdom
+VA,Vatican City State,Caesar Place,Via Fornovo 3,"00192",Vaticano,,Vatican City State
+VA,Vatican City State,Vatican Charme,Via Germanico 99,"00192",Vatican City,,Vatican City State
