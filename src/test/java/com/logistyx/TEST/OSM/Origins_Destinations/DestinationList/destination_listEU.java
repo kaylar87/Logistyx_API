@@ -1,32 +1,25 @@
-package com.logistyx.utilities.AbstractBaseClasses.OSM.Origins_Destinations.DestinationList;
+package com.logistyx.TEST.OSM.Origins_Destinations.DestinationList;
 
 import com.logistyx.pojo.osm.OSMPojo;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
+import io.restassured.response.ValidatableResponse;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
 import java.util.Base64;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.*;
-
-import io.restassured.response.ValidatableResponse;
-import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 
-public class dest_test {
+public class destination_listEU {
 
     public static String requestJsonBodyShipments;
     public static RequestSpecification requestSpecShipments;
@@ -91,7 +84,7 @@ public class dest_test {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/pt1.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/ptEU.csv", numLinesToSkip = 1)
     public void test1(String CountryCode, String CountryName, String Reference, String Address1, String PostalCode, String LocalityName, String SubdivisionCode, String Remark) {
 
 
