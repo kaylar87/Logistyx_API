@@ -51,8 +51,8 @@ public class Bound_Printed_Matter_Less_1lbs_rounded extends OSMBaseBoundPrintedM
     @Test
     public void test4() {
 
-        String grossWeightRounded = String.valueOf(osmPojoShipments.getShippingUnits().get(0).getGrossWeight());
-        assertThat(grossWeightRounded, is(equalTo("1")));
+        String weightFromEDI = decodedValuesDomestic.get(14);
+        assertThat(weightFromEDI, is(equalTo("1")));
     }
 
 

@@ -6,13 +6,13 @@ import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.time.OffsetDateTime;
-import java.util.Base64;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static io.restassured.RestAssured.*;
 
@@ -202,5 +202,44 @@ public abstract class OSMBaseBoundPrintedMatterNotDGLess1lbsRounded {
         decodedBytesShipments = Base64.getDecoder().decode(encodedStringFromPostmanShipments);
         decodedStringShipments = new String(decodedBytesShipments);
 
+        int shipmentIdFromShipmentsRequest = osmPojoShipments.getShipmentId();
+        JSONObject objectShipmentIdFromShipmentsRequest = new JSONObject();
+        JSONArray array = new JSONArray();
+        objectShipmentIdFromShipmentsRequest.put("Shipments", array);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ShipmentId", shipmentIdFromShipmentsRequest);
+        array.add(map);
+        requestSpecConveyances = given().header("Shipper-Code", "LBI")
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(objectShipmentIdFromShipmentsRequest);
+        responseSpecConveyances = expect().statusCode(200)
+                .and()
+                .contentType(ContentType.JSON);
+        validateResponseConveyances = given().spec(requestSpecConveyances)
+                .when()
+                .post("/conveyances/confirm")
+                .then()
+                .spec(responseSpecConveyances);
+        osmPojoConveyances = validateResponseConveyances.extract().as(OSMPojo.class);
+        encodedStringFromPostmanConveyances = osmPojoConveyances.getDocuments().get(0).getContent();
+        decodedBytesConveyances = Base64.getDecoder().decode(encodedStringFromPostmanConveyances);
+        decodedStringConveyances = new String(decodedBytesConveyances);
+
+        String[] decodeArrDomestic = decodedStringConveyances.split("\r\n");
+        decodeArrListDomestic = Arrays.asList(decodeArrDomestic);
+
+        Object a = decodeArrListDomestic.get(0);
+        decodedHeadersDomestic = new ArrayList<>();
+        //    System.out.println("a = " + a);
+        for (String s : a.toString().split("\",\"")) {
+            decodedHeadersDomestic.add(s);
+        }
+        Object b = decodeArrListDomestic.get(1);
+        decodedValuesDomestic = new ArrayList<>();
+        //    System.out.println("b = " + b);
+        for (String s : b.toString().split("\",\"")) {
+            decodedValuesDomestic.add(s);
+        }
     }
 }
